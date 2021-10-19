@@ -1,0 +1,46 @@
+.mt-50 {
+    margin-top: 10px
+}
+
+.mb-50 {
+    margin-bottom: 50px
+}
+.card {
+    position: relative;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, .125);
+    border-radius: .1875rem
+}
+
+@media (min-width: 576px) {
+    .blog-horizontal .card-img-actions {
+        width: 35%;
+        float: left;
+        max-width: 25rem;
+        z-index: 10
+    }
+}
+
+a {
+    text-decoration: none !important
+}
+
+.course-button {
+    border: 1px solid #007bff;
+    padding: 5px;
+    background-color: #007bff;
+    padding-right: 10px;
+    padding-top: 3px;
+    color: #fff;
+    border-radius: 3px
+}
+
+.course-button:hover {
+    color: #fff
+}
