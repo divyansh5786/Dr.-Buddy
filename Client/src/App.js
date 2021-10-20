@@ -1,6 +1,6 @@
 import React from 'react';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-
+import { useState } from 'react';
 import Navbar from './pages/Navbar';
 import Home from './pages/Home';
 import Doctors from './pages/Doctors';
@@ -11,6 +11,7 @@ import './css/App.css';
 
 
 function App() {
+  const [id,setId] = useState('');
   return (
     <>
       <Navbar/>

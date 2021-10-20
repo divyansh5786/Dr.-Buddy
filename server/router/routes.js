@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
 });
 
 router.post('/register', userSignup.register);
-router.get('/login', userLogin.LogIn);
+router.post('/login', userLogin.LogIn);
 router.get('/profile',Authenticate,userProfile.profile)
 
 

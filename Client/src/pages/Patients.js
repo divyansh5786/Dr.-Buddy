@@ -18,6 +18,7 @@ function Patients() {
         <Route exact path="/patients/dashboard" component={Dashboard} />
         <Route exact path="/patients/bookapp" component={bookappointment} />
         <Route exact path="/patients/" component={Dashboard} />
+        <Route exact path="/patients/bookapp/confirm" component={Dashboard} />
         {/* <Route exact path="/patients" component={Patients} />
         <Route exact path="/patientlist" component={PatientList} />
         <Route exact path="/bookapp" component={Bookapp} />

@@ -23,22 +23,22 @@ const contestSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    // email: {
-    //     type: String,
-    //     required: true
-    // },
-    // cityCode: {
-    //     type: String,
-    //     required: true
-    // },
-    // AddLine1: {
-    //     type: String,
-    //     required: true
-    // },
-    // AddLine2: {
-    //     type: String,
-    //     required: true
-    // },
+    email: {
+        type: String,
+        required: true
+    },
+    state: {
+        type: String,
+        required: true
+    },
+    city: {
+        type: String,
+        required: true
+    },
+    Address: {
+        type: String,
+        required: true
+    },
     // Online: {
     //     type: Boolean,
     //     required: true

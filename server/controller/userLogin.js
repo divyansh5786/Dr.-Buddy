@@ -6,26 +6,31 @@ const jwt = require('jsonwebtoken');
 
 
 
-LogIn = async(req, res) => {
-const {username,password}= req.body;
-let user;
-  if(!check) user= await Doctor.findOne({username:username});
-  else   user= await Patient.findOne({username:username});
-  if(!user)
-  {
-      res.send(401);
-  }
- //   mia bhabhi
-  //   naughty america
-  if(user.password===password)
-  {
-     res.send(user);
+LogIn = async (req, res) => {
+  const { username, password, type } = req.body;
+  console.log(username, password, type);
+  if (type == 'Doctor')
+    check = false;
+  else
+    check = true;
 
-  }  
-  let token;
+  let user;
+  if (!check)
+    user = await Doctor.findOne({ username: username });
+  else
+    user = await Patient.findOne({ username: username });
+
+  if (!user || user === null) {
+    return res.status(422).json({id:null});
+  }
+  //   mia bhabhi
+  //   naughty america
+  else if (user.password === password) {
+    res.status(201);
+    let token;
     try {
-      token =await  jwt.sign(
-        { userId:user.id},
+      token = await jwt.sign(
+        { userId: user.id },
         process.env.TOKEN_SECRET_KEY,
         { expiresIn: '1h' }
       );
@@ -34,10 +39,16 @@ let user;
     }
     console.log("token")
     console.log(token);
+    return res.json({id:user.id});
+  }
+  
+  else
+    return res.status(422).json({id:null});
+
 }
 
 
 
 module.exports = {
-    LogIn,
+  LogIn,
 };
