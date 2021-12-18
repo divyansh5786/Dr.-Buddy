@@ -1,19 +1,34 @@
-import React from 'react'
+import React from 'react';
+import { useState,useEffect } from 'react';
 import '../../css/dashboard.css';
 import '../../css/bookapp.css';
 import { NavLink } from 'react-router-dom';
 import PatientCard from '../utilities/patientCard';
+import SearchDoctor from '../utilities/searchDoctor';
 
+function Bookappointment({setDoctorBook,setPage}) {
 
-function bookappointment() {
+    const [doctors,setDoctors] = useState(null);
+    useEffect(() => {
+        setPage('Book Appointment');
+    }, []);
+
 return (
     <>
-        <div class="home-content">
-            <div class="d-flex justify-content-center mt-50 mb-50">
-                <div class="row">
-                    <div class="col-md-12">
-                        <PatientCard />
-                        <PatientCard />
+        <div className="home-content">
+        <SearchDoctor setDoctors={setDoctors} />
+            {/* <SearchDoctor /> */}
+            <div style={{marginInline:'10%'}}>
+                <div className="row">
+                    <div className="col-md-12">
+                    {doctors===null?"Select the feilds" :doctors.length===0?"No Doctors to show" :  
+                    doctors.map((doctor)=>{
+                        console.log(doctor.name);
+                        return (<PatientCard doctor={doctor} setDoctorBook={setDoctorBook} show={true}/>   
+                     )
+                 })
+                    } 
+                       
                     </div>
                 </div>
             </div>
@@ -23,4 +38,4 @@ return (
     )
 }
 
-export default bookappointment
+export default Bookappointment

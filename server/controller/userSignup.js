@@ -4,8 +4,6 @@ const Doctor = require("../module/doctorSchema");
 const Patient = require("../module/patientSchema");
 const jwt = require('jsonwebtoken');
 
-
-
 register = async (req, res) => {
   const { username, password, firstname, lastname, mobile, email, city, state, Address, type } = req.body;
   let check = true;
@@ -35,8 +33,6 @@ register = async (req, res) => {
 
   }
 }
-
-
 
 module.exports = {
   register,

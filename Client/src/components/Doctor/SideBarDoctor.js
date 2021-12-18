@@ -12,44 +12,48 @@ function SideBarDoctor() {
         </div>
         <ul class="nav-links">
           <li>
-            <a>
+          <NavLink to="/doctors/dashboard">
               <i class='bx bx-grid-alt' ></i>
-              <NavLink class="links_name" to="/doctors/dashboard">Dashboard</NavLink>
-            </a>
+              <span class="links_name" to="/doctors/dashboard">Dashboard</span>
+              </NavLink>
           </li>
           <li>
-            <a href="#">
+          <NavLink to="/doctors/mypatient">
+              <i class='bx bx-box' ></i>
+              <span class="links_name" >My Patients</span>
+            </NavLink>
+          </li>
+          <li>
+          <NavLink to="/doctors/appointments">
               <i class='bx bx-box' ></i>
               <span class="links_name" >Appointments</span>
-            </a>
+            </NavLink>
           </li>
           <li>
-            <a>
-              <i class='bx bx-list-ul' ></i>
-              <NavLink class="links_name" to="/doctors/patientlist">Patients List</NavLink>
-            </a>
+          <NavLink to="/doctors/prescription">
+              <i class='bx bx-box' ></i>
+              <span class="links_name" to="/doctors/prescription">Prescriptions</span>
+            </NavLink>
+          </li>
+          <li><NavLink to="/doctors/profile">
+              <i class='bx bx-cog' ></i>
+              <span class="links_name" >Profile</span>
+            </NavLink>
           </li>
           <li>
-            <a href="#">
+          <NavLink to="/doctors/messages">
               <i class='bx bx-message' ></i>
               <span class="links_name">Messages</span>
-            </a>
+            </NavLink>
           </li>
-          <li>
-            <a href="#">
-              <i class='bx bx-cog' ></i>
-              <span class="links_name">Settings</span>
-            </a>
-          </li>
-          <li class="log_out">
-            <a href="#">
+          <li >
+          <NavLink to="/doctors/logOut">
               <i class='bx bx-log-out'></i>
               <span class="links_name">Log out</span>
-            </a>
+            </NavLink>
           </li>
         </ul>
       </div>
-
     </>
   )
 }

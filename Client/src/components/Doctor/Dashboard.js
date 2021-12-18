@@ -1,8 +1,17 @@
-import React from 'react'
+import React from 'react';
+import { useState,useEffect } from 'react';
 import '../../css/dashboard.css';
 import { NavLink } from 'react-router-dom';
 
-function Dashboard() {
+function Dashboard({id,setPage}) {
+  useEffect(() => {
+    setPage('Dashboard');
+
+}, []);
+  console.log('dashboard');
+    console.log(id);
+
+    
   return (
     <>
 <div class="home-content">
@@ -150,7 +159,7 @@ function Dashboard() {
 </div>
 </div>
 </>
-  )
+  );
 }
 
 export default Dashboard

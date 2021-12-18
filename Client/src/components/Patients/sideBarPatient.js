@@ -12,34 +12,52 @@ function SideBarPatient() {
         </div>
         <ul class="nav-links">
           <li>
-            <a href="#" class="active">
+          <NavLink to="/patients/dashboard">
               <i class='bx bx-grid-alt' ></i>
-              <NavLink class="links_name" to="/patients/dashboard">Dashboard</NavLink>
-            </a>
+              <span class="links_name" to="/patients/dashboard">Dashboard</span>
+              </NavLink>
           </li>
           <li>
-            <a>
+            <NavLink to="/patients/bookapp">
               <i class='bx bx-box' ></i>
-              <NavLink class="links_name" to="/patients/bookapp">Book Appointment</NavLink>
-            </a>
+              <span class="links_name" >Book Appointment</span>
+            </NavLink>
           </li>
           <li>
-            <a href="#">
+          <NavLink to="/patients/appointments">
+              <i class='bx bx-box' ></i>
+              <span class="links_name" >Appointments</span>
+            </NavLink>
+          </li>
+          <li>
+          <NavLink to="/patients/prescription">
+              <i class='bx bx-box' ></i>
+              <span class="links_name" to="/patients/prescription">Prescriptions</span>
+            </NavLink>
+          </li>
+          <li>
+          <NavLink to="/patients/medicaldata">
+              <i class='bx bx-cog' ></i>
+              <span class="links_name" >Medical Data</span>
+            </NavLink>
+          </li>
+          <li>
+          <NavLink to="/patients/profile">
+              <i class='bx bx-cog' ></i>
+              <span class="links_name" >Profile</span>
+            </NavLink>
+          </li>
+          <li>
+          <NavLink to="/patients/messages">
               <i class='bx bx-message' ></i>
               <span class="links_name">Messages</span>
-            </a>
+            </NavLink>
           </li>
-          <li>
-            <a href="#">
-              <i class='bx bx-cog' ></i>
-              <span class="links_name">Settings</span>
-            </a>
-          </li>
-          <li class="log_out">
-            <a href="#">
+          <li >
+          <NavLink to="/patients/logOut">
               <i class='bx bx-log-out'></i>
               <span class="links_name">Log out</span>
-            </a>
+            </NavLink>
           </li>
         </ul>
       </div>

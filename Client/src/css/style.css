@@ -5,6 +5,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: sans-serif;
 }
 
 body,
@@ -19,7 +20,73 @@ input {
   min-height: 90vh;
   overflow: hidden;
 }
+.selector{
 
+    position: absolute;
+    width: 10vh;
+    background-color: #fff;
+    min-height: 90vh;
+    overflow: hidden;
+
+}
+
+.card {
+  border: 1px solid #f0f0f0;
+  
+}
+.table {
+  color: #272b41;
+  max-width: 100%;
+  margin-bottom: 0;
+  width: 100%;
+}
+.table thead {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+}
+.tab-content {
+	padding-top: 20px;
+}
+table.table td h2 span {
+    color: #888;
+    display: block;
+    font-size: 16px;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+.card-table .table td, .card-table .table th {
+    border-top: 1px solid #e2e5e8;
+    padding: 1rem 0.75rem;
+    white-space: nowrap;
+}
+.table.table-center td, .table.table-center th {
+    vertical-align: middle;
+}
+table.table td h2 a {
+  color: #272b41;
+  font-size: large;
+}
+.bg-success-light {
+  background-color: rgba(15, 183, 107,0.12) !important;
+  color: #26af48 !important;
+}
+.bg-warning-light {
+  background-color: rgba(255, 152, 0,0.12) !important;
+  color: #f39c12 !important;
+}
+.bg-danger-light {
+  background-color: rgba(242, 17, 54,0.12) !important;
+  color: #e63c3c !important;
+}
+.bg-primary-light {
+  background-color: rgba(17, 148, 247,0.12) !important;
+  color: #2196f3 !important;
+  
+}
+.bg-info-light {
+  background-color: rgba(2, 182, 179,0.12) !important;
+  color: #1db9aa !important;
+  text-align: center;
+}
 .forms-container {
   position: absolute;
   width: 100%;
@@ -42,6 +109,10 @@ input {
 .signupd{
   margin-top: 2%;
 
+}
+.addMedical{
+  padding-top: 15%;
+  padding-inline: 10%;
 }
 
 form {

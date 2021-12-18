@@ -1,0 +1,39 @@
+.prescription
+{
+    padding-inline: 10%;
+    padding-block: 10%;
+    
+}
+.panel-body{
+    padding-inline: 2.5%;
+    padding-block: 2.5%;
+    background-color: white;
+}
+.doctor-widget{
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1.5px solid rgb(0, 0, 0);
+}
+.doctor-info-left{
+    margin-right: auto;
+}
+.doctor-info-right{
+    margin-left: auto;
+}
+.doctor-info-centre{
+    margin-inline: auto;
+}
+.rowmajor{
+    display: flex;
+}
+.patientDetail{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-bottom: 1.5px solid rgb(0, 0, 0);
+}
+.panel-body2{
+    display: flex;
+    flex-direction: row;
+    justify-content:center;
+}

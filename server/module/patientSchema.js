@@ -39,15 +39,7 @@ const patientSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    // Online: {
-    //     type: Boolean,
-    //     required: true
-    // },
-    // Fees: {
-    //     type: Number,
-    //     required: true
-    // },
-    // Degree:[{
+    // Medical:[{
     //     Name: {
     //         type: String,
     //         required: true
@@ -65,22 +57,13 @@ const patientSchema = new mongoose.Schema({
     //         required: true
     //     },
     // }],
-    // Specialization: {
-    //     type: Array,
-    //     required: true
-    // },
-    // Schedule:{
-    //     type:Object,
-    //     required:false
-    // },
-    // Patients:{
-    //     type:Array,
-    //     required:false
-    // },
+
     // Appointments: {
     //     type: Array,
     //     required: true
     // },
+    Appointments:[gvhb,hhjb,64534],
+    prescription:[sfv,rsv,54]
 
  })
 

@@ -8,19 +8,29 @@ import Patients from './pages/Patients';
 import Signup from './pages/Signup';
 import {Switch, Route, Redirect} from 'react-router-dom';
 import './css/App.css';
+import Profile from './components/utilities/patientProfileForDoctor';
 
 
 function App() {
-  const [id,setId] = useState('');
+  const [doctor,setDoctor] = useState(null);
+  const [patient,setPatient] = useState(null);
+  const id='';
   return (
     <>
       <Navbar/>
       <Switch>
-        
-        <Route path="/doctors" component={Doctors} />
-        <Route path="/patients" component={Patients} />
+      <Route  path="/doctors" render={()=>{
+            return(<Doctors id={id} />)
+          }}> 
+           </Route>
+           <Route  path="/patients" render={()=>{
+            return(<Patients id={id} />)
+          }}> 
+           </Route>
         <Route exact path="/signup" component={Signup} />
-        <Route exact path="/" component={Home} />
+        <Route exact path="/patientProfile" component={Profile} />
+        <Route exact path="/" render={()=>{return(<Home setPatient={setPatient} setDoctor={setDoctor} />)}}> 
+           </Route>
         <Redirect to="/" />
       </Switch>
     </>

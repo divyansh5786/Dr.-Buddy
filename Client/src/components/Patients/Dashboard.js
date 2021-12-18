@@ -1,151 +1,239 @@
 import React from 'react'
+import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import '../../css/dashboard.css';
+import DashMedPatient from '../utilities/dashMedPatient';
+import DashAppointPatient from '../utilities/dashAppointPatient';
+import DashPresPatient from '../utilities/dashPresPatient';
 import { NavLink } from 'react-router-dom';
 
-function Dashboard() {
+const fetchMedicalData = async (id) => {
+  try {
+    const res = await fetch("/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        id
+      })
+    });
+    const data = await res.json();
+
+    if (res.status === 422 || !data) {
+      window.alert("Invailid Registration");
+      console.log("Invailid Registration");
+    } else {
+      window.alert("Registration Successful");
+      console.log("Registration Successfull");
+      // history.replace("/");
+    }
+  }
+  catch (e) {
+    console.log("error occured in fetching" + e);
+  }
+  const tempdata = [{
+    "date": "12 Nov 2017",
+    "bp": "138",
+    "sugar": "120",
+    "temp": "98.4",
+    "pulse": "72",
+  },
+  {
+    "date": "13 Nov 2017",
+    "bp": "118",
+    "sugar": "110",
+    "temp": "96.5",
+    "pulse": "75",
+  },];
+  return tempdata;
+}
+
+const fetchAppointmentsData = async (id) => {
+  try {
+    const res = await fetch("/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        id
+      })
+    });
+    const data = await res.json();
+
+    if (res.status === 422 || !data) {
+      window.alert("Invailid Registration");
+      console.log("Invailid Registration");
+    } else {
+      window.alert("Registration Successful");
+      console.log("Registration Successfull");
+      // history.replace("/");
+    }
+  }
+  catch (e) {
+    console.log("error occured in fetching" + e);
+  }
+  const tempdata = [{
+    "id": "565465",
+    "doctorname": "Dr. harish goyl",
+    "spec": "Surgeon",
+    "dateOfBooking": "22 Oct 2021",
+    "dateOfAppointment": "24 Oct 2021",
+    "time": "Evening",
+    "fees": "250",
+    "concern": "Stomach pain",
+    "status": "confirm"
+  },
+  {
+    "id": "165165",
+    "doctorname": "Dr. kaunal bhardwaj",
+    "spec": "Dentist",
+    "dateOfBooking": "22 Oct 2021",
+    "dateOfAppointment": "24 Oct 2021",
+    "time": "Evening",
+    "fees": "250",
+    "concern": "Stomach pain",
+    "status": "pending"
+  },];
+  return tempdata;
+}
+
+const fetchPrescriptionData = async (id) => {
+  try {
+    const res = await fetch("/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        id
+      })
+    });
+    const data = await res.json();
+
+    if (res.status === 422 || !data) {
+      window.alert("Invailid Registration");
+      console.log("Invailid Registration");
+    } else {
+      window.alert("Registration Successful");
+      console.log("Registration Successfull");
+      // history.replace("/");
+    }
+  }
+  catch (e) {
+    console.log("error occured in fetching" + e);
+  }
+  const tempdata = [{
+    "id": "565465",
+    "doctorName": "Dr. harish goyl",
+    "spec": "Surgeon",
+    "dateOfAppointment": "24 Oct 2021",
+  },
+  {
+    "id": "165165",
+    "doctorName": "Dr. kaunal bhardwaj",
+    "spec": "Dentist",
+    "dateOfAppointment": "24 Oct 2021",
+  },];
+  return tempdata;
+}
+
+function Dashboard({ id, setPage }) {
+  const history = useHistory();
+  const [medicalData, setmedicalData] = useState(null);
+  const [prescriptions, setPrescriptions] = useState(null);
+  const [appointments, setAppointments] = useState(null);
+
+  useEffect(() => {
+    setPage('DashBoard');
+    fetchMedicalData(id).then(tempdata => {
+      if (tempdata.length === 0)
+        tempdata = [{
+          "date": " ",
+          "bp": " ",
+          "sugar": " ",
+          "temp": " ",
+          "pulse": " ",
+        },];
+      setmedicalData(tempdata);
+    });
+    fetchAppointmentsData(id).then(tempdata => {
+      setAppointments(tempdata);
+    });
+    fetchPrescriptionData(id).then(tempdata => {
+      setPrescriptions(tempdata);
+    });
+
+  }, []);
   return (
     <>
 
-<div class="home-content">
-      <div class="overview-boxes">
-        <div class="box">
-          <div class="right-side">
-            <div class="box-topic">Heart Rate</div>
-            <div class="number">12 bpm</div>
-            <div class="indicator">
-              <i class='bx bx-up-arrow-alt'></i>
-              <span class="text">Uptill Now</span>
-            </div>
-          </div>
-          <span class="iconify" data-icon="system-uicons:heart-rate" data-width="50" data-height="50"></span>
-        </div>
-        <div class="box">
-          <div class="right-side">
-            <div class="box-topic">Body Tempreture</div>
-            <div class="number">18 c</div>
-            <div class="indicator">
-              <i class='bx bx-up-arrow-alt'></i>
-              <span class="text">Today only</span>
-            </div>
-          </div>
-          <span class="iconify" data-icon="emojione-v1:thermometer" data-width="50" data-height="50"></span>
-        </div>
-        <div class="box">
-          <div class="right-side">
-            <div class="box-topic">Blood Pressure</div>
-            <div class="number">202/90</div>
-            <div class="indicator">
-              <span class="text">mg/dl</span>
-            </div>
-          </div>
-          <span class="iconify" data-icon="healthicons:blood-pressure-2" data-width="50" data-height="50"></span>
-        </div>
-        <div class="box">
-          <div class="right-side">
-            <div class="box-topic">Glucose Level</div>
-            <div class="number">70-90</div>
-            <div class="indicator">
-              <i class='bx bx-up-arrow-alt up'></i>
-              <span class="text">Today Only</span>
-            </div>
-          </div>
-          <span class="iconify" data-icon="entypo:drop" data-width="50" data-height="50"></span>
-        </div>
-      </div>
+      <div class="home-content">
+        {medicalData === null ? "Loading..." : <DashMedPatient key={medicalData[0].id} data={medicalData[0]} />
+        }
 
-      <div class="sales-boxes">
-        <div class="recent-sales box">
-          <div class="title">Doctor Appointment</div>
-          <div class="sales-details">
-            <ul class="details">
-              <li class="topic">Date</li>
-              <li><a href="#">02 Jan 2021</a></li>
-              <li><a href="#">05 Jan 2021</a></li>
-              
-            </ul>
-            <ul class="details">
-            <li class="topic">Doctor Name</li>
-            <li><a href="#">Alex Doe</a></li>
-            <li><a href="#">David Mart</a></li>
-          </ul>
-          <ul class="details">
-            <li class="topic">Purpose</li>
-            <li><a href="#">X-rays report</a></li>
-            <li><a href="#">MRI Scan report</a></li>
-            
-          </ul>
-          <ul class="details">
-            <li class="topic">Paid Amount</li>
-            <li><a href="#">$204.98</a></li>
-            <li><a href="#">$124.55</a></li>
-            
-          </ul>
+        <div class="sales-boxes">
+          <div class="recent-sales box">
+            <div class="title">Doctor Appointment</div>
+            <div class="card card-table mb-0 card-body table-responsive">
+                        <table class="table table-hover table-center mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Doctor</th>
+                                    <th>Appt Date</th>
+                                    <th>Concern</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {appointments===null?"Loading..." :appointments.length===0?"No appointment made" :  
+                    appointments.map((appointment)=>{
+                        console.log(appointment.doctorname);
+                        return (<DashAppointPatient key={appointment.id} appointment={appointment} />   
+                     )
+                 })
+                    }
+                                
+
+                            </tbody>
+                        </table>
+                        </div>
+
+            <div class="button">
+              <a href="#">See All</a>
+            </div>
           </div>
-          <div class="button">
-            <a href="#">See All</a>
+          <div class="top-sales box">
+            <div class="title">Prescriptions</div>
+            <div class="card card-table mb-0 card-body table-responsive">
+                        <table class="table table-hover table-center mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Id</th>
+                                    <th>Created By</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {prescriptions===null?"Loading..." :prescriptions.length===0?"No appointment made" :  
+                    prescriptions.map((prescription)=>{
+                        console.log(prescription);
+                        return (<DashPresPatient key={prescription.id} prescription={prescription} />   
+                     )
+                 })
+                    }
+                            </tbody>
+                        </table>
+
+                    </div>
           </div>
-        </div>
-        <div class="top-sales box">
-          <div class="title">Top Doctors</div>
-          <ul class="top-sales-details">
-            <li>
-            <a href="#">
-              <img src="images/sunglasses.jpg" alt=""/>
-              <span class="product">Vuitton Sunglasses</span>
-            </a>
-            <span class="price">
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            </span>
-          </li>
-          <li>
-            <a href="#">
-               <img src="images/jeans.jpg" alt=""/>
-              <span class="product">Hourglass Jeans </span>
-            </a>
-            <span class="price">
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span>
-            </span>
-          </li>
-          <li>
-            <a href="#">
-             <img src="images/nike.jpg" alt=""/>
-              <span class="product">Nike Sport Shoe</span>
-            </a>
-            <span class="price">
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span>
-            </span>
-          </li>
-          <li>
-            <a href="#">
-              <img src="images/scarves.jpg" alt=""/>
-              <span class="product">Hermes Silk Scarves.</span>
-            </a>
-            <span class="price">
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span>
-            <span class="fa fa-star"></span>
-            </span>
-          </li>
-          </ul>
         </div>
       </div>
-    </div>
 
     </>
-  )}
+  )
+}
 
-  export default Dashboard
+export default Dashboard

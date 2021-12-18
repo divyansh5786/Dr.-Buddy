@@ -2,39 +2,65 @@ import React from 'react'
 import '../../css/dashboard.css';
 import '../../css/bookapp.css';
 import { NavLink } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
-function PatientCard() {
-  return (
-    <>
-<div class="card blog-horizontal mt-4">
-    <div class="card-body">
-        <div class="card-img-actions mr-sm-3 mb-3"><img src="https://i.imgur.com/OJHNsX9.jpg" class="img-fluid card-img" alt="" /></div>
-        <div class="mb-3">
-            <h5 class="d-flex font-weight-semibold flex-nowrap my-1">Dr. Nayan Sins</h5>
-            <ul class="list-inline list-inline-dotted text-muted mb-0">
-                <li class="list-inline-item">Specialist :-<a href="#" class="text-muted" data-abc="true"> Cardeologist</a></li>
-                <li class="list-inline-item"></li>
-            </ul>
-        </div>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore</p>
-    </div>
-    <div class="card-footer d-sm-flex justify-content-sm-between align-items-sm-center">
-        <ul class="list-inline list-inline-dotted mb-0">
-            <li class="list-inline-item"><i class="fa fa-user mr-1"></i> 272</li>
-            <li class="list-inline-item"><i class="fa fa-calendar-check-o mr-1"></i> 15 hours</li>
-            <li class="list-inline-item">
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star"></span>
-                <span class="text-muted ml-1">(12)</span> </li>
-        </ul>
-        <div class="mt-2 mt-sm-0"> <a href="#" class="course-button">Book Appointment</a> </div>
-    </div>
-</div>
+function PatientCard(props) {
+    const history = useHistory();
+    console.log(props);
 
-</>
-  )}
+    const book = () => {
+        props.setDoctorBook(props.doctor);
+        history.push("/patients/bookapp/confirm");
+    }
+    return (
 
-  export default PatientCard
+        <>
+        <div className="box" style={{marginTop:'20px'}}>
+            <div className="card blog-horizontal mt-4" >
+                <div className="card">
+                    <div className="card-body">
+                        <div className="doctor-widget">
+                            <div className="doc-info-left">
+                                <div className="doctor-img">
+                                    <a href="doctor-profile.html">
+                                        <img src="https://i.imgur.com/OJHNsX9.jpg" className="img-fluid card-img" alt="" />
+                                    </a>
+                                </div>
+                                <div className="doc-info-cont">
+                                    <h4 className="doc-name"><a href="doctor-profile.html">{props.doctor.name}</a></h4>
+                                    <p className="doc-speciality">{props.doctor.degree}</p>
+                                    <h5 className="doc-department"> {props.doctor.spec}</h5>
+                                    <div className="clinic-details">
+                                        <div className="doc-location"><i className="fas fa-map-marker-alt"></i> {props.doctor.Address}</div>
+                                        <p className="doc-location"> {" " + props.doctor.city + ", " + props.doctor.state}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="doc-info-right">
+                                {props.show === true ?
+                                    <div className="clini-infos">
+                                        <li><i className="far fa-money-bill-alt"></i>{props.doctor.fees}</li>
+                                    </div> : <div className="clini-infos">
+
+                                        <li><i className="far fa-money-bill-alt"></i>{props.doctor.fees}</li>
+                                        <li><i className="fas fa-phone"></i>{props.doctor.mobile}</li>
+                                        <li><i className="fas fa-envelope"></i>{props.doctor.email}</li>
+                                    </div>}
+                                {props.show === false ? " " :
+                                    <div className="clinic-booking">
+                                        <button className="btn btn-outline-primary">View Profile</button>
+                                        <button className="btn btn-primary" style={{ width: 'auto' }} onClick={book}>Book Appointment</button>
+
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </>
+    )
+}
+
+export default PatientCard

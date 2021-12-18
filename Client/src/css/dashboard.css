@@ -6,6 +6,77 @@
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
 }
+.btn{
+width:90px;
+}
+.user-tabs .nav-tabs.nav-tabs-bottom > li > a.active, .user-tabs .nav-tabs.nav-tabs-bottom > li > a.active:hover, .user-tabs .nav-tabs.nav-tabs-bottom > li > a.active:focus {
+  border-bottom-width: 3px; 
+  color: #20c0f3;
+}
+.nav-tabs.nav-tabs-bottom > li > a.active, .nav-tabs.nav-tabs-bottom > li > a.active:hover, .nav-tabs.nav-tabs-bottom > li > a.active:focus {
+ 
+  border-color: transparent;
+  border-bottom-color: #20c0f3;
+  background-color: transparent;
+  
+}
+.user-tabs .nav-tabs > li > a {
+  border: 0;
+  border-bottom: 3px solid transparent;
+  color: #3e3e3e;
+  font-weight: 600;
+  padding: 20px;
+}
+.signature-wrap {
+  float: right;
+  margin-bottom: 20px;
+  text-align: center;
+  width: 220px;
+}
+.signature {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border: 2px dashed #ccc;
+  border-radius: 4px;
+  color: #272b41;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  height: 85px;
+  margin-bottom: 15px;
+  width: 100%;
+}
+.add-new-btn {
+  background-color: #0de0fe;
+  border-radius: 30px;
+  color: #fff;
+  display: inline-block;
+  font-weight: 500;
+  margin-bottom: 20px;
+  padding: 10px 20px;
+}
+a, a:hover, a:active, a:focus {
+  outline: none;
+  text-decoration: none;
+}
+.nav-tabs.nav-justified > li > a {
+  border-radius: 0;
+  margin-bottom: 0;
+}
+.nav-tabs > li > a {
+  margin-right: 0;
+  color: #888;
+  border-radius: 0;
+}
+a, a:hover, a:active, a:focus {
+  outline: none;
+  text-decoration: none;
+}
 .sidebar{
   position: fixed;
   height: 100%;
@@ -55,13 +126,16 @@
 .sidebar .nav-links li a:hover{
   background: #081D45;
 }
+.sidebar .nav-links li a:visited{
+  background: #081D45;
+}
 .sidebar .nav-links li i{
   min-width: 60px;
   text-align: center;
   font-size: 18px;
   color: #fff;
 }
-.sidebar .nav-links li a .links_name{
+.sidebar .nav-links .links_name{
   color: #fff;
   font-size: 15px;
   font-weight: 400;
@@ -184,6 +258,21 @@ nav .profile-details i{
   padding: 0 20px;
   margin-bottom: 26px;
 }
+.widget-profile {
+  background-color: #fff;
+  border-bottom: 1px solid #f0f0f0;
+}
+.card-body {
+  padding: 1.5rem;
+}
+
+.box{
+ 
+  background: #fff;
+  padding: 15px 14px;
+  border-radius: 12px;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+}
 .overview-boxes .box{
   display: flex;
   align-items: center;
@@ -261,7 +350,7 @@ nav .profile-details i{
 
 /* left box */
 .home-content .sales-boxes .recent-sales{
-  width: 65%;
+  width: 50%;
   background: #fff;
   padding: 20px 30px;
   margin: 0 20px;
@@ -314,7 +403,7 @@ nav .profile-details i{
 
 /* Right box */
 .home-content .sales-boxes .top-sales{
-  width: 35%;
+  width: 50%;
   background: #fff;
   padding: 20px 30px;
   margin: 0 20px 0 0;

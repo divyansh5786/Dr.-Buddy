@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 
 
-function Home() {
+function Home({setPatient,setDoctor}) {
   const history = useHistory();
   const [user, setUser] = useState({ username: "", password: "",type:"" });
 
@@ -36,7 +36,18 @@ function Home() {
     } else {
       window.alert("Login Successful");
       console.log("Login Successfull",data);
-      // history.replace("/");
+      
+      if(type=='Doctor')
+      {
+        history.replace("/doctor/dashboard");
+        setPatient(data);
+      }
+      else
+      {
+        history.replace("/patient/dashboard");
+        setDoctor(data);
+      }
+      
     }
   }
   return (
