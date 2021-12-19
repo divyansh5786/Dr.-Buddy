@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 register = async (req, res) => {
   const { username, password, firstname, lastname, mobile, email, city, state, Address, type } = req.body;
   let check = true;
-  if(type=='Doctor')
+  if(type==='Doctor')
    check = false;
   if (!username || !password || !firstname || !lastname || !mobile || !email || !city || !state || !Address) {
     return res.status(422).json({ error: "please fill all the fields properly" });
