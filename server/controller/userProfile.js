@@ -13,8 +13,7 @@ profile = async(req, res) => {
   {
       res.send(401);
   }
- //   mia bhabhi
-  //   naughty america
+
   if(user.password===password)
   {
      res.send(user);
@@ -23,8 +22,34 @@ profile = async(req, res) => {
   
 }
 
+addProfession = async(req, res) => {
 
+    const {id, Online,Fees,Specialization,Patients,Appointments,Degree}= req.body;
+   // const dummy= req.body;
+    if(userLogin)
+    {
+      try{
+          await Doctor.findByIdAndUpdate(id,
+            {Online:Online},
+            {Fees:Fees},
+            {Specialization,Specialization},
+            {Patients,Patients},
+            {Appointments,Appointments},
+            {Degree,Degree},
+          )
+          }catch(e){
+              console.log(e);
+          }
+        
+    }
+    else
+    {
+        console.log('user not found')
+        res.status(404);
+    }
+}
 
 module.exports = {
     profile,
+    addProfession,
 };

@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken');
 
 LogIn = async (req, res) => {
   const { username, password, type } = req.body;
-  console.log(username, password, type);
+  console.log(username, password, type, '/userlogin 11');
   if (type == 'Doctor')
     check = false;
   else
@@ -37,7 +37,7 @@ LogIn = async (req, res) => {
     } catch (err) {
       console.log(err)
     }
-    console.log("token")
+    console.log("token   /userlogin")
     console.log(token);
     return res.json({id:user.id});
   }
