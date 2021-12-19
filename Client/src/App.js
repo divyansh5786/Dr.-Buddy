@@ -20,7 +20,7 @@ function App() {
       <Navbar/>
       <Switch>
       <Route  path="/doctors" render={()=>{
-            return(<Doctors id={id} />)
+            return(<Doctors id={doctor} />)
           }}> 
            </Route>
            <Route  path="/patients" render={()=>{

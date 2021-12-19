@@ -11,6 +11,7 @@ import patientlist from '../components/Doctor/patientList';
 import Appointments from '../components/Doctor/appointments';
 import ViewPrescription from '../components/Doctor/viewPrescription';
 import AddPrescription from '../components/Doctor/addPrescription';
+import AddProfessional from '../components/Doctor/addprofessional';
 import Prescriptions from '../components/Doctor/prescription';
 import MyPatient from '../components/Doctor/myPatients';
 import PatientView from '../components/Doctor/patientView';
@@ -33,6 +34,7 @@ function Doctors(id) {
            </Route>
            <Route exact path="/doctors/viewprescription"render={()=>{return(<ViewPrescription id={id} setPage={setPage} />)}}/>
            <Route exact path="/doctors/addprescription"render={()=>{return(<AddPrescription id={id} setPage={setPage} />)}} />
+           <Route exact path="/doctors/addprofessional"render={()=>{return(<AddProfessional id={id} setPage={setPage} />)}} />
         <Route exact path="/doctors/patientview" render={()=>{return(<PatientView id={id} setPage={setPage} />)}} />
         <Route exact path="/doctors/patientlist" component={patientlist} />
         <Route exact path="/doctors/mypatient" render={()=>{return(<MyPatient id={id} setPage={setPage} />)}} />
