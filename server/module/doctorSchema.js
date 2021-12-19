@@ -39,48 +39,41 @@ const contestSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    // Online: {
-    //     type: Boolean,
-    //     required: true
-    // },
-    // Fees: {
-    //     type: Number,
-    //     required: true
-    // },
-    // Degree:[{
-    //     Name: {
-    //         type: String,
-    //         required: true
-    //     },
-    //     Institute: {
-    //         type: String,
-    //         required: true
-    //     },
-    //     From: {
-    //         type: String,
-    //         required: true
-    //     },
-    //     To: {
-    //         type: String,
-    //         required: true
-    //     },
-    // }],
-    // Specialization: {
-    //     type: Array,
-    //     required: true
-    // },
-    // Schedule:{
-    //     type:Object,
-    //     required:false
-    // },
-    // Patients:{
-    //     type:Array,
-    //     required:false
-    // },
-    // Appointments: {
-    //     type: Array,
-    //     required: true
-    // },
+    Online: {
+        type: Boolean,
+        required: false
+    },
+    Fees: {
+        type: Number,
+        required: false
+    },
+    Degree:[{
+        Name: {
+            type: String,
+            required: false
+        },
+        Institute: {
+            type: String,
+            required: false
+        },
+        Duration: {
+            type: String,
+            required: false
+        },
+        
+    }],
+    Specialization: {
+        type: String,
+        required: false
+    },
+    Patients:{
+        type:Array,
+        required:false
+    },
+    Appointments: {
+        type: Array,
+        required: false
+    },
 
  })
 
