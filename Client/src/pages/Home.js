@@ -35,17 +35,17 @@ function Home({setPatient,setDoctor}) {
       console.log("Invailid Credentials");
     } else {
       window.alert("Login Successful");
-      console.log("Login Successfull",data);
+      console.log("Login Successfull",data.id);
       
       if(type=='Doctor')
       {
         history.replace("/doctor/dashboard");
-        setPatient(data);
+        setDoctor(data.id);
       }
       else
       {
-        history.replace("/patient/dashboard");
-        setDoctor(data);
+        history.replace("/patients/dashboard");
+        setPatient(data.id);
       }
       
     }
@@ -77,6 +77,7 @@ function Home({setPatient,setDoctor}) {
                   name="type"
                   value={user.type}
                   onChange={handleInputs}>
+                    <option>Select</option>
                   <option>Doctor</option>
                   <option>Patient</option>
                 </select>

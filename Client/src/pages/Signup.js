@@ -13,6 +13,7 @@ function Signup() {
   const handleInputs = (e) => {
     name = e.target.name;
     value = e.target.value;
+    console.log(name + " " + value);
     setUser({ ...user, [name]: value });
   }
 
@@ -53,6 +54,7 @@ function Signup() {
               name="type"
               value={user.type}
               onChange={handleInputs}>
+                <option value="Select">Select</option>
               <option value="Doctor">Doctor</option>
               <option value="Patient">Patient</option>
             </select>

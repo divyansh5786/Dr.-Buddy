@@ -62,8 +62,8 @@ const patientSchema = new mongoose.Schema({
     //     type: Array,
     //     required: true
     // },
-    Appointments:[gvhb,hhjb,64534],
-    prescription:[sfv,rsv,54]
+    // Appointments:[gvhb,hhjb,64534],
+    // prescription:[sfv,rsv,54]
 
  })
 
