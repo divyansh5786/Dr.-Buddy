@@ -1,0 +1,154 @@
+.mt-50 {
+    margin-top: 10px
+}
+
+.mb-50 {
+    margin-bottom: 50px
+}
+.card {
+    position: relative;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, .125);
+    border-radius: .1875rem
+}
+
+@media (min-width: 576px) {
+    .blog-horizontal .card-img-actions {
+        width: 35%;
+        float: left;
+        max-width: 25rem;
+        z-index: 10
+    }
+}
+
+a {
+    text-decoration: none !important
+}
+
+.course-button {
+    border: 1px solid #007bff;
+    padding: 5px;
+    background-color: #007bff;
+    padding-right: 10px;
+    padding-top: 3px;
+    color: #fff;
+    border-radius: 3px
+}
+
+.course-button:hover {
+    color: #fff
+}
+
+.doctor-widget {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+.doc-info-left {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+.doc-info-right {
+    margin-left: auto;
+    -ms-flex: 0 0 205px;
+    /* flex: 0 0 205px;
+    max-width: 205px; */
+}
+.doctor-img {
+    -ms-flex: 0 0 150px;
+    flex: 0 0 150px;
+    margin-right: 20px;
+    width: 150px;
+}
+.doctor-img img {
+    border-radius: 5px;
+}
+.doc-department {
+    color: #20c0f3;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+.doc-department img {
+    width: 19px;
+    display: inline-block;
+    margin-right: 10px;
+}
+.doc-location {
+    color: #757575;
+    font-size: 14px;
+}
+.doctor-widget .doc-name {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 3px;
+}
+.doc-speciality {
+    font-size: 14px;
+    color: #757575;
+    margin-bottom: 15px;
+}
+.clini-infos {
+    margin-bottom: 15px;
+}
+
+
+.clini-infos li {
+    display: block;
+    line-height: 30px;
+    color: #4E4852;
+}
+.clini-infos li i {
+    font-size: 15px;
+    min-width: 30px;
+}
+
+.clinic-booking a + a {
+    margin-top: 15px;
+}
+.clinic-booking a {
+    background-color: #fff;
+    border: 2px solid #20c0f3;
+    border-radius: 4px;
+    color: #20c0f3;
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    padding: 10px 20px;
+    text-align: center;
+    text-transform: uppercase;
+    width: 100%;
+}
+.clinic-booking a.view-pro-btn:hover, .clinic-booking a.view-pro-btn:focus {
+    background: #20c0f3; 
+    color: #fff;
+}
+.clinic-booking a.apt-btn {
+    background-color: #20c0f3;
+    color: #fff;
+}
+.clinic-booking a.apt-btn:hover, .clinic-booking a.apt-btn:focus {
+    background-color: #0db9f2;
+    border-color: #0db9f2;
+    color: #fff;
+}
+.timeSlot{
+    background-color:#ffffff;
+    padding-top: 2%;
+    padding-left:2%;
+    padding-right:2%;
+
+}
+.btn btn-outline-primary{
+    margin-inline: 115%;
+}
+.btn{
+    margin-right: 5%;
+}
