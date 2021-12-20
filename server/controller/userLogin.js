@@ -23,8 +23,7 @@ LogIn = async (req, res) => {
   if (!user || user === null) {
     return res.status(422).json({id:null});
   }
-  //   mia bhabhi
-  //   naughty america
+ 
   else if (user.password === password) {
     res.status(201);
     let token;

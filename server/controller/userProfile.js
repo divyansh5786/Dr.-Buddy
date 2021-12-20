@@ -23,30 +23,20 @@ profile = async(req, res) => {
 }
 
 addProfession = async(req, res) => {
-
-    const {id, Online,Fees,Specialization,Patients,Appointments,Degree}= req.body;
-   // const dummy= req.body;
-    if(userLogin)
-    {
+    const {id,Online,Specialization,Fees,Degree}= req.body;
+    let user;
       try{
-          await Doctor.findByIdAndUpdate(id,
-            {Online:Online},
-            {Fees:Fees},
-            {Specialization,Specialization},
-            {Patients,Patients},
-            {Appointments,Appointments},
-            {Degree,Degree},
-          )
-          }catch(e){
-              console.log(e);
-          }
-        
-    }
-    else
-    {
-        console.log('user not found')
-        res.status(404);
-    }
+        user= await Doctor.findById(id)
+    }catch(e){console.log(e)}
+   
+    user.Specialization=Specialization;
+    user.Online=Online;
+    user.Fees=Fees;
+
+    const result=  await  user.save();
+    res.status(200).send(user);
+   
+   
 }
 
 module.exports = {
