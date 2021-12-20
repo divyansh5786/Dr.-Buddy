@@ -40,6 +40,11 @@ function SideBarDoctor() {
               <span class="links_name" >Profile</span>
             </NavLink>
           </li>
+          <li><NavLink to="/doctors/addprofessional">
+              <i class='bx bx-cog' ></i>
+              <span class="links_name" >Add Professional</span>
+            </NavLink>
+          </li>
           <li>
           <NavLink to="/doctors/messages">
               <i class='bx bx-message' ></i>

@@ -3,7 +3,7 @@ import React from 'react'
 import '../../src/css/style.css';
 import {useHistory} from 'react-router-dom';
 
-function Signup() {
+function Signup({setDoctor}) {
   const history = useHistory();
   const [user, setUser] = useState({
     username: "", password: "", firstname: "", lastname: "", mobile: "", email: "", city: "", state: "", Address: "", type: ""
@@ -36,7 +36,8 @@ function Signup() {
     } else {
       window.alert("Registration Successful");
       console.log("Registration Successfull");
-      history.replace("/");
+      console.log(type);
+        history.replace("/");
     }
   }
 

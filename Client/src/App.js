@@ -20,14 +20,14 @@ function App() {
       <Navbar/>
       <Switch>
       <Route  path="/doctors" render={()=>{
-            return(<Doctors id={doctor} />)
+            return(<Doctors doctor={doctor} />)
           }}> 
            </Route>
            <Route  path="/patients" render={()=>{
             return(<Patients id={id} />)
           }}> 
            </Route>
-        <Route exact path="/signup" component={Signup} />
+           <Route exact path="/SignUp" render={()=>{return(<Signup setDoctor={setDoctor} />)}}/> 
         <Route exact path="/patientProfile" component={Profile} />
         <Route exact path="/" render={()=>{return(<Home setPatient={setPatient} setDoctor={setDoctor} />)}}> 
            </Route>

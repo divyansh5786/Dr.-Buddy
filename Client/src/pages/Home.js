@@ -39,7 +39,7 @@ function Home({setPatient,setDoctor}) {
       
       if(type=='Doctor')
       {
-        history.replace("/doctor/dashboard");
+        history.replace("/doctors/dashboard");
         setDoctor(data.id);
       }
       else

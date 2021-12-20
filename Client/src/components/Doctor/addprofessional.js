@@ -2,57 +2,53 @@ import { useState, useEffect } from 'react';
 import '../../css/prescriptions.css';
 import React from 'react'
 //import '../../css/style.css';
-import { useHistory } from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 
 
-const fetchPatientData = async (id) => {
+const saveDetails = async (details,history) => {
+    
     try {
-        const res = await fetch("/register", {
+        const res = await fetch("/addprofessisonal", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                id
+                details
             })
         });
         const data = await res.json();
 
         if (res.status === 422 || !data) {
-            window.alert("Invailid Registration");
-            console.log("Invailid Registration");
+            window.alert("Some error accured while processinf, Please try again");
+            console.log("Error Occurred");
         } else {
-            window.alert("Registration Successful");
-            console.log("Registration Successfull");
-            // history.replace("/");
+            window.alert("Details saved successfully");
+            console.log("Details saved successfully");
+            history.replace("/");
         }
     }
     catch (e) {
         console.log("error occured in fetching" + e);
     }
-    const tempdata = {
-        "name": "Narendra Modi",
-        "gender": "male",
-        "age": "25",
-        "Address": "118/22 Amar Enclave",
-        "city": "ghaziabad",
-        "state": "Uttar Pradesh",
-        "mobile": "9990892500",
-        "email": "bansal@gmail.com",
-    };
-    return tempdata;
 }
 
 function AddProfessional({id,setPage}) {
+    const history = useHistory();
     
-  
+    console.log(id);
+    // if(id==null)
+    // history.replace("/");
+    
     const [mode, setmode] = useState([]);
     const [degrees, upadtedegree] = useState([]);
     const [specialisation, setspecialisation] = useState([]);
     const [fees, setfees] = useState(null);
     const [temporary, settemporary] = useState({mode:"",degreename:"",institute:"",duration:"",specialisation:"",fees:" "});
     
-
+    const handleNULLId = ()=>{
+        
+    }
     useEffect(() => {
         setPage('Add Professional');
     }, []);
@@ -82,17 +78,21 @@ function AddProfessional({id,setPage}) {
         settemporary({ ...temporary, fees: "" });
     }
     const postdata =()=>{
-        let prescription={"mode":mode,"degree":degrees,"specialisation":specialisation,"fees":fees};
-        console.log(prescription);
+        if (mode.toLowerCase()=="online")
+        mode=false;
+        else
+        mode=true;
+        let details={"id":id,"mode":mode,"degree":degrees,"specialisation":specialisation,"fees":fees};
+        console.log(details);
+        //saveDetails(details,history);
     }
     return (< >
-    
         <div class="professionals" style={{ paddingTop: '10%', paddingInline: '10%' }}>
         <h4 style={{"paddingLeft":"10px"}}>Professional Details</h4>
             <div class="card">
                 <div class="card-body pt-0">
                 <div class="Mode" style={{ "paddingTop": "25px" }}>
-                        <h4>Mode Up</h4>
+                        <h4>Mode</h4>
                         <hr />
                         <div className="row g-2" style={{"justifyContent":"space-between","paddingInline":"2%"}}>
                             <div style={{"width":"50%"}}>
