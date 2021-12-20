@@ -44,7 +44,7 @@ const contestSchema = new mongoose.Schema({
         required: false
     },
     Fees: {
-        type: Number,
+        type: String,
         required: false
     },
     Degree:[{

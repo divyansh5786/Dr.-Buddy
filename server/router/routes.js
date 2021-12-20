@@ -12,7 +12,7 @@ userProfile= require("../controller/userProfile")
 
 router.post('/register', userSignup.register);
 router.post('/login', userLogin.LogIn);
-router.get('/profile',Authenticate,userProfile.profile)
-router.post('/addprofession',Authenticate,userProfile.addProfession);
+router.post('/profile',Authenticate,userProfile.profile)
+router.post('/addprofession',userProfile.addProfession);
 
 module.exports = router;
