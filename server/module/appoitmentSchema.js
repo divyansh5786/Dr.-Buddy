@@ -30,7 +30,7 @@ const contestSchema = new mongoose.Schema({
         required: true
     },
     appointmentTime : {
-        type: String,
+        type: Date,
         required: true
     },
     

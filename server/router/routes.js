@@ -9,12 +9,14 @@ userSignup = require("../controller/userSignup");
 userLogin = require("../controller/userLogin")
 userProfile= require("../controller/userProfile")
 searchDoctor= require("../controller/searchDoctor")
-
+newAppointment=require("../controller/newAppointment")
 
 router.post('/register', userSignup.register);
 router.get('/searchDoctor', searchDoctor.doctorlist);
 router.post('/login', userLogin.LogIn);
-router.post('/profile',Authenticate,userProfile.profile)
+router.get('/profile',Authenticate,userProfile.profile)
 router.post('/addprofession',userProfile.addProfession);
+router.post('/newAppointment',newAppointment.addAppointment);
+
 
 module.exports = router;

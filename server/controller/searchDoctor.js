@@ -2,16 +2,16 @@
 const mongoose = require('mongoose');
 const Doctor = require("../module/doctorSchema");
 const Patient = require("../module/patientSchema");
-const jwt = require('jsonwebtoken');
 
 
 
 doctorlist = async (req, res) => {
   const { city, state, Specialization,Online } = req.body;
-  Doctor.find({city: city,state:state,Specialization:Specialization,Online:Online}, function(err, doctors) 
+  await Doctor.find({city: city,state:state,Specialization:Specialization,Online:Online}, function(err, doctors) 
     {
        if (err)
        {
+           console.log(err);
            res.send(err);
        }
        else{
@@ -22,6 +22,7 @@ doctorlist = async (req, res) => {
     });
 
 }
+
 
 
 
