@@ -32,6 +32,8 @@ addProfession = async(req, res) => {
     user.Specialization=Specialization;
     user.Online=Online;
     user.Fees=Fees;
+    Degree.map((degree)=>{
+    user.Degree.push(degree)});
 
     const result=  await  user.save();
     res.status(200).send(user);
