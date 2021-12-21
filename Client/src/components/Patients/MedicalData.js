@@ -4,10 +4,17 @@ import '../../css/style.css';
 import { NavLink, useHistory } from 'react-router-dom';
 import MedicaldDataCard from '../utilities/medicalDataCard';
 
-
+var DateTransform = (date) => {
+  let milliseconds = Date.parse(date);
+  date = new Date(milliseconds)
+  console.log(date);
+  var d = (date.getDate())+"/"+(date.getMonth())+"/"+(date.getFullYear());
+  return d;
+}
 const fetchData = async (id) => {
   console.log(id);
   let patientID = id;
+  let tempdata=[];
     try{const res = await fetch("/patientviewMedicalData", {
         method: "POST",
         headers: {
@@ -21,31 +28,22 @@ const fetchData = async (id) => {
       console.log(data);
       
       if (res.status === 422 || !data) {
-        window.alert("Invailid Registration");
-        console.log("Invailid Registration");
+        window.alert("Error Occured while fetching medical data");
+        console.log("Error Occured while fetching medical data");
       } else {
-        window.alert("Registration Successful");
-        console.log("Registration Successfull");
-        // history.replace("/");
+        console.log("Medical fetch Successfull");
+        console.log(data);
+        data.map((medical)=>{
+          let tempmedical = {date:DateTransform(medical.date),bp:medical.bloodPressure,sugar:medical.sugar,temp:medical.bodyTempreture,pulse:medical.pulse};
+          tempdata.push(tempmedical);
+        });
+        console.log(tempdata);
+        // history.replace("/patients/medicaldata");
       }}
       catch(e)
       {
           console.log("error occured in fetching"+e);
       }
-        const tempdata = [{
-        "date":"12 Nov 2017",
-        "bp":"120",
-        "sugar":"120",
-        "temp":"98.4",
-        "pulse":"72", 
-      },
-      {
-        "date":"13 Nov 2017",
-        "bp":"118",
-        "sugar":"110",
-        "temp":"96.5",
-        "pulse":"75", 
-      },];
       return tempdata;
 }
 

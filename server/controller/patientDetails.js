@@ -5,6 +5,7 @@ const Appointment= require("../module/appoitmentSchema")
 
 addMedicalData= async(req,res)=> { 
     const{id, medicalData}= req.body;
+    console.log(medicalData);
     try{
         var patient= await Patient.findById(id);
         //medicalData.map((element)=>{

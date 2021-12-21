@@ -9,8 +9,8 @@ const contestSchema = new mongoose.Schema({
         ref: "Doctor"
     },
     patientID: {
-        type: String,
-        required: true
+        type: Schema.Types.ObjectId,
+        ref: "Patient"
     },
     concern: {
         type: String,

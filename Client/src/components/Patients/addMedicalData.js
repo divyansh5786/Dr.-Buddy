@@ -21,9 +21,11 @@ function Addmedical({id,setPage}) {
     }
   
     const postData = async (e) => {
-      let medicalData = med;
       e.preventDefault();
-     
+      let date = new Date();
+      let medicalData = {date:date,bloodPressure:med.bp,bodyTempreture:med.temp,sugar:med.sugar,pulse:med.pulse};
+     console.log(id);
+     console.log("here");
       const { pulse, bp, sugar, temp } = med;
       const res = await fetch("/patientAddMedicalData", {
         method: "POST",

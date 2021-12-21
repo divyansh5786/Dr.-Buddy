@@ -8,13 +8,14 @@ makearray = async(result)=>{
 }
 viewAppointmentPatient = async(req, res) => {
     const{patientID}=req.body ;
-    var appointments=[];
     try {
         var  result = await Appointment.find({patientID:patientID}).populate('doctorID',{ firstname: 1 ,lastname: 1,Specialization:1});
+        
         console.log("patient Appointment genreated   //viewAppointment - 11");
         console.log(result);
-        res.status(201).json(appointments);
+        res.status(201).json({appointments:result});
       } catch (e) {
+        res.status(422).json({message:"error occured"});
         console.log(e);
       }
     }

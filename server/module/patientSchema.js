@@ -43,6 +43,10 @@ const patientSchema = new mongoose.Schema({
 
 
     medicalData:[{
+        date:{
+            type: String,
+            required: false
+        },
         bloodPressure: {
             type: String,
             required: false

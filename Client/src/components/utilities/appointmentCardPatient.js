@@ -14,8 +14,8 @@ function AppointmentCard({appointment}) {
                     <a href="doctor-profile.html">{appointment.doctorname}<span>{appointment.spec}</span></a>
                 </h2>
             </td>
-            <td>{appointment.dateOfBooking}<span class="d-block text-info">{appointment.time}</span></td>
-            <td>{appointment.dateOfAppointment}</td>
+            <td>{appointment.dateOfAppointment}<span class="d-block text-info">{appointment.time}</span></td>
+            <td>{appointment.dateOfBooking}</td>
             <td>{appointment.fees}</td>
             <td>{appointment.concern}</td>
             {appointment.status==="confirm"?
