@@ -7,15 +7,13 @@ addMedicalData= async(req,res)=> {
     const{id, medicalData}= req.body;
     try{
         var patient= await Patient.findById(id);
-        //medicalData.map((element)=>{
-            patient.medicalData.push(medicalData);
+        medicalData.map((element)=>{
+            patient.medicalData.push(element)});
         
       await patient.save();
       console.log(patient);
-      res.status(201).json({messege: "Sent request"});
     }catch(e){
        console.log(e);
-       res.status(422).json({messege: "Error occured"});
     }
     
 
@@ -44,8 +42,21 @@ viewPatientProfile = async(req,res)=>{
 }
 
 updatePatientProfile= async(req,res)=>{
- const {patient}= req.body;
+ const {id,updatedPatient}= req.body;
+ try{
+    var patient= await Patient.findById(id);
+    patient=updatedPatient;
+    await patient.save();
+    console.log(patient);
+    console.log('after update patient profile  / patientdetails - 51')
+    res.status(201).json({message:"patient profile updated sucessfully"});
 
+    
+   }catch(e)
+   {
+       console.log(e);
+   }
+     
 }
 
  module.exports={
