@@ -6,16 +6,19 @@ import MedicaldDataCard from '../utilities/medicalDataCard';
 
 
 const fetchData = async (id) => {
-    try{const res = await fetch("/register", {
+  console.log(id);
+  let patientID = id;
+    try{const res = await fetch("/patientviewMedicalData", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          id
+          patientID
         })
       });
       const data = await res.json();
+      console.log(data);
       
       if (res.status === 422 || !data) {
         window.alert("Invailid Registration");

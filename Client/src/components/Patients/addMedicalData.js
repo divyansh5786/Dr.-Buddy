@@ -16,30 +16,33 @@ function Addmedical({id,setPage}) {
     const handleInputs = (e) => {
       name = e.target.name;
       value = e.target.value;
+      console.log(name + " " + value);
       setMed({ ...med, [name]: value });
     }
   
     const postData = async (e) => {
+      let medicalData = med;
       e.preventDefault();
      
       const { pulse, bp, sugar, temp } = med;
-      const res = await fetch("/register", {
+      const res = await fetch("/patientAddMedicalData", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          id, pulse, bp, sugar, temp
+          id, medicalData
         })
       });
+      console.log(pulse);
       const data = await res.json();
       if (res.status === 422 || !data) {
-        window.alert("Invailid Registration");
-        console.log("Invailid Registration");
+        window.alert("Not Updated");
+        console.log("Not Updated");
       } else {
-        window.alert("Registration Successful");
-        console.log("Registration Successfull");
-        history.replace("/");
+        window.alert("Successfully updated");
+        console.log("Successfully updated");
+        //history.replace("/");
       }
     }
     return (

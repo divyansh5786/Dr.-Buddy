@@ -7,13 +7,15 @@ addMedicalData= async(req,res)=> {
     const{id, medicalData}= req.body;
     try{
         var patient= await Patient.findById(id);
-        medicalData.map((element)=>{
-            patient.medicalData.push(element)});
+        //medicalData.map((element)=>{
+            patient.medicalData.push(medicalData);
         
       await patient.save();
       console.log(patient);
+      res.status(201).json({messege: "Sent request"});
     }catch(e){
        console.log(e);
+       res.status(422).json({messege: "Error occured"});
     }
     
 
