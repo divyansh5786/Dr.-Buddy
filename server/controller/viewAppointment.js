@@ -17,6 +17,7 @@ viewAppointmentPatient = async(req, res) => {
       } catch (e) {
         res.status(422).json({message:"error occured"});
         console.log(e);
+        res.status(422).json({message:"Appointment view Error"});
       }
     }
 
@@ -29,6 +30,7 @@ viewAppointmentPatient = async(req, res) => {
             res.status(201).json(result);
           } catch (e) {
             console.log(e);
+            res.status(422).json({message:"Appointment view Error"});
           }
         }
     module.exports = {

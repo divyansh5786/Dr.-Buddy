@@ -8,15 +8,14 @@ addMedicalData= async(req,res)=> {
     console.log(medicalData);
     try{
         var patient= await Patient.findById(id);
-        //medicalData.map((element)=>{
-            patient.medicalData.push(medicalData);
+        patient.medicalData.push(medicalData);
         
       await patient.save();
       console.log(patient);
-      res.status(201).json({messege: "Sent request"});
+      res.status(201).json({message:"medicalData sucessfully"});
     }catch(e){
        console.log(e);
-       res.status(422).json({messege: "Error occured"});
+       res.status(422).json({message:"MedicalData Not added"});
     }
     
 
@@ -29,6 +28,7 @@ viewMedicalData= async(req,res) =>{
    }catch(e)
    {
        console.log(e);
+       res.status(422);
    }
 }
 
@@ -41,12 +41,27 @@ viewPatientProfile = async(req,res)=>{
     }catch(e)
     {
         console.log(e);
+        res.status(422).json({message:"patient profile NOT view"});
     }
 }
 
 updatePatientProfile= async(req,res)=>{
- const {patient}= req.body;
+ const {id,updatedPatient}= req.body;
+ try{
+    var patient= await Patient.findById(id);
+    patient=updatedPatient;
+    await patient.save();
+    console.log(patient);
+    console.log('after update patient profile  / patientdetails - 51')
+    res.status(201).json({message:"patient profile updated sucessfully"});
 
+    
+   }catch(e)
+   {
+       console.log(e);
+       res.status(422).json({message:"patient profile NOT updated"});
+   }
+     
 }
 
  module.exports={
