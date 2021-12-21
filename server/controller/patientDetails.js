@@ -7,13 +7,14 @@ addMedicalData= async(req,res)=> {
     const{id, medicalData}= req.body;
     try{
         var patient= await Patient.findById(id);
-        medicalData.map((element)=>{
-            patient.medicalData.push(element)});
+        patient.medicalData.push(medicalData);
         
       await patient.save();
       console.log(patient);
+      res.status(201).json({message:"medicalData sucessfully"});
     }catch(e){
        console.log(e);
+       res.status(422).json({message:"MedicalData Not added"});
     }
     
 
@@ -26,6 +27,7 @@ viewMedicalData= async(req,res) =>{
    }catch(e)
    {
        console.log(e);
+       res.status(422);
    }
 }
 
@@ -38,6 +40,7 @@ viewPatientProfile = async(req,res)=>{
     }catch(e)
     {
         console.log(e);
+        res.status(422).json({message:"patient profile NOT view"});
     }
 }
 
@@ -55,6 +58,7 @@ updatePatientProfile= async(req,res)=>{
    }catch(e)
    {
        console.log(e);
+       res.status(422).json({message:"patient profile NOT updated"});
    }
      
 }
