@@ -1,10 +1,12 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 const { stringify } = require('nodemon/lib/utils');
+// const doctor = require("../module/doctorSchema");
 
 const contestSchema = new mongoose.Schema({
     doctorID: {
-        type: String,
-        required: true
+        type: Schema.Types.ObjectId,
+        ref: "Doctor"
     },
     patientID: {
         type: String,

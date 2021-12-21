@@ -6,30 +6,34 @@ import AppointmentCard from '../utilities/appointmentCardPatient';
 
 
 const fetchData = async (id) => {
-    try{const res = await fetch("/register", {
+  console.log(id);
+  let patientID = id;
+    try{const res = await fetch("/viewAppointmentPatient", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          id
+          patientID
         })
       });
       const data = await res.json();
-      
+      var tempdata = [];
       if (res.status === 422 || !data) {
-        window.alert("Invailid Registration");
-        console.log("Invailid Registration");
+        window.alert("Error while fetching appointments");
+        console.log("Error while fetching appointments");
       } else {
-        window.alert("Registration Successful");
-        console.log("Registration Successfull");
-        // history.replace("/");
+        console.log(" Appointments fetched successfully");
+            console.log(data);
       }}
       catch(e)
       {
           console.log("error occured in fetching"+e);
       }
-        const tempdata = [{
+      // data.map((appointment)=>{
+      //   let appoint = {id:_id,};
+      //  });
+        tempdata = [{
         "id":"565465",
         "doctorname":"Dr. harish goyl",
         "spec":"Surgeon",
@@ -58,8 +62,9 @@ function Appointments ({id,setPage}) {
 
     const history = useHistory ();
     const [appointments, setAppointments] = useState(null);
-
+    
     useEffect(() => {
+      console.log("here");
         setPage('Appointments');
         fetchData(id).then(tempdata => {
             setAppointments(tempdata);

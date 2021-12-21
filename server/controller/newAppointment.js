@@ -6,6 +6,7 @@ const Appointment= require("../module/appoitmentSchema")
 addAppointment = async(req, res) => {
     const{doctorID,patientID,concern,status,fee, bookingDate, appointmentDate,appointmentTime}=req.body ;
     try {
+
         var newAppointment = new Appointment({ doctorID,patientID,concern,status,fee, bookingDate, appointmentDate,appointmentTime });
         await newAppointment.save();
         res.status(201).json({message:"appointment booked"});

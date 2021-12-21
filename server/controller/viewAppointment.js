@@ -3,13 +3,17 @@ const Doctor = require("../module/doctorSchema");
 const Patient = require("../module/patientSchema");
 const Appointment= require("../module/appoitmentSchema")
 
+makearray = async(result)=>{
+  
+}
 viewAppointmentPatient = async(req, res) => {
     const{patientID}=req.body ;
+    var appointments=[];
     try {
-        const  result = await Appointment.find({patientID:patientID});
-
-        console.log("patient Appointment genreated   //viewAppointment - 11")
-        res.status(201).json(result);
+        var  result = await Appointment.find({patientID:patientID}).populate('doctorID',{ firstname: 1 ,lastname: 1,Specialization:1});
+        console.log("patient Appointment genreated   //viewAppointment - 11");
+        console.log(result);
+        res.status(201).json(appointments);
       } catch (e) {
         console.log(e);
       }
