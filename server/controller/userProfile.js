@@ -24,8 +24,7 @@ profile = async(req, res) => {
 
 addProfession = async(req, res) => {
     const {id,Online,Specialization,Fees,Degree}= req.body;
-    console.log(req.body);
-    console.log(req.body.id);
+    
     let user;
       try{
         user= await Doctor.findById(id)
@@ -37,8 +36,12 @@ addProfession = async(req, res) => {
     Degree.map((degree)=>{
     user.Degree.push(degree)});
 
-    const result=  await  user.save();
+    try{
+      const result=  await  user.save();
     res.status(200).send(user);
+    }catch(e){
+      console.log(e);
+    }
    
    
 }

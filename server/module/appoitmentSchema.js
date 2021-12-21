@@ -37,6 +37,23 @@ const contestSchema = new mongoose.Schema({
         required: true
     },
     
+    diagnosis: {
+        type: Array,
+        required: false
+    },
+    medicine: {
+        type: Array,
+        required: false
+    },
+    tests: {
+        type: Array,
+        required: false
+    },
+   followUp : {
+        type: String,
+        required: false
+    },
+    
    
 
  })

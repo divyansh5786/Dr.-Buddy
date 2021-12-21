@@ -23,6 +23,7 @@ router.post('/viewAppointmentPatient',viewAppointment.viewAppointmentPatient);
 router.post('/viewAppointmentDoctor',viewAppointment.viewAppointmentDoctor);
 router.post('/patientAddMedicalData',patientDetails.addMedicalData);
 router.post('/patientviewMedicalData',patientDetails.viewMedicalData);
-
+router.post('/viewpatient',patientDetails.viewPatientProfile);
+router.post('/updatepatient',patientDetails.updatePatientProfile);
 
 module.exports = router;
