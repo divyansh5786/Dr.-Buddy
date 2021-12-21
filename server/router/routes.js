@@ -11,6 +11,7 @@ userProfile= require("../controller/userProfile")
 searchDoctor= require("../controller/searchDoctor")
 newAppointment=require("../controller/newAppointment")
 viewAppointment=require("../controller/viewAppointment")
+patientDetails=require("../controller/patientDetails")
 
 router.post('/register', userSignup.register);
 router.post('/searchDoctor', searchDoctor.doctorlist);
@@ -20,6 +21,8 @@ router.post('/addprofession',userProfile.addProfession);
 router.post('/newAppointment',newAppointment.addAppointment);
 router.post('/viewAppointmentPatient',viewAppointment.viewAppointmentPatient);
 router.post('/viewAppointmentDoctor',viewAppointment.viewAppointmentDoctor);
+router.post('/patientAddMedicalData',patientDetails.addMedicalData);
+router.post('/patientviewMedicalData',patientDetails.viewMedicalData);
 
 
 module.exports = router;

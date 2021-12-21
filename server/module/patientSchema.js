@@ -41,13 +41,27 @@ const patientSchema = new mongoose.Schema({
     },
    
 
-    // Appointments: {
-    //     type: Array,
-    //     required: true
-    // },
-    // Appointments:[gvhb,hhjb,64534],
-    // prescription:[sfv,rsv,54]
 
+    medicalData:[{
+        bloodPressure: {
+            type: String,
+            required: false
+        },
+        bodyTempreture: {
+            type: String,
+            required: false
+        },
+        sugar: {
+            type: String,
+            required: false
+        },
+        pulse: {
+            type: String,
+            required: false
+        },
+        
+    }],
+    
  })
 
 
