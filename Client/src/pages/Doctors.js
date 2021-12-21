@@ -17,7 +17,7 @@ import MyPatient from '../components/Doctor/myPatients';
 import PatientView from '../components/Doctor/patientView';
 
 function Doctors(doctor) {
-  let id = doctor.id;
+  let id = doctor;
   const [page,setPage] = useState('Dashboard');
   return (
     <>

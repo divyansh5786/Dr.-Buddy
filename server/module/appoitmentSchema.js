@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { stringify } = require('nodemon/lib/utils');
 
 const contestSchema = new mongoose.Schema({
     doctorID: {
@@ -30,7 +31,7 @@ const contestSchema = new mongoose.Schema({
         required: true
     },
     appointmentTime : {
-        type: Date,
+        type: String,
         required: true
     },
     

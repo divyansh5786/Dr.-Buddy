@@ -8,9 +8,9 @@ addAppointment = async(req, res) => {
     try {
         var newAppointment = new Appointment({ doctorID,patientID,concern,status,fee, bookingDate, appointmentDate,appointmentTime });
         await newAppointment.save();
-        console.log("new Appointment is save  // search doctor -32")
-        res.status(201).json({ message: "new Appointment is save" });
+        res.status(201).json({message:"appointment booked"});
       } catch (e) {
+        res.status(422).json({message:"Error occured while booking appointmnet"});
         console.log(e);
       }
     }

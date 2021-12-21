@@ -12,7 +12,7 @@ searchDoctor= require("../controller/searchDoctor")
 newAppointment=require("../controller/newAppointment")
 
 router.post('/register', userSignup.register);
-router.get('/searchDoctor', searchDoctor.doctorlist);
+router.post('/searchDoctor', searchDoctor.doctorlist);
 router.post('/login', userLogin.LogIn);
 router.get('/profile',Authenticate,userProfile.profile)
 router.post('/addprofession',userProfile.addProfession);

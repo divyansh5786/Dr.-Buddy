@@ -20,53 +20,49 @@ function SearchDoctor({setDoctors}) {
       e.preventDefault();
     
       const { state, city, type, spec } = search;
+      let Specialization = spec;
+      let Online;
+      if(Online == "Online")
+      Online=true;
+      else
+      Online=false;
+      
       console.log(state);
       console.log(city);
       console.log(type);
       console.log(spec);
-      const tempdata = [{
-        "name":"Harish Goyal",
-        "spec":"Surgeon",
-        "Address":"118/22 Amar Enclave",
-        "city":"Ghaziabad",
-        "state":"up",
-        "fees":"250",
-        "degree":"Md,Mbbs",
-        "mobile":"9990892500",
-        "email":"bansal@gmail.com"     
-      },
-      {
-        "name":"mukesh vampanthy",
-        "spec":"Dentist",
-        "Address":"118/22 Amar Enclave",
-        "city":"Delhi",
-        "state":"Up",
-        "fees":"250",
-        "degree":"Mds,Bds",
-        "mobile":"8826501470",
-        "email":"nayanchuda@gmail.com"        
-      }];
-      setDoctors(tempdata);
-      console.log(tempdata);
-      const res = await fetch("/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          state, city, type, spec
-        })
-      });
-      const data = await res.json();
-      
-      if (res.status === 422 || !data) {
-        window.alert("Invailid Registration");
-        console.log("Invailid Registration");
-      } else {
-        window.alert("Registration Successful");
-        console.log("Registration Successfull");
-        history.replace("/");
-      }
+      const tempdata = [];
+      try {
+        const res = await fetch("/searchDoctor", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              city, state, Specialization,Online
+            })
+        });
+        const data = await res.json();
+
+        if (res.status === 422 || !data) {
+            window.alert("Some error accured while fetching doctors, Please try again");
+            console.log("Error Occurred");
+        } else {
+            console.log(" Doctors fetched successfully");
+            console.log(data);
+            data.map((doctor)=>{
+              let degreestring;
+              doctor.Degree.map((degree)=>{degreestring = degreestring + degree.Name});
+              let tempdoctor = {name:doctor.firstname+doctor.lastname,spec:doctor.Specialization,Address:doctor.Address,city:doctor.city,state:doctor.state,fees:doctor.Fees,degree:degreestring,mobile:doctor.mobile,email:doctor.email,id:doctor._id};
+              tempdata.push(tempdoctor);
+            });
+            console.log(tempdata);
+            setDoctors(tempdata);
+        }
+    }
+    catch (e) {
+        console.log("error occured in fetching" + e);
+    }
     }
     return (
         <>

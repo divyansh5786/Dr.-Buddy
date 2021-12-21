@@ -6,15 +6,15 @@ import {useHistory} from 'react-router-dom';
 
 
 const saveDetails = async (details,history) => {
-    
+    const { id, Online, Specialization, Fees, Degree } = details;
     try {
-        const res = await fetch("/addprofessisonal", {
+        const res = await fetch("/addprofession", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                details
+                id,Online,Specialization,Fees,Degree
             })
         });
         const data = await res.json();
@@ -24,8 +24,8 @@ const saveDetails = async (details,history) => {
             console.log("Error Occurred");
         } else {
             window.alert("Details saved successfully");
-            console.log("Details saved successfully");
-            history.replace("/");
+            console.log("Details saved successfully"+data);
+            history.replace("/doctors/dashboard");
         }
     }
     catch (e) {
@@ -44,7 +44,7 @@ function AddProfessional({id,setPage}) {
     const [degrees, upadtedegree] = useState([]);
     const [specialisation, setspecialisation] = useState([]);
     const [fees, setfees] = useState(null);
-    const [temporary, settemporary] = useState({mode:"",degreename:"",institute:"",duration:"",specialisation:"",fees:" "});
+    const [temporary, settemporary] = useState({mode:"",Name:"",Institute:"",Duration:"",specialisation:"",fees:" "});
     
     const handleNULLId = ()=>{
         
@@ -65,9 +65,9 @@ function AddProfessional({id,setPage}) {
         settemporary({ ...temporary, mode: "" });
     }
       const adddegree =()=>{
-          let tempmed = {degreename:temporary.degreename,institute:temporary.institute,duration:temporary.duration}
+          let tempmed = {Name:temporary.Name,Institute:temporary.Institute,Duration:temporary.Duration}
         upadtedegree( arr => [...arr, tempmed]);
-        settemporary({ ...temporary, degreename:"",institute:"",duration:""});
+        settemporary({ ...temporary, Name:"",Institute:"",Duration:""});
       }
       const addspecialisation =()=>{
         setspecialisation(temporary.specialisation);
@@ -78,13 +78,14 @@ function AddProfessional({id,setPage}) {
         settemporary({ ...temporary, fees: "" });
     }
     const postdata =()=>{
-        if (mode.toLowerCase()=="online")
-        mode=false;
+        let online;
+        if (mode=="online")
+        online=false;
         else
-        mode=true;
-        let details={"id":id,"mode":mode,"degree":degrees,"specialisation":specialisation,"fees":fees};
+        online=true;
+        let details={"id":id.doctor,"Online":online,"Specialization":specialisation,"Fees":fees,"Degree":degrees};
         console.log(details);
-        //saveDetails(details,history);
+        saveDetails(details,history);
     }
     return (< >
         <div class="professionals" style={{ paddingTop: '10%', paddingInline: '10%' }}>
@@ -118,9 +119,9 @@ function AddProfessional({id,setPage}) {
                         <div className="row g-4" style={{"justifyContent":"space-between","paddingInline":"2%"}}>
                         <div className="col-md">
                                 <div className="form-floating mb-3">
-                                    <input type="text" className="form-control" id="floatingInput" placeholder="Degree Name"
-                                        name="degreename" 
-                                        value={temporary.degreename}
+                                    <input type="text" className="form-control" id="floatingInput" placeholder="Name"
+                                        name="Name" 
+                                        value={temporary.Name}
                                         onChange={handleInputs}/>
                                     <label for="floatingInput">Degree Name</label>
                                 </div>
@@ -128,19 +129,19 @@ function AddProfessional({id,setPage}) {
                             <div className="col-md">
                                 <div className="form-floating mb-3">
                                     <input type="text" className="form-control" id="floatingInput" placeholder="Institute Name"
-                                        name="institute"
-                                        value={temporary.institute}
+                                        name="Institute"
+                                        value={temporary.Institute}
                                         onChange={handleInputs} />
                                     <label for="floatingInput">Institute Name</label>
                                 </div>
                             </div>
                             <div className="col-md">
                                 <div className="form-floating mb-3">
-                                    <input type="text" className="form-control" id="floatingInput" placeholder="duration"
-                                        name="duration"
-                                        value={temporary.duration}
+                                    <input type="text" className="form-control" id="floatingInput" placeholder="Duration"
+                                        name="Duration"
+                                        value={temporary.Duration}
                                         onChange={handleInputs}/>
-                                    <label for="floatingInput">duration</label>
+                                    <label for="floatingInput">Duration</label>
                                 </div>
                             </div>
                             <div  style={{"width":"auto"}}>
@@ -161,9 +162,9 @@ function AddProfessional({id,setPage}) {
                     {degrees.map((degree,index) => {
                                 return (<tr>
                                     <td>{index+1}</td>
-                                    <td>{degree.degreename}</td>
-                                    <td>{degree.institute}</td>
-                                    <td>{degree.duration}</td>
+                                    <td>{degree.Name}</td>
+                                    <td>{degree.Institute}</td>
+                                    <td>{degree.Duration}</td>
                                 </tr>)
                             })
                         }

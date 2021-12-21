@@ -14,7 +14,9 @@ import Prescriptions from '../components/Patients/prescriptions';
 import MedicalData from '../components/Patients/MedicalData';
 import Profile from '../components/Patients/profile';
 
-function Patients(id) {
+function Patients(patient) {
+   let id = patient.patient;
+   console.log(id);
   const [doctorBook,setDoctorBook] = useState(null);
   const [page,setPage] = useState('Dashboard');
   return (
@@ -40,7 +42,7 @@ function Patients(id) {
            </Route>
         <Route exact path="/patients/" render={()=>{return(<Dashboard id={id} setPage={setPage} />)}}> 
            </Route>
-        <Route exact path="/patients/bookapp/confirm" render={()=>{return(<AppConfirm doctor={doctorBook} setPage={setPage}/>)}}> 
+        <Route exact path="/patients/bookapp/confirm" render={()=>{return(<AppConfirm doctor={doctorBook} patient={id} setPage={setPage}/>)}}> 
            </Route>
            
         {/* <Route exact path="/patients/bookapp/confirm" component={AppConfirm} /> */}

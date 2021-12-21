@@ -39,24 +39,7 @@ const patientSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    // Medical:[{
-    //     Name: {
-    //         type: String,
-    //         required: true
-    //     },
-    //     Institute: {
-    //         type: String,
-    //         required: true
-    //     },
-    //     From: {
-    //         type: String,
-    //         required: true
-    //     },
-    //     To: {
-    //         type: String,
-    //         required: true
-    //     },
-    // }],
+   
 
     // Appointments: {
     //     type: Array,

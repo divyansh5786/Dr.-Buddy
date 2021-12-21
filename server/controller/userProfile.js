@@ -24,6 +24,8 @@ profile = async(req, res) => {
 
 addProfession = async(req, res) => {
     const {id,Online,Specialization,Fees,Degree}= req.body;
+    console.log(req.body);
+    console.log(req.body.id);
     let user;
       try{
         user= await Doctor.findById(id)

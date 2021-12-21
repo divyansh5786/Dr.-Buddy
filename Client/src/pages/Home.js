@@ -45,6 +45,7 @@ function Home({setPatient,setDoctor}) {
       else
       {
         history.replace("/patients/dashboard");
+        console.log(data.id);
         setPatient(data.id);
       }
       
