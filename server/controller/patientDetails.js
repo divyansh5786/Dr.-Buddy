@@ -49,9 +49,10 @@ updatePatientProfile= async(req,res)=>{
  const {id,updatedPatient}= req.body;
  try{
     var patient= await Patient.findById(id);
+    //console.log(patient);
     patient=updatedPatient;
+    
     await patient.save();
-    console.log(patient);
     console.log('after update patient profile  / patientdetails - 51')
     res.status(201).json({message:"patient profile updated sucessfully"});
 
