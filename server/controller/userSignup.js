@@ -20,6 +20,8 @@ register = async (req, res) => {
       await newDoctor.save();
     } catch (e) {
       console.log(e);
+      res.status(422).json({ error: "Error while creating doctor" });
+  
     }
     res.status(201).json({ message: "user registered successfully as Doctor" });
   }
@@ -31,6 +33,7 @@ register = async (req, res) => {
       res.status(201).json({ message: "user registered successfully as Patient" });
     } catch (e) {
       console.log(e);
+      res.status(422).json({ error: "Error while creating doctor" });
     }
 
   }

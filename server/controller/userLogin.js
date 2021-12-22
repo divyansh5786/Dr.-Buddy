@@ -16,9 +16,20 @@ LogIn = async (req, res) => {
 
   let user;
   if (!check)
-    user = await Doctor.findOne({ username: username });
+   {
+     try { 
+       user = await Doctor.findOne({ username: username });
+    }catch(e){
+      console.log(e);
+    }
+    }
   else
-    user = await Patient.findOne({ username: username });
+   { 
+     try {user = await Patient.findOne({ username: username });
+    }catch(e){
+      console.log(e);
+    }
+    }
 
   if (!user || user === null) {
     console.log("not found");

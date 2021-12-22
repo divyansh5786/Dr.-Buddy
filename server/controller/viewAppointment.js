@@ -15,7 +15,7 @@ viewAppointmentPatient = async(req, res) => {
         console.log(result);
         res.status(201).json({appointments:result});
       } catch (e) {
-        res.status(422).json({message:"error occured"});
+       
         console.log(e);
         res.status(422).json({message:"Appointment view Error"});
       }
@@ -34,8 +34,25 @@ viewAppointmentPatient = async(req, res) => {
             res.status(422).json({message:"Appointment view Error"});
           }
         }
+
+
+        statusUpdate =(req,res)=>{
+             const{id,status}= req.body;
+             try{
+                 var appointment= await Appointment.findById(id);
+                 appointment.status= status;
+                 await appointment.save();
+                 res.status(422).json({message:"status updated sucessfully"});
+                    
+             }catch(e)
+             {
+               console.log(e);
+               res.status(422).json({message:"status NOT updated"});
+             }
+        }
     module.exports = {
         viewAppointmentPatient,
         viewAppointmentDoctor,
+        statusUpdate,
     };
    

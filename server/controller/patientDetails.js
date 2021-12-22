@@ -10,7 +10,8 @@ addMedicalData= async(req,res)=> {
         var patient= await Patient.findById(id);
         patient.medicalData.push(medicalData);
         
-      await patient.save();
+        await patient.save();
+       
       console.log(patient);
       res.status(201).json({message:"medicalData sucessfully"});
     }catch(e){
@@ -61,6 +62,7 @@ updatePatientProfile= async(req,res)=>{
     patient.state= updatedPatient.state
     patient.Address= updatedPatient.Address
     await patient.save();
+   
     console.log(patient);
     console.log('after update patient profile  / patientdetails - 51')
     res.status(201).json({message:"patient profile updated sucessfully"});
