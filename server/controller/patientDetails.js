@@ -55,6 +55,8 @@ updatePatientProfile= async(req,res)=>{
     patient.lastname= updatedPatient.lastname
     patient.mobile= updatedPatient.mobile
     patient.email=updatedPatient.email
+    patient.dateofbirth=updatedPatient.dateofbirth
+    patient.gender=updatedPatient.gender
     patient.city= updatedPatient.city
     patient.state= updatedPatient.state
     patient.Address= updatedPatient.Address

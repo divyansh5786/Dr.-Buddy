@@ -84,6 +84,7 @@ function Profile({ id, setPage }) {
         e.preventDefault();
         //const { firstname, lastname, mobile, email, city, state, Address } = user;
         let updatedPatient = user;
+        updatedPatient.dateofbirth = DateTransformtoobject(updatedPatient.dateofbirth);
         console.log(user);
         const res = await fetch("/updatepatient", {
             method: "POST",
