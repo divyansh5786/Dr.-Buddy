@@ -3,12 +3,13 @@ import React from 'react'
 import '../../css/style.css';
 import { NavLink, useHistory } from 'react-router-dom';
 import MedicaldDataCard from '../utilities/medicalDataCard';
+import AlertBar from '../utilities/alertbar';
 
 var DateTransform = (date) => {
   let milliseconds = Date.parse(date);
   date = new Date(milliseconds)
   console.log(date);
-  var d = (date.getDate())+"/"+(date.getMonth())+"/"+(date.getFullYear());
+  var d = (date.getDate())+"/"+(date.getMonth()+1)+"/"+(date.getFullYear());
   return d;
 }
 const fetchData = async (id) => {
@@ -47,7 +48,7 @@ const fetchData = async (id) => {
       return tempdata;
 }
 
-function MedicalData({id,setPage}) {
+function MedicalData({id,setPage,alert,setalert}) {
 
     const history = useHistory ();
     const [medicalData, setmedicalData] = useState(null);
@@ -63,6 +64,7 @@ function MedicalData({id,setPage}) {
     
     return (
         <div classname="med"style={{ paddingTop: '10%', paddingInline: '10%' }}>
+          <AlertBar alert = {alert} setalert={setalert}/>
             <div class="tab-content pt-0 ">
                 <div id="pat_appointments " class="tab-pane fade show active ">
                   <div style={{display:'flex',justifyContent: "space-between"}}>

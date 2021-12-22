@@ -3,7 +3,7 @@ import React from 'react'
 import '../../css/style.css';
 import {useHistory} from 'react-router-dom';
 
-function Addmedical({id,setPage}) {
+function Addmedical({id,setPage,setalert}) {
   useEffect(() => {
     setPage('Add Medical data');
 }, []);
@@ -39,12 +39,12 @@ function Addmedical({id,setPage}) {
       console.log(pulse);
       const data = await res.json();
       if (res.status === 422 || !data) {
-        window.alert("Not Updated");
-        console.log("Not Updated");
+        setalert({color:"red",message:"Error Occure while adding medical data"});
+        console.log("/patients/medicaldata");
       } else {
-        window.alert("Successfully updated");
+        setalert({color:"green",message:"medical data added successfully"});
         console.log("Successfully updated");
-        //history.replace("/");
+        history.replace("/patients/medicaldata");
       }
     }
     return (

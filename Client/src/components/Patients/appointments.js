@@ -8,7 +8,7 @@ var DateTransform = (date) => {
   let milliseconds = Date.parse(date);
   date = new Date(milliseconds)
   console.log(date);
-  var d = (date.getDate())+"/"+(date.getMonth())+"/"+(date.getFullYear());
+  var d = (date.getDate())+"/"+(date.getMonth()+1)+"/"+(date.getFullYear());
   return d;
 }
 const fetchData = async (id) => {

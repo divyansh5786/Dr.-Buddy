@@ -17,13 +17,14 @@ import MyPatient from '../components/Doctor/myPatients';
 import PatientView from '../components/Doctor/patientView';
 
 function Doctors(doctor) {
-  let id = doctor;
+  let id = doctor.doctor.id;
+  let name = doctor.doctor.name;
   const [page,setPage] = useState('Dashboard');
   return (
     <>
       <SideBarDoctor />
       <section class="home-section">
-      <NavBarDoctor page={page}/>
+      <NavBarDoctor page={page} name={name}/>
         <Switch>
         <Route exact path="/doctors/" render={()=>{
             return(<Dashboard id={id} />)

@@ -8,63 +8,106 @@ import "react-datepicker/dist/react-datepicker.css";
 
 
 
-function Appointments({ id,setPage}) {
+function Appointments({ id, setPage }) {
 
     const history = useHistory();
     const [appointments, setAppointments] = useState(null);
-   // const [status, setStatus] = useState(null);
+    // const [status, setStatus] = useState(null);
     const [startDate, setStartDate] = useState(new Date());
-const DateTransform=(date)=>{
-    let myDate = (date.getUTCFullYear()) + "/" + (date.getMonth() + 1)+ "/" + (date.getUTCDate());
-    console.log(myDate);
-    return myDate;
-}
+    const DateTransform = (date) => {
+        let myDate = new Date(date.getUTCFullYear(),date.getMonth(),(date.getUTCDate()),0,0,0,0);
+        console.log(date);
+        console.log(myDate);
+        return myDate;
+    }
+    var DateTransformtostring= (date) => {
+        let milliseconds = Date.parse(date);
+        date = new Date(milliseconds)
+        //console.log(date);
+        var d = (date.getDate())+"/"+(date.getMonth()+1)+"/"+(date.getFullYear());
+        return d;
+      }
 
-    const handleChange = (date) => {
+      var calculateAge = (date)=>{
+        let milliseconds = Date.parse(date);
+        let nowmilli = Date.parse(new Date());
+        let age = Math.floor((nowmilli-milliseconds)/1000/86400/365);
+        return age;
+
+      }
+
+    const handleChange = async(date) => {
+        setAppointments(null);
         console.log(date);
         setStartDate(date);
+        let appointmentDate = DateTransform(date);
+        let doctorID = id;
         try {
-            //setAppointment according to date from doctor json
+            const res = await fetch("/viewAppointmentDoctor", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    doctorID, appointmentDate
+                })
+            });
+            const data = await res.json();
+            var tempdata = [];
+            if (res.status === 422 || !data) {
+                window.alert("Error while fetching appointments");
+                console.log("Error while fetching appointments");
+            } else {
+              // console.log(" Appointments fetched successfully");
+               // console.log(data);
+                data.map((appointment) => {
+                    let tempappoint = {
+                        id: appointment._id,
+                        patientname: appointment.patientID.firstname + appointment.patientID.lastname,
+                        dateOfAppointment: DateTransformtostring(appointment.appointmentDate),
+                        time: appointment.appointmentTime,
+                        fees: appointment.fee,
+                        concern: appointment.concern,
+                        status: appointment.status,
+                        age:calculateAge(appointment.patientID.dateofbirth),
+                        gender:appointment.patientID.gender,
+                    };
+                    tempdata.push(tempappoint);
+                });
+              //  console.log(tempdata);
+            }
         }
         catch (e) {
-            console.log(e);
+            console.log("error occured in fetching" + e);
         }
-        var tempdata = [];
-        let date1 = DateTransform(date);
-        let date2 = DateTransform(new Date());
-        let status = date1.normalize() === date2.normalize();
-        
-        if(status===true)
-        {
-            tempdata=[{
-                "id":"565465",
-                "patientname":"Prakhar Lokhande",
-                "dateOfAppointment":"24 Oct 2021",
-                "time":"Evening",
-                "type":"Old patient",
-                "concern":"Cough",
-                "status":"pending",
-              },
-              {
-                "id":"165165",
-                "patientname":"Himanshu Singh",
-                "dateOfAppointment":"24 Oct 2021",
-                "time":"Evening",
-                "type":"Old patient",
-                "concern":"Cough",
-                "status":"confirm",
-              },,];
-        }
-        console.log("done");
+        // tempdata = [{
+        //     "id": "565465",
+        //     "patientname": "Prakhar Lokhande",
+        //     "dateOfAppointment": "24 Oct 2021",
+        //     "time": "Evening",
+        //     "type": "Old patient",
+        //     "concern": "Cough",
+        //     "status": "pending",
+        // },
+        // {
+        //     "id": "165165",
+        //     "patientname": "Himanshu Singh",
+        //     "dateOfAppointment": "24 Oct 2021",
+        //     "time": "Evening",
+        //     "type": "Old patient",
+        //     "concern": "Cough",
+        //     "status": "confirm",
+        // }, ,];
+       // console.log("done");
         setAppointments(tempdata);
-        console.log(typeof(tempdata));
+       // console.log(typeof (tempdata));
 
     }
     useEffect(() => {
         setPage('Appointments');
         handleChange(startDate);
     }, []);
-     
+
 
 
 
@@ -82,7 +125,9 @@ const DateTransform=(date)=>{
                                 <tr>
                                     <th>Patient Name</th>
                                     <th>Appt Date</th>
-                                    <th>Type</th>
+                                    <th>Age</th>
+                                    <th>Gender</th>
+                                    <th>Fees</th>
                                     <th>Concern</th>
                                     <th>Status</th>
                                     <th></th>
@@ -91,8 +136,8 @@ const DateTransform=(date)=>{
                             <tbody>
                                 {appointments === null ? "Loading..." : appointments.length === 0 ? "No appointment made" :
                                     appointments.map((appointment) => {
-                                        console.log(appointment.doctorname);
-                                        return (<AppointmentCard key={appointment.id} appointment={appointment} appointments = {appointments} setAppointments ={setAppointments} />
+                                       // console.log(appointment.doctorname);
+                                        return (<AppointmentCard key={appointment.id} appointment={appointment} appointments={appointments} setAppointments={setAppointments} />
                                         )
                                     })
                                 }

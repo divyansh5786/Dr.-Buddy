@@ -23,9 +23,10 @@ viewAppointmentPatient = async(req, res) => {
 
     viewAppointmentDoctor = async(req, res) => {
         const{doctorID,appointmentDate}=req.body ;
+        console.log(doctorID+ " "+appointmentDate);
         try {
-            const  result = await Appointment.find({doctorID:doctorID},{appointmentDate:appointmentDate});
-    
+            var  result = await Appointment.find({doctorID:doctorID,appointmentDate:appointmentDate}).populate('patientID',{ firstname: 1 ,lastname: 1, dateofbirth: 1, gender: 1});
+            console.log(result);
             console.log("doctor Appointment genreated   //viewAppointment - 11")
             res.status(201).json(result);
           } catch (e) {

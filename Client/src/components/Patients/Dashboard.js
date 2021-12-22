@@ -6,98 +6,92 @@ import DashMedPatient from '../utilities/dashMedPatient';
 import DashAppointPatient from '../utilities/dashAppointPatient';
 import DashPresPatient from '../utilities/dashPresPatient';
 import { NavLink } from 'react-router-dom';
+import AlertBar from '../utilities/alertbar';
 
+var DateTransform = (date) => {
+  let milliseconds = Date.parse(date);
+  date = new Date(milliseconds)
+  console.log(date);
+  var d = (date.getDate())+"/"+(date.getMonth()+1)+"/"+(date.getFullYear());
+  return d;
+}
 const fetchMedicalData = async (id) => {
-  try {
-    const res = await fetch("/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        id
-      })
-    });
-    const data = await res.json();
-
-    if (res.status === 422 || !data) {
-      window.alert("Invailid Registration");
-      console.log("Invailid Registration");
-    } else {
-      window.alert("Registration Successful");
-      console.log("Registration Successfull");
-      // history.replace("/");
-    }
-  }
-  catch (e) {
-    console.log("error occured in fetching" + e);
-  }
-  const tempdata = [{
-    "date": "12 Nov 2017",
-    "bp": "138",
-    "sugar": "120",
-    "temp": "98.4",
-    "pulse": "72",
-  },
-  {
-    "date": "13 Nov 2017",
-    "bp": "118",
-    "sugar": "110",
-    "temp": "96.5",
-    "pulse": "75",
-  },];
-  return tempdata;
+  console.log(id);
+  let patientID = id;
+  let tempdata=null;
+    try{const res = await fetch("/patientviewMedicalData", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          patientID
+        })
+      });
+      const data = await res.json();
+      console.log(data);
+      
+      if (res.status === 422 || !data) {
+        window.alert("Error Occured while fetching medical data");
+        console.log("Error Occured while fetching medical data");
+      } else {
+        console.log("Medical fetch Successfull");
+        console.log(data);
+        let medical = data[data.length-1];
+          tempdata = {date:DateTransform(medical.date),bp:medical.bloodPressure,sugar:medical.sugar,temp:medical.bodyTempreture,pulse:medical.pulse};
+        console.log(tempdata);
+        // history.replace("/patients/medicaldata");
+      }}
+      catch(e)
+      {
+          console.log("error occured in fetching"+e);
+      }
+      return tempdata;
 }
-
 const fetchAppointmentsData = async (id) => {
+  console.log(id);
+  let patientID = id;
   try {
-    const res = await fetch("/register", {
+    const res = await fetch("/viewAppointmentPatient", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        id
+        patientID
       })
     });
     const data = await res.json();
-
+    var tempdata = [];
     if (res.status === 422 || !data) {
-      window.alert("Invailid Registration");
-      console.log("Invailid Registration");
+      window.alert("Error while fetching appointments");
+      console.log("Error while fetching appointments");
     } else {
-      window.alert("Registration Successful");
-      console.log("Registration Successfull");
-      // history.replace("/");
+      console.log(" Appointments fetched successfully");
+      console.log(data);
+      var len = data.appointments.length;
+      for(var i=0;i<2;i++)
+      {
+        let appointment = data.appointments[len-i-1];
+        let tempappoint = { id: appointment._id,
+           doctorname: appointment.doctorID.firstname + appointment.doctorID.lastname, 
+           spec: appointment.doctorID.Specialization,
+           dateOfAppointment: DateTransform(appointment.appointmentDate),
+           time: appointment.appointmentTime,
+           concern:appointment.concern,
+           status:appointment.status,
+          };
+          tempdata.push(tempappoint);
+      }
+
     }
   }
   catch (e) {
     console.log("error occured in fetching" + e);
   }
-  const tempdata = [{
-    "id": "565465",
-    "doctorname": "Dr. harish goyl",
-    "spec": "Surgeon",
-    "dateOfBooking": "22 Oct 2021",
-    "dateOfAppointment": "24 Oct 2021",
-    "time": "Evening",
-    "fees": "250",
-    "concern": "Stomach pain",
-    "status": "confirm"
-  },
-  {
-    "id": "165165",
-    "doctorname": "Dr. kaunal bhardwaj",
-    "spec": "Dentist",
-    "dateOfBooking": "22 Oct 2021",
-    "dateOfAppointment": "24 Oct 2021",
-    "time": "Evening",
-    "fees": "250",
-    "concern": "Stomach pain",
-    "status": "pending"
-  },];
   return tempdata;
 }
+
 
 const fetchPrescriptionData = async (id) => {
   try {
@@ -139,7 +133,7 @@ const fetchPrescriptionData = async (id) => {
   return tempdata;
 }
 
-function Dashboard({ id, setPage }) {
+function Dashboard({ id, setPage,alert,setalert}) {
   const history = useHistory();
   const [medicalData, setmedicalData] = useState(null);
   const [prescriptions, setPrescriptions] = useState(null);
@@ -148,14 +142,14 @@ function Dashboard({ id, setPage }) {
   useEffect(() => {
     setPage('DashBoard');
     fetchMedicalData(id).then(tempdata => {
-      if (tempdata.length === 0)
-        tempdata = [{
+      if (tempdata === null)
+        tempdata = {
           "date": " ",
           "bp": " ",
           "sugar": " ",
           "temp": " ",
           "pulse": " ",
-        },];
+        };
       setmedicalData(tempdata);
     });
     fetchAppointmentsData(id).then(tempdata => {
@@ -170,7 +164,8 @@ function Dashboard({ id, setPage }) {
     <>
 
       <div class="home-content">
-        {medicalData === null ? "Loading..." : <DashMedPatient key={medicalData[0].id} data={medicalData[0]} />
+      <AlertBar alert = {alert} setalert={setalert}/>
+        {medicalData === null ? "Loading..." : <DashMedPatient key={medicalData.id} data={medicalData} />
         }
 
         <div class="sales-boxes">

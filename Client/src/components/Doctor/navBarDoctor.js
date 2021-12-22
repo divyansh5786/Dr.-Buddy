@@ -2,7 +2,7 @@ import React from 'react'
 import '../../css/dashboard.css';
 import { NavLink } from 'react-router-dom';
 
-function NavBarDoctor({page}) {
+function NavBarDoctor({page,name}) {
   return (
     <>
     <nav>
@@ -10,10 +10,12 @@ function NavBarDoctor({page}) {
             <span class="dashboard">{page}</span>
           </div>
 
+          <NavLink to="/doctors/profile">
           <div class="profile-details">
             <box-icon name="user"></box-icon>
-            <span class="admin_name">Lokahnde</span>
+            <span class="admin_name">{name}</span>
           </div>
+          </NavLink>
         </nav>
     </>
   )

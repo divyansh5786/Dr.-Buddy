@@ -13,7 +13,7 @@ var DateTransform = (date) => {
     var d = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0);
     return d;
 }
-function AppConfirm({ doctor, patient, setPage }) {
+function AppConfirm({ doctor, patient, setPage,setalert }) {
     const [startDate, setStartDate] = useState(new Date());
     useEffect(() => {
         setPage('Confirm Appointment');
@@ -70,11 +70,12 @@ function AppConfirm({ doctor, patient, setPage }) {
         const data = await res.json();
         console.log(data);
         if (res.status === 422 || !data) {
-            window.alert("Error Occure while booking appointment");
+            setalert({color:"red",message:"Error Occure while booking appointment"});
             console.log("Error Occure while booking appointment");
+            history.replace("/patients/dashboard");
         } else {
-            window.alert("Appointment Booked Succesfully" );
             console.log("Appointment Booked Succesfully" );
+            setalert({color:"green",message:"Appointment Booked Succesfully"});
             history.replace("/patients/dashboard");
         }
     }
@@ -106,7 +107,6 @@ function AppConfirm({ doctor, patient, setPage }) {
                         <input type="radio" className="btn-check" name="options-outlined" id="option2" autocomplete="off"
                             name="time"
                             value="Evening"
-                            value={appointment.time}
                             onChange={handleInputs} />
                         <label className="btn btn-outline-primary" for="option2">Evening</label>
                         <br />

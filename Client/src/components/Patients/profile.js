@@ -3,7 +3,7 @@ import '../../css/dashboard.css';
 import { NavLink } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-
+import AlertBar from '../utilities/alertbar';
 
 
 var DateTransformtoobject = (date) => {
@@ -63,7 +63,7 @@ const fetchData = async (id) => {
     return tempdata;
 }
 
-function Profile({ id, setPage }) {
+function Profile({ id, setPage,alert,setalert }) {
     const history = useHistory();
     const [user, setUser] = useState(null);
 
@@ -97,10 +97,10 @@ function Profile({ id, setPage }) {
         });
         const data = await res.json();
         if (res.status === 422 || !data) {
-            window.alert("Error Occured while saving new details");
+            setalert({color:"red",message:"Error Occured while saving new details"});
             console.log("Error Occured while saving new details");
         } else {
-            window.alert("Details saved Successful");
+            setalert({color:"green",message:"Details saved Successfull"});
             console.log("Details saved Successfull");
             //   history.replace("/");
         }
@@ -108,6 +108,7 @@ function Profile({ id, setPage }) {
 
     return (<>
         <div class="heelo" style={{ paddingTop: "8%", paddingInline: '10%' }} >
+        <AlertBar alert = {alert} setalert={setalert}/>
             <h3 className='text-center'>Profile Details</h3>
             <div class="box">
                 <div class="card">

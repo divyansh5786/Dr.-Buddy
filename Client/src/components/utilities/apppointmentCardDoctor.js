@@ -17,7 +17,9 @@ function AppointmentCard({appointment,appointments,setAppointments}) {
                 </h2>
             </td>
             <td>{appointment.dateOfAppointment}<span class="d-block text-info">{appointment.time}</span></td>
-            <td>{appointment.type}</td>
+            <td>{appointment.age}</td>
+            <td>{appointment.gender}</td>
+            <td>{appointment.fees}</td>
             <td>{appointment.concern}</td>
             {appointment.status==="confirm"?
             <td><span class="badge badge-pill bg-success-light">Confirmed</span></td>:appointment.status=="pending"? <td><span class="badge badge-pill bg-warning-light">Pending</span></td>:<td><span class="badge badge-pill bg-danger-light">Cancelled</span></td>

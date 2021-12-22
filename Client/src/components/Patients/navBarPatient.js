@@ -2,21 +2,25 @@ import React from 'react'
 import '../../css/dashboard.css';
 import { NavLink } from 'react-router-dom';
 
-function NavBarPatient({page}) {
+function NavBarPatient({ page, name }) {
   return (
     <>
-    <nav>
+      <nav>
           <div class="sidebar-button">
             <span class="dashboard">{page}</span>
           </div>
 
-          <div class="profile-details">
-            <box-icon name="user"></box-icon>
-            <span class="admin_name">Lokahnde</span>
-          </div>
-        </nav>
+          <NavLink to="/patients/profile">
+            <div class="profile-details">
+              <box-icon name="user"></box-icon>
+              <span class="admin_name">{name}</span>
+            </div>
+          </NavLink>
+      </nav>
+
     </>
   )
 }
 
 export default NavBarPatient
+

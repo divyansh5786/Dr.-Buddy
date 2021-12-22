@@ -38,7 +38,7 @@ LogIn = async (req, res) => {
     }
     console.log("token   /userlogin")
    // console.log(token);
-    return res.json({id:user.id});
+    return res.json({id:user.id,name:user.firstname+" "+user.lastname});
   }
   
   else
