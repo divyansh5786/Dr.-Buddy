@@ -36,7 +36,7 @@ viewAppointmentPatient = async(req, res) => {
         }
 
 
-        statusUpdate =(req,res)=>{
+        statusUpdate = async(req,res)=>{
              const{id,status}= req.body;
              try{
                  var appointment= await Appointment.findById(id);

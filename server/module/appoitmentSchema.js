@@ -50,7 +50,7 @@ const contestSchema = new mongoose.Schema({
         required: false
     },
    followUp : {
-        type: String,
+        type: Date,
         required: false
     },
     
