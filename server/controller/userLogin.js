@@ -37,7 +37,7 @@ LogIn = async (req, res) => {
       console.log(err)
     }
     console.log("token   /userlogin")
-    console.log(token);
+   // console.log(token);
     return res.json({id:user.id});
   }
   
