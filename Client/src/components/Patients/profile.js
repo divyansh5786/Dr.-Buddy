@@ -6,8 +6,22 @@ import { useHistory } from 'react-router-dom';
 
 
 
+var DateTransformtoobject = (date) => {
+    let tareek = parseInt(date.substring(0,2));
+    let month = parseInt(date.substring(3,5));
+    let year = parseInt(date.substring(6));
+    const d = new Date(year, month-1, tareek, 0, 0, 0, 0);
+    console.log(year + " "+ month +" " + tareek +" " + d);
+    return d;
+  }
 
-
+var DateTransformtoString = (date) => {
+    const d = new Date(date);
+    //console.log(year + " "+ month +" " + tareek +" " + d);
+    const res =  (d.getDate())+"/"+(d.getMonth()+1)+"/"+(d.getFullYear());
+    //console.log(res);
+    return res;
+  }
 const fetchData = async (id) => {
     let patientID = id;
     let tempdata;
@@ -27,9 +41,12 @@ const fetchData = async (id) => {
         } else {
             console.log("Details fetched Successfull");
             console.log(data);
+            var dateofbirth=DateTransformtoString(data.dateofbirth);
             tempdata = {
                 "firstname": data.firstname,
                 "lastname": data.lastname,
+                "dateofbirth":dateofbirth,
+                "gender":data.gender,
                 "mobile": data.mobile,
                 "email": data.email,
                 "city": data.city,
@@ -116,6 +133,27 @@ function Profile({ id, setPage }) {
                                                     name="lastname"
                                                     value={user.lastname}
                                                     onChange={handleInputs} />
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <div class="form-group">
+                                                <label>Date of birth in (dd/mm/yyyy)</label>
+                                                <input type="text" class="form-control" name="dateofbirth"
+                                                    value={user.dateofbirth}
+                                                    onChange={handleInputs} />
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <div class="form-group">
+                                                <label>Gender</label>
+                                                <select className="form-select" id="floatingSelectGrid" aria-label="Floating label select example"
+                                                    name="gender"
+                                                    value={user.gender}
+                                                    onChange={handleInputs}>
+                                                    <option selected>Select</option>
+                                                    <option value="Male">Male</option>
+                                                    <option value="Female">Female</option>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6">

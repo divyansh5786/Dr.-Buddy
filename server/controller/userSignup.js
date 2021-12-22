@@ -5,7 +5,7 @@ const Patient = require("../module/patientSchema");
 const jwt = require('jsonwebtoken');
 
 register = async (req, res) => {
-  const { username, password, firstname, lastname, mobile, email, city, state, Address, type } = req.body;
+  const { username, password, firstname, lastname, mobile, email, city, state, Address, type, dateofbirth, gender } = req.body;
   let check = true;
 
   if(type==='Doctor')
@@ -16,7 +16,7 @@ register = async (req, res) => {
   }
   if (!check) {
     try {
-      var newDoctor = new Doctor({ username, password, firstname, lastname, mobile, email, city, state, Address });
+      var newDoctor = new Doctor({ username, password, firstname, lastname, mobile, email, city, state, Address, dateofbirth, gender });
       await newDoctor.save();
     } catch (e) {
       console.log(e);
@@ -25,7 +25,7 @@ register = async (req, res) => {
   }
   else {
     try {
-      var newPatient = new Patient({ username, password, firstname, lastname, mobile, email, city, state, Address });
+      var newPatient = new Patient({ username, password, firstname, lastname, mobile, email, city, state, Address, dateofbirth, gender });
       await newPatient.save();
       console.log("done")
       res.status(201).json({ message: "user registered successfully as Patient" });

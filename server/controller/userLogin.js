@@ -21,9 +21,9 @@ LogIn = async (req, res) => {
     user = await Patient.findOne({ username: username });
 
   if (!user || user === null) {
+    console.log("not found");
     return res.status(422).json({id:null});
   }
- 
   else if (user.password === password) {
     res.status(201);
     let token;
@@ -42,7 +42,11 @@ LogIn = async (req, res) => {
   }
   
   else
+  {
+    console.log("password os wrong");
     return res.status(422).json({id:null});
+  }
+    
 
 }
 

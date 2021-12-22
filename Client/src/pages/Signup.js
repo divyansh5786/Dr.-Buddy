@@ -3,10 +3,18 @@ import React from 'react'
 import '../../src/css/style.css';
 import {useHistory} from 'react-router-dom';
 
+var DateTransform = (date) => {
+  let tareek = parseInt(date.substring(0,2));
+  let month = parseInt(date.substring(3,5));
+  let year = parseInt(date.substring(6));
+  const d = new Date(year, month-1, tareek, 0, 0, 0, 0);
+  console.log(year + " "+ month +" " + tareek +" " + d);
+  return d;
+}
 function Signup({setDoctor}) {
   const history = useHistory();
   const [user, setUser] = useState({
-    username: "", password: "", firstname: "", lastname: "", mobile: "", email: "", city: "", state: "", Address: "", type: ""
+    username: "", password: "", firstname: "", lastname: "", mobile: "", email: "", city: "", state: "", Address: "", type: "", dateofbirth:"", gender:""
   });
 
   let name, value;
@@ -19,14 +27,16 @@ function Signup({setDoctor}) {
 
   const postData = async (e) => {
     e.preventDefault();
-    const { username, password, firstname, lastname, mobile, email, city, state, Address, type } = user;
+    var { username, password, firstname, lastname, mobile, email, city, state, Address, type, dateofbirth, gender } = user;
+    dateofbirth = DateTransform(dateofbirth);
+    console.log(user);
     const res = await fetch("/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        username, password, firstname, lastname, mobile, email, city, state, Address, type
+        username, password, firstname, lastname, mobile, email, city, state, Address, type, dateofbirth, gender
       })
     });
     const data = await res.json();
@@ -103,7 +113,30 @@ function Signup({setDoctor}) {
               </div>
             </div>
           </div>
-
+          <div className="row g-2">
+            <div className="col-md">
+              <div className="form-floating mb-3">
+                <input type="text" className="form-control" id="floatingInput" placeholder="dateofbirth"
+                  name="dateofbirth"
+                  value={user.dateofbirth}
+                  onChange={handleInputs} />
+                <label for="floatingInput">Date of birth in (dd/mm/yyyy)</label>
+              </div>
+            </div>
+            <div className="col-md">
+              <div className="form-floating mb-3">
+            <select className="form-select" id="floatingSelectGrid"
+              name="gender"
+              value={user.gender}
+              onChange={handleInputs}>
+                <option value="Select">Select</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+            <label for="floatingInput">Gender</label>
+          </div>
+          </div>
+</div>
 
 
           <div className="row g-2">
