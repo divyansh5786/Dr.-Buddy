@@ -8,7 +8,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 
 
-function Appointments({ id, setPage,setpatient }) {
+function Appointments({ id, setPage,setpatient,setappointment }) {
 
     const history = useHistory();
     const [appointments, setAppointments] = useState(null);
@@ -139,7 +139,7 @@ function Appointments({ id, setPage,setpatient }) {
                                 {appointments === null ? "Loading..." : appointments.length === 0 ? "No appointment made" :
                                     appointments.map((appointment) => {
                                        // console.log(appointment.doctorname);
-                                        return (<AppointmentCard key={appointment.id} appointment={appointment} appointments={appointments} setAppointments={setAppointments} setpatient={setpatient} />
+                                        return (<AppointmentCard key={appointment.id} appointment={appointment} appointments={appointments} setAppointments={setAppointments} setpatient={setpatient} setappointment={setappointment} />
                                         )
                                     })
                                 }

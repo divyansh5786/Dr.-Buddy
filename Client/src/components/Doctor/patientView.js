@@ -197,6 +197,7 @@ function PatientView({patient,id, setPage}) {
                                                 <th>Dosage</th>
                                                 <th>Freq/Duaration</th>
                                                 <th>Tests</th>
+                                                <th>Follow Up</th>
                                                 <th></th>
                                             </tr>
                                         </thead>

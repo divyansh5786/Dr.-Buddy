@@ -6,13 +6,14 @@ import { useHistory } from 'react-router-dom';
 
 
 
-function AppointmentCard({appointment,appointments,setAppointments,setpatient}) {
+function AppointmentCard({appointment,appointments,setAppointments,setpatient,setappointment}) {
     setpatient(null);
     const history = useHistory();
 
-    const viewpatient = async(patientID)=>{
+    const viewpatient = async(patientID,id)=>{
         if(patientID!=null &&setpatient!=null ){
             setpatient(patientID);
+            setappointment(id);
             console.log(patientID);
             history.push("/doctors/patientview");
         }
@@ -49,7 +50,7 @@ function AppointmentCard({appointment,appointments,setAppointments,setpatient}) 
                     <a href="doctor-profile.html" class="avatar avatar-sm mr-2">
 
                     </a>
-                    <a  onClick={()=>{viewpatient(appointment.patientID)}} >{appointment.patientname}</a>
+                    <a  onClick={()=>{viewpatient(appointment.patientID,appointment.id)}} >{appointment.patientname}</a>
                 </h2>
             </td>
             <td>{appointment.dateOfAppointment}<span class="d-block text-info">{appointment.time}</span></td>

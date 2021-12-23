@@ -5,59 +5,114 @@ import PatientDetails from '../utilities/patientDetails';
 //import '../../css/style.css';
 import { useHistory } from 'react-router-dom';
 
-
-const fetchPatientData = async (id) => {
+var DateTransform = (date) => {
+    console.log(date);
+    let tareek = parseInt(date.substring(0,2));
+    let month = parseInt(date.substring(3,5));
+    let year = parseInt(date.substring(6));
+    const d = new Date(year, month-1, tareek, 0, 0, 0, 0);
+    console.log(year + " "+ month +" " + tareek +" " + d);
+    return d;
+  }
+const postprescription = async (appointment,prescription,history) => {
+    console.log(prescription);
+    let diagnosis = prescription.diagnosis;
+    let medicine =  prescription.medcines;
+    let tests =  prescription.tests;
+    let followUp = DateTransform(prescription.followup);
+    let id = appointment;
+    console.log(id);
     try {
-        const res = await fetch("/register", {
+        const res = await fetch("/addPrescription", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                id
+                id,diagnosis,medicine,tests,followUp
             })
         });
         const data = await res.json();
 
         if (res.status === 422 || !data) {
-            window.alert("Invailid Registration");
-            console.log("Invailid Registration");
+            //window.alert("Invailid Registration");
+            if(data)
+            console.log(data.message);
+            else
+            console.log("error occured");
         } else {
-            window.alert("Registration Successful");
-            console.log("Registration Successfull");
-            // history.replace("/");
+
+            console.log("Prescription uploaded successfully");
+            history.replace("/doctors/patientview");
         }
     }
     catch (e) {
-        console.log("error occured in fetching" + e);
+        console.log("error occured " + e);
     }
-    const tempdata = {
-        "name": "Narendra Modi",
-        "gender": "male",
-        "age": "25",
-        "Address": "118/22 Amar Enclave",
-        "city": "ghaziabad",
-        "state": "Uttar Pradesh",
-        "mobile": "9990892500",
-        "email": "bansal@gmail.com",
-    };
-    return tempdata;
+}
+const fetchPatientData = async (patient,history,) => {
+    var calculateAge = (date)=>{
+        let milliseconds = Date.parse(date);
+        let nowmilli = Date.parse(new Date());
+        let age = Math.floor((nowmilli-milliseconds)/1000/86400/365);
+        return age;
+
+      }
+      var tempdata = null;
+    let patientID = patient;
+    try{
+        const res = await fetch("/viewpatient", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            patientID
+        })
+      });
+      const data = await res.json();
+      
+      if (res.status === 422 || !data) {
+        window.alert("Error Occured while fetchinf patient details");
+        console.log("Invailid Registration");
+        history.back();
+      } else {
+        console.log("Patient Details Fectched Successfully");
+        console.log(data);
+        tempdata = {
+            "name":data.firstname+" "+data.lastname,
+            "gender":data.gender,
+            "age":calculateAge(data.dateofbirth),
+            "Address":data.Address,
+            "city":data.city, 
+            "state":data.state,
+            "mobile":data.mobile,
+            "email":data.email,
+          };
+        // history.replace("/");
+      }}
+      catch(e)
+      {
+          console.log("error occured in fetching"+e);
+      }
+        
+      return tempdata;
 }
 
-function AddPrescription({id,setPage}) {
-    
-  
+function AddPrescription({patient,id,setPage,appointment}) {
+    console.log(appointment);
+    const history = useHistory();
     const [patientData, setpatientData] = useState(null);
     const [diagnoisis, upadtediagnoisis] = useState([]);
     const [medicines, upadtemedicines] = useState([]);
     const [tests, upadtetest] = useState([]);
     const [followup, setfollowup] = useState(null);
-    const [temporary, settemporary] = useState({diagnos:"",medicinename:"",dosage:"",fd:"",test:"",followup:" "});
+    const [temporary, settemporary] = useState({diagnos:"",medicinename:"",dosage:"",fd:"",test:"",followup:""});
     
 
     useEffect(() => {
         setPage('Add Prescription');
-        fetchPatientData(id).then(tempdata => {
+        fetchPatientData(patient,history).then(tempdata => {
             setpatientData(tempdata);
         })
     }, []);
@@ -76,7 +131,7 @@ function AddPrescription({id,setPage}) {
       const addmedicine =()=>{
           let tempmed = {medicinename:temporary.medicinename,dosage:temporary.dosage,fd:temporary.fd}
         upadtemedicines( arr => [...arr, tempmed]);
-        settemporary({ ...temporary, name:"",dosage:"",fd:""});
+        settemporary({ ...temporary, medicinename:"",dosage:"",fd:""});
       }
       const addtest =()=>{
         upadtetest( arr => [...arr, temporary.test]);
@@ -89,6 +144,7 @@ function AddPrescription({id,setPage}) {
     const postdata =()=>{
         let prescription={"diagnosis":diagnoisis,"medcines":medicines,"tests":tests,"followup":followup};
         console.log(prescription);
+        postprescription(appointment,prescription,history);
     }
     return (< >
     

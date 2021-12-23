@@ -1,95 +1,111 @@
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import React from 'react'
 import '../../css/style.css';
 import { useHistory } from 'react-router-dom';
-import PrescriptionCard from '../utilities/prescriptionCard';
+import PatientViewPres from '../utilities/patientViewPres';
 
 
-const fetchData = async (id) => {
-    try{const res = await fetch("/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          id
-        })
-      });
-      const data = await res.json();
-      
-      if (res.status === 422 || !data) {
-        window.alert("Invailid Registration");
-        console.log("Invailid Registration");
-      } else {
-        window.alert("Registration Successful");
-        console.log("Registration Successfull");
-        // history.replace("/");
-      }}
-      catch(e)
-      {
-          console.log("error occured in fetching"+e);
-      }
-        const tempdata = [{
-        "id":"565465",
-        "doctorName":"Dr. harish goyl",
-        "spec":"Surgeon",
-        "dateOfAppointment":"24 Oct 2021", 
+const fetchPrescriptions = async (id) => {
+  console.log(id);
+  let patientID = id;
+  try {
+    const res = await fetch("/viewAppointmentPatient", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
       },
-      {
-          "id":"165165",
-        "doctorName":"Dr. kaunal bhardwaj",
-        "spec":"Dentist",
-        "dateOfAppointment":"24 Oct 2021", 
-      },];
-      return tempdata;
+      body: JSON.stringify({
+        patientID
+      })
+    });
+    const data = await res.json();
+    var tempdata = [];
+    if (res.status === 422 || !data) {
+      window.alert("Error while fetching appointments");
+      console.log("Error while fetching appointments");
+    } else {
+      console.log(" Appointments fetched successfully");
+      console.log(data);
+      data.appointments.map((appointment) => {
+        let tempappoint = {
+          id: appointment._id,
+          doctorname: appointment.doctorID.firstname + appointment.doctorID.lastname,
+          spec: appointment.doctorID.Specialization,
+          dateOfAppointment: DateTransform(appointment.appointmentDate),
+          diagnosis: appointment.diagnosis,
+          medicine: appointment.medicine,
+          followUp: DateTransform(appointment.followUp),
+          tests: appointment.tests,
+        };
+        tempdata.push(tempappoint);
+      });
+      console.log(tempdata);
+    }
+  }
+  catch (e) {
+    console.log("error occured in fetching" + e);
+  }
+  return tempdata;
 }
 
-function Prescriptions({id,setPage}) {
+var DateTransform = (date) => {
+  let milliseconds = Date.parse(date);
+  date = new Date(milliseconds)
+  console.log(date);
+  var d = (date.getDate()) + "/" + (date.getMonth() + 1) + "/" + (date.getFullYear());
+  return d;
+}
+function Prescriptions({ id, setPage }) {
 
-    const history = useHistory ();
-    const [prescriptions, setPrescriptions] = useState(null);
+  const history = useHistory();
+  const [prescriptions, setPrescriptions] = useState(null);
 
-    useEffect(() => {
-        setPage('Prescription');
-        fetchData(id).then(tempdata => {
-            setPrescriptions(tempdata);
-        })
-      }, []);
-      
-    
-    
-    return (
-        <div classname="prescriptions"style={{ paddingTop: '10%', paddingInline: '8%' }}>
-            <div class="tab-content pt-0 box">
-                <div id="pat_appointments" class="tab-pane fade show active ">
-                    <div class="card card-table mb-0 card-body table-responsive">
-                        <table class="table table-hover table-center mb-0">
-                            <thead>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Id</th>
-                                    <th>Created By</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            {prescriptions===null?"Loading..." :prescriptions.length===0?"No appointment made" :  
-                    prescriptions.map((prescription)=>{
-                        console.log(prescription);
-                        return (<PrescriptionCard key={prescriptions.id} prescription={prescription} />   
-                     )
-                 })
-                    }
-                            </tbody>
-                        </table>
-
-                    </div>
-                </div>
-            </div>
-            </div>
+  useEffect(() => {
+    setPage('Prescription');
+    fetchPrescriptions(id).then(tempdata => {
+      setPrescriptions(tempdata);
+    })
+  }, []);
 
 
-    );
+
+  return (
+    <div classname="prescriptions" style={{ paddingTop: '10%', paddingInline: '8%' }}>
+      <div class="tab-content pt-0 box">
+        <div id="pat_appointments" class="tab-pane fade show active ">
+          <div class="card card-table mb-0 card-body table-responsive">
+            <table class="table table-hover table-center mb-0">
+              <thead>
+                <tr>
+                  <th>Doctor</th>
+                  <th>Appt Date</th>
+                  <th>Diagnosis</th>
+                  <th>Medicine</th>
+                  <th>Dosage</th>
+                  <th>Freq/Duaration</th>
+                  <th>Tests</th>
+                  <th>Follow Up</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {prescriptions === null ? "Loading..." : prescriptions.length === 0 ? "No prescription made" :
+                  prescriptions.map((prescription) => {
+                    //console.log(appointment.doctorname);
+                    return (<PatientViewPres key={prescription.id} prescription={prescription} />
+                    )
+                  })
+                }
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  );
 }
 
 export default Prescriptions
