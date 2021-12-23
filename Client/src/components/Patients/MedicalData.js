@@ -69,7 +69,7 @@ function MedicalData({id,setPage,alert,setalert}) {
                 <div id="pat_appointments " class="tab-pane fade show active ">
                   <div style={{display:'flex',justifyContent: "space-between"}}>
                   <span style={{fontSize:'x-large',fontWeight:'600'}}>Medical Data</span>
-                  <NavLink to="/patients/addmedical"><button className="btn btn-primary" type="submit" >Submit</button></NavLink>
+                  <NavLink to="/patients/addmedical" style={{"width":"auto"}}><button className="btn btn-primary" type="submit" >Add Data</button></NavLink>
                   </div>
                   <div className="box">
                     <div class="card card-table mb-0 card-body table-responsive ">

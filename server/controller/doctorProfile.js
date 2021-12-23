@@ -79,7 +79,7 @@ updateDoctorProfile= async(req,res)=>{
         console.log(doctorID);
         try {
             var  result = await Appointment.find({doctorID})
-            .populate('patientID',{ firstname: 1 ,lastname: 1, dateofbirth: 1, gender: 1}).select({patientID:1});
+            .populate('patientID',{ firstname: 1 ,lastname: 1, dateofbirth: 1, gender: 1,mobile: 1,email: 1}).select({patientID:1});
             
 function uniqueByKey( result, key) {
   return [...new Map( result.map((x) => [x[key], x])).values()];

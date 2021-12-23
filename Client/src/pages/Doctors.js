@@ -9,7 +9,7 @@ import Dashboard from '../components/Doctor/Dashboard';
 import {Switch, Route, Redirect} from 'react-router-dom';
 import patientlist from '../components/Doctor/patientList';
 import Appointments from '../components/Doctor/appointments';
-import ViewPrescription from '../components/Doctor/viewPrescription';
+import ViewPrescription from '../components/utilities/viewPrescription';
 import AddPrescription from '../components/Doctor/addPrescription';
 import AddProfessional from '../components/Doctor/addprofessional';
 import Prescriptions from '../components/Doctor/prescription';
@@ -37,7 +37,7 @@ function Doctors(doctor) {
             return(<Dashboard id={id} setPage={setPage}/>)
           }}> 
            </Route>
-           <Route exact path="/doctors/viewprescription"render={()=>{return(<ViewPrescription id={id} setPage={setPage} />)}}/>
+           <Route exact path="/doctors/viewprescription"render={()=>{return(<ViewPrescription />)}}/>
            <Route exact path="/doctors/addprescription"render={()=>{return(<AddPrescription patient={patient} id={id} setPage={setPage} appointment={appointment} />)}} />
            <Route exact path="/doctors/addprofessional"render={()=>{return(<AddProfessional id={id} setPage={setPage} />)}} />
         <Route exact path="/doctors/patientview" render={()=>{return(<PatientView patient={patient} id={id} setPage={setPage} />)}} />

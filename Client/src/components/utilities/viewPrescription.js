@@ -4,10 +4,10 @@ import React from 'react'
 //import '../../css/style.css';
 import { useHistory } from 'react-router-dom';
 
-function ViewPrescription({id,setPage}) {
-	useEffect(() => {
-        setPage('View Prescription');
-    }, []);
+function ViewPrescription() {
+	//useEffect(() => {
+       // setPage('View Prescription');
+    //}, []);
     return (<>
 	<div class="prescription">
 		<div class="panel-body">
