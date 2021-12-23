@@ -15,6 +15,8 @@ import AddProfessional from '../components/Doctor/addprofessional';
 import Prescriptions from '../components/Doctor/prescription';
 import MyPatient from '../components/Doctor/myPatients';
 import PatientView from '../components/Doctor/patientView';
+import PendingAppointments from '../components/Doctor/pendingApp';
+import ProfileDoctor from '../components/Doctor/profiledoctor';
 
 function Doctors(doctor) {
   let id = doctor.doctor.id;
@@ -37,13 +39,16 @@ function Doctors(doctor) {
             return(<Dashboard id={id} setPage={setPage}/>)
           }}> 
            </Route>
+           
            <Route exact path="/doctors/viewprescription"render={()=>{return(<ViewPrescription />)}}/>
            <Route exact path="/doctors/addprescription"render={()=>{return(<AddPrescription patient={patient} id={id} setPage={setPage} appointment={appointment} />)}} />
            <Route exact path="/doctors/addprofessional"render={()=>{return(<AddProfessional id={id} setPage={setPage} />)}} />
+           <Route exact path="/doctors/profile"render={()=>{return(<ProfileDoctor id={id} setPage={setPage} />)}} />
         <Route exact path="/doctors/patientview" render={()=>{return(<PatientView patient={patient} id={id} setPage={setPage} />)}} />
         <Route exact path="/doctors/patientlist" component={patientlist} />
         <Route exact path="/doctors/mypatient" render={()=>{return(<MyPatient id={id} setPage={setPage} />)}} />
         <Route exact path="/doctors/appointments" render={()=>{return(<Appointments id={id} setPage={setPage} setpatient={setpatient} setappointment={setappointment}/>)}} />
+        <Route exact path="/doctors/Pendingappointemnt" render={()=>{return(<PendingAppointments id={id} setPage={setPage} setpatient={setpatient} setappointment={setappointment}/>)}} />
         <Route exact path="/doctors/prescription" render={()=>{return(<Prescriptions id={id} setPage={setPage} />)}} />
         {/* <Route exact path="/patients" component={Patients} />
         <Route exact path="/patientlist" component={PatientList} />

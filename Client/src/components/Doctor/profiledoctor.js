@@ -23,20 +23,20 @@ var DateTransformtoString = (date) => {
     return res;
   }
 const fetchData = async (id) => {
-    let patientID = id;
+    let doctorID = id;
     let tempdata;
     try {
         // const { firstname, lastname, mobile, email, city, state, Address } = user;
-        const res = await fetch("/viewpatient", {
+        const res = await fetch("/viewdoctor", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ patientID })
+            body: JSON.stringify({ doctorID })
         });
         const data = await res.json();
+        console.log(data);
         if (res.status === 422 || !data) {
-           
             console.log("Error Occured while fetching details");
         } else {
             console.log("Details fetched Successfull");
@@ -63,7 +63,7 @@ const fetchData = async (id) => {
     return tempdata;
 }
 
-function Profile({ id, setPage,alert,setalert }) {
+function ProfileDoctor({ id, setPage }) {
     const history = useHistory();
     const [user, setUser] = useState(null);
 
@@ -97,10 +97,10 @@ function Profile({ id, setPage,alert,setalert }) {
         });
         const data = await res.json();
         if (res.status === 422 || !data) {
-            setalert({color:"red",message:"Error Occured while saving new details"});
+            //setalert({color:"red",message:"Error Occured while saving new details"});
             console.log("Error Occured while saving new details");
         } else {
-            setalert({color:"green",message:"Details saved Successfull"});
+            //setalert({color:"green",message:"Details saved Successfull"});
             console.log("Details saved Successfull");
             //   history.replace("/");
         }
@@ -108,7 +108,7 @@ function Profile({ id, setPage,alert,setalert }) {
 
     return (<>
         <div class="heelo" style={{ paddingTop: "8%", paddingInline: '10%' }} >
-        <AlertBar alert = {alert} setalert={setalert}/>
+        {/* <AlertBar alert = {alert} setalert={setalert}/> */}
             <h3 className='text-center'>Profile Details</h3>
             <div class="box">
                 <div class="card">
@@ -225,4 +225,4 @@ function Profile({ id, setPage,alert,setalert }) {
     )
 }
 
-export default Profile
+export default ProfileDoctor
