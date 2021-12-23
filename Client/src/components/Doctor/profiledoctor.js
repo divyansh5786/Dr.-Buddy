@@ -4,95 +4,72 @@ import { NavLink } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import AlertBar from '../utilities/alertbar';
-
+import ProfileViewDoctor from './profileviewdoctor';
 
 var DateTransformtoobject = (date) => {
-    let tareek = parseInt(date.substring(0,2));
-    let month = parseInt(date.substring(3,5));
+    let tareek = parseInt(date.substring(0, 2));
+    let month = parseInt(date.substring(3, 5));
     let year = parseInt(date.substring(6));
-    const d = new Date(year, month-1, tareek, 0, 0, 0, 0);
-    console.log(year + " "+ month +" " + tareek +" " + d);
+    const d = new Date(year, month - 1, tareek, 0, 0, 0, 0);
+    console.log(year + " " + month + " " + tareek + " " + d);
     return d;
-  }
+}
 
 var DateTransformtoString = (date) => {
     const d = new Date(date);
     //console.log(year + " "+ month +" " + tareek +" " + d);
-    const res =  (d.getDate())+"/"+(d.getMonth()+1)+"/"+(d.getFullYear());
+    const res = (d.getDate()) + "/" + (d.getMonth() + 1) + "/" + (d.getFullYear());
     //console.log(res);
     return res;
-  }
-const fetchData = async (id) => {
-    let doctorID = id;
-    let tempdata;
-    try {
-        // const { firstname, lastname, mobile, email, city, state, Address } = user;
-        const res = await fetch("/viewdoctor", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ doctorID })
-        });
-        const data = await res.json();
-        console.log(data);
-        if (res.status === 422 || !data) {
-            console.log("Error Occured while fetching details");
-        } else {
-            console.log("Details fetched Successfull");
-            console.log(data);
-            var dateofbirth=DateTransformtoString(data.dateofbirth);
-            tempdata = {
-                "firstname": data.firstname,
-                "lastname": data.lastname,
-                "dateofbirth":dateofbirth,
-                "gender":data.gender,
-                "mobile": data.mobile,
-                "email": data.email,
-                "city": data.city,
-                "state": data.state,
-                "Address": data.Address
-            };
-        }
-        // history.replace("/");
-    }
-    catch (e) {
-        console.log(e + 'error while fetching');
-    }
-     
-    return tempdata;
 }
+
 
 function ProfileDoctor({ id, setPage }) {
     const history = useHistory();
     const [user, setUser] = useState(null);
+    const [profile, setprofile] = useState('view');
+    const [temporary, settemporary] = useState({Name:"",Institute:"",Duration:""});
 
     let name, value;
     const handleInputs = (e) => {
         name = e.target.name;
         value = e.target.value;
+        if(name == "Name" ||name == "Institute" || name == "Duration")
+        settemporary({ ...temporary, [name]: value });
+        else
         setUser({ ...user, [name]: value });
     }
-
-    useEffect(() => {
-        setPage('Profile');
-        fetchData(id).then(tempdata => {
-            setUser(tempdata);
-        })
-    }, []);
+const updateDegree =()=>{
+    user.Degree.push(temporary);
+    settemporary({Name:"",Institute:"",Duration:""});
+}
+const deleteDegree = (index)=>{
+    let tempdata={};
+    console.log(index);
+    user.Degree.splice(index, 1);
+    Object.assign(tempdata, user);
+    setUser(tempdata);
+}
+    // useEffect(() => {
+    //     setPage('Profile');
+    //     fetchData(id).then(tempdata => {
+    //         setUser(tempdata);
+    //     })
+    // }, []);
     const postData = async (e) => {
         e.preventDefault();
         //const { firstname, lastname, mobile, email, city, state, Address } = user;
-        let updatedPatient = user;
-        updatedPatient.dateofbirth = DateTransformtoobject(updatedPatient.dateofbirth);
-        console.log(user);
-        const res = await fetch("/updatepatient", {
+        let updatedDoctor = user;
+        updatedDoctor.dateofbirth = DateTransformtoobject(updatedDoctor.dateofbirth);
+        updatedDoctor.Online = (updatedDoctor.Online=="false")?false:true;
+        console.log(updatedDoctor);
+        const res = await fetch("/updateDoctorProfile", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                id,updatedPatient
+                id, updatedDoctor
             })
         });
         const data = await res.json();
@@ -103,14 +80,15 @@ function ProfileDoctor({ id, setPage }) {
             //setalert({color:"green",message:"Details saved Successfull"});
             console.log("Details saved Successfull");
             //   history.replace("/");
+            console.log(profile +" "+ typeof(profile));
+            history.replace("/doctors/dashboard");
         }
     }
 
     return (<>
         <div class="heelo" style={{ paddingTop: "8%", paddingInline: '10%' }} >
-        {/* <AlertBar alert = {alert} setalert={setalert}/> */}
             <h3 className='text-center'>Profile Details</h3>
-            <div class="box">
+            {(profile === 'view') ? <ProfileViewDoctor id={id} setPage={setPage} user={user} setUser={setUser} setprofile={setprofile} /> : <div class="box">
                 <div class="card">
                     <div class="card-body" >
 
@@ -209,6 +187,90 @@ function ProfileDoctor({ id, setPage }) {
                                                 </select>
                                             </div>
                                         </div>
+                                        <div class="col-12 col-md-6">
+                                            <div class="form-group">
+                                                <label>Fees</label>
+                                                <input type="text" class="form-control" name="Fees"
+                                                    value={user.Fees}
+                                                    onChange={handleInputs} />
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <div class="form-group">
+                                                <label>Online</label>
+                                                <input type="text" class="form-control" name="Online"
+                                                    value={user.Online}
+                                                    onChange={handleInputs} />
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label>Specialization</label>
+                                                <input type="text" class="form-control"
+                                                    name="Specialization"
+                                                    value={user.Specialization}
+                                                    onChange={handleInputs} />
+                                            </div>
+                                        </div>
+                                        <div><label>Add Degree</label></div>
+                                        <div className="row g-4" style={{ "justifyContent": "space-between", "paddingInline": "2%", "margin-top": "auto" }}>
+                                            <div className="col-md">
+                                                <div className="form-floating mb-3">
+                                                    <input type="text" className="form-control" id="floatingInput" placeholder="Name"
+                                                        name="Name"
+                                                        value={temporary.Name}
+                                                        onChange={handleInputs} />
+                                                    <label for="floatingInput">Degree Name</label>
+                                                </div>
+                                            </div>
+                                            <div className="col-md">
+                                                <div className="form-floating mb-3">
+                                                    <input type="text" className="form-control" id="floatingInput" placeholder="Institute Name"
+                                                        name="Institute"
+                                                        value={temporary.Institute}
+                                                        onChange={handleInputs} />
+                                                    <label for="floatingInput">Institute Name</label>
+                                                </div>
+                                            </div>
+                                            <div className="col-md">
+                                                <div className="form-floating mb-3">
+                                                    <input type="text" className="form-control" id="floatingInput" placeholder="Duration"
+                                                        name="Duration"
+                                                        value={temporary.Duration}
+                                                        onChange={handleInputs} />
+                                                    <label for="floatingInput">Duration</label>
+                                                </div>
+                                            </div>
+                                            <div style={{ "width": "auto" }}>
+                                                <a class="add-new-btn" onClick={updateDegree} >Add Degree</a>
+                                            </div>
+                                        </div>
+
+                                        <div style={{ "paddingInline": "10%" }}>
+                                            <table class="table table-condensed nomargin" >
+                                                <thead>
+                                                    <tr>
+                                                        <th>S.No.</th>
+                                                        <th>Degree</th>
+                                                        <th>Institute</th>
+                                                        <th>Duration</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {user.Degree.map((degree, index) => {
+                                                        return (<tr>
+                                                            <td>{index + 1}</td>
+                                                            <td>{degree.Name}</td>
+                                                            <td>{degree.Institute}</td>
+                                                            <td>{degree.Duration}</td>
+                                                            <td><button class="deletebtn" onClick={()=>{deleteDegree(index)}}><i class="fa fa-trash"></i></button></td>
+                                                        </tr>)
+                                                    })
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                     <div class="submit-section" >
                                         <button type="submit" class="btn btn-primary submit-btn" onClick={postData}>Save Changes</button>
@@ -219,10 +281,10 @@ function ProfileDoctor({ id, setPage }) {
 
                     </div>
                 </div>
-            </div>
+            </div>}
         </div>
     </>
     )
 }
 
-export default ProfileDoctor
+export default ProfileDoctor;

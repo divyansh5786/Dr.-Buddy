@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import AlertBar from '../utilities/alertbar';
-
+import ProfileViewPatient from './profileviewPatient';
 
 var DateTransformtoobject = (date) => {
     let tareek = parseInt(date.substring(0,2));
@@ -64,6 +64,7 @@ const fetchData = async (id) => {
 }
 
 function Profile({ id, setPage,alert,setalert }) {
+    const [profile, setprofile] = useState('view');
     const history = useHistory();
     const [user, setUser] = useState(null);
 
@@ -110,7 +111,7 @@ function Profile({ id, setPage,alert,setalert }) {
         <div class="heelo" style={{ paddingTop: "8%", paddingInline: '10%' }} >
         <AlertBar alert = {alert} setalert={setalert}/>
             <h3 className='text-center'>Profile Details</h3>
-            <div class="box">
+            {(profile === 'view') ? <ProfileViewPatient id={id} setPage={setPage} user={user} setUser={setUser} setprofile={setprofile} /> :<div class="box">
                 <div class="card">
                     <div class="card-body" >
 
@@ -219,7 +220,7 @@ function Profile({ id, setPage,alert,setalert }) {
 
                     </div>
                 </div>
-            </div>
+            </div>}
         </div>
     </>
     )
