@@ -5,14 +5,16 @@ const mongoose = require('mongoose');
 const path = require('path');
 const Authenticate = require('../middleware/auth');
 
-userSignup = require("../controller/userSignup");
-userLogin = require("../controller/userLogin")
-doctorProfile= require("../controller/doctorProfile")
-searchDoctor= require("../controller/searchDoctor")
-newAppointment=require("../controller/newAppointment")
-viewAppointment=require("../controller/viewAppointment")
-patientDetails=require("../controller/patientDetails")
-viewPrescription=require("../controller/viewPrescription")
+userSignup = require("../controller/commonSignUp");
+userLogin = require("../controller/commonLogin")
+doctorProfile= require("../controller/doctor/doctorProfile")
+searchDoctor= require("../controller/doctor/searchDoctor")
+newAppointment=require("../controller/appointment/newAppointment")
+viewAppointment=require("../controller/appointment/viewAppointment")
+patientDetails=require("../controller/patient/patientDetails")
+viewPrescription=require("../controller/appointment/viewPrescription")
+doctorPendingAppointment= require("../controller/doctor/doctorPendingAppointment")
+
 
 //  router.get('/profile',Authenticate,doctorProfile.profile)
 router.post('/register', userSignup.register);
@@ -24,6 +26,7 @@ router.post('/viewdoctor',doctorProfile.viewDoctor);
 router.post('/updateDoctorProfile',doctorProfile.updateDoctorProfile);
 router.post('/showDoctorspatient',doctorProfile.showDoctorsPatient);
 
+router.post('/doctorPendingAppointment',doctorPendingAppointment.PendingAppointment)
 router.post('/newAppointment',newAppointment.addAppointment);
 
 router.post('/viewAppointmentPatient',viewAppointment.viewAppointmentPatient);

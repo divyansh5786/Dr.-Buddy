@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const Doctor = require("../module/doctorSchema");
-const Patient = require("../module/patientSchema");
-const Appointment= require("../module/appoitmentSchema")
+const Doctor = require("../../module/doctorSchema");
+const Patient = require("../../module/patientSchema");
+const Appointment= require("../../module/appoitmentSchema")
 
 addPrescription = async(req, res) => {
     var{id,diagnosis, medicine,tests, followUp}= req.body;

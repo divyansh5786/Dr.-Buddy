@@ -5,7 +5,8 @@ const mongoose = require('mongoose');
 const contestSchema = new mongoose.Schema({
     username: {
         type: String,
-        required: true
+        required: true,
+        unique:true
     },
     password: {
         type: String,
@@ -25,7 +26,8 @@ const contestSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        unique:true
     },
     state: {
         type: String,
