@@ -3,11 +3,12 @@ import React from 'react'
 import '../../css/style.css';
 import { useHistory } from 'react-router-dom';
 
-function view(history)
+function view(history,setappointment,prescription)
 {
+    setappointment(prescription.id);
     history.push('/patients/viewprescriptions');
 }
-function DashPresPatient({prescription}) {
+function DashPresPatient({prescription,setappointment}) {
     const history = useHistory();
     return (
         <tr>
@@ -21,7 +22,7 @@ function DashPresPatient({prescription}) {
             </td>
             <td class="text-right">
                 <div class="table-action">
-                    <a  class="btn btn-sm bg-info-light" onClick={()=>{view(history)}}>
+                    <a  class="btn btn-sm bg-info-light" onClick={()=>{view(history,setappointment,prescription)}}>
                         <i class="far fa-eye"></i> View
                     </a>
                 </div>
