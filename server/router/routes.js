@@ -18,15 +18,23 @@ viewPrescription=require("../controller/viewPrescription")
 router.post('/register', userSignup.register);
 router.post('/searchDoctor', searchDoctor.doctorlist);
 router.post('/login', userLogin.LogIn);
+
 router.post('/addprofession',doctorProfile.addProfession);
+router.post('/viewdoctor',doctorProfile.viewDoctor);
+router.post('/updateDoctorProfile',doctorProfile.updateDoctorProfile);
+router.post('/showDoctorspatient',doctorProfile.showDoctorsPatient);
+
 router.post('/newAppointment',newAppointment.addAppointment);
+
 router.post('/viewAppointmentPatient',viewAppointment.viewAppointmentPatient);
 router.post('/viewAppointmentDoctor',viewAppointment.viewAppointmentDoctor);
+router.post('/statusUpdate',viewAppointment.statusUpdate);
+
 router.post('/patientAddMedicalData',patientDetails.addMedicalData);
 router.post('/patientviewMedicalData',patientDetails.viewMedicalData);
 router.post('/viewpatient',patientDetails.viewPatientProfile);
 router.post('/updatepatient',patientDetails.updatePatientProfile);
-router.post('/statusUpdate',viewAppointment.statusUpdate);
+
 router.post('/addPrescription',viewPrescription.addPrescription);
 
 
