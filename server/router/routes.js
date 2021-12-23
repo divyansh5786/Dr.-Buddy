@@ -15,7 +15,6 @@ patientDetails=require("../controller/patient/patientDetails")
 viewPrescription=require("../controller/appointment/viewPrescription")
 doctorPendingAppointment= require("../controller/doctor/doctorPendingAppointment")
 
-
 //  router.get('/profile',Authenticate,doctorProfile.profile)
 router.post('/register', userSignup.register);
 router.post('/searchDoctor', searchDoctor.doctorlist);
