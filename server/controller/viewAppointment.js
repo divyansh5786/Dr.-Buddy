@@ -3,9 +3,7 @@ const Doctor = require("../module/doctorSchema");
 const Patient = require("../module/patientSchema");
 const Appointment= require("../module/appoitmentSchema")
 
-makearray = async(result)=>{
-  
-}
+
 viewAppointmentPatient = async(req, res) => {
     const{patientID}=req.body ;
     try {
@@ -36,13 +34,15 @@ viewAppointmentPatient = async(req, res) => {
         }
 
 
-        statusUpdate =(req,res)=>{
+        statusUpdate =async(req,res)=>{
              const{id,status}= req.body;
+             console.log(id);
+             console.log(status);
              try{
                  var appointment= await Appointment.findById(id);
                  appointment.status= status;
                  await appointment.save();
-                 res.status(422).json({message:"status updated sucessfully"});
+                 res.status(201).json({message:"status updated sucessfully"});
                     
              }catch(e)
              {

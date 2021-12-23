@@ -8,7 +8,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 
 
-function Appointments({ id, setPage }) {
+function Appointments({ id, setPage,setpatient }) {
 
     const history = useHistory();
     const [appointments, setAppointments] = useState(null);
@@ -59,9 +59,11 @@ function Appointments({ id, setPage }) {
                 console.log("Error while fetching appointments");
             } else {
               // console.log(" Appointments fetched successfully");
-               // console.log(data);
+               console.log(data);
                 data.map((appointment) => {
+                    //console.log("patient id "+appointment.patientID._id);
                     let tempappoint = {
+                        patientID:appointment.patientID._id,
                         id: appointment._id,
                         patientname: appointment.patientID.firstname + appointment.patientID.lastname,
                         dateOfAppointment: DateTransformtostring(appointment.appointmentDate),
@@ -137,7 +139,7 @@ function Appointments({ id, setPage }) {
                                 {appointments === null ? "Loading..." : appointments.length === 0 ? "No appointment made" :
                                     appointments.map((appointment) => {
                                        // console.log(appointment.doctorname);
-                                        return (<AppointmentCard key={appointment.id} appointment={appointment} appointments={appointments} setAppointments={setAppointments} />
+                                        return (<AppointmentCard key={appointment.id} appointment={appointment} appointments={appointments} setAppointments={setAppointments} setpatient={setpatient} />
                                         )
                                     })
                                 }

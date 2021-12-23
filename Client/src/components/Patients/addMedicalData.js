@@ -40,7 +40,7 @@ function Addmedical({id,setPage,setalert}) {
       const data = await res.json();
       if (res.status === 422 || !data) {
         setalert({color:"red",message:"Error Occure while adding medical data"});
-        console.log("/patients/medicaldata");
+        history.replace("/patients/medicaldata");
       } else {
         setalert({color:"green",message:"medical data added successfully"});
         console.log("Successfully updated");

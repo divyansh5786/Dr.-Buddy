@@ -18,7 +18,7 @@ function AppointmentCard({appointment}) {
             <td>{appointment.dateOfBooking}</td>
             <td>{appointment.fees}</td>
             <td>{appointment.concern}</td>
-            {appointment.status==="confirm"?
+            {appointment.status==="complete"?<td><span class="badge badge-pill bg-primary-light">Completed</span></td>:appointment.status==="confirm"?
             <td><span class="badge badge-pill bg-success-light">Confirm</span></td>:appointment.status=="pending"? <td><span class="badge badge-pill bg-warning-light">Pending</span></td>:<td><span class="badge badge-pill bg-danger-light">Cancelled</span></td>
     }
             <td class="text-right">

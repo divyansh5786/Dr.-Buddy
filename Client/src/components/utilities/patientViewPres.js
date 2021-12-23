@@ -17,23 +17,23 @@ function PatientViewPres({prescription}) {
                 </h2>
             </td>
             <td>{prescription.dateOfAppointment}</td>
-            <td><ul style={{"list-style-type":"none","padding-inline-start": "0px"}}>{prescription.diagnosis.map((diagnos) => {
+            <td><ul style={{"list-style-type":"none","padding-inline-start": "0px"}}>{(prescription.diagnosis==null ||prescription.diagnosis.length==0 )?"":prescription.diagnosis.map((diagnos) => {
                                         return <li>{diagnos}</li>;
                                         })
                                     }</ul></td>
-            <td><ul style={{"list-style-type":"none","padding-inline-start": "0px"}}>{prescription.medicines.map((medicine) => {
+            <td><ul style={{"list-style-type":"none","padding-inline-start": "0px"}}>{(prescription.medicines==null ||prescription.medicines.length==0 )?"":prescription.medicines.map((medicine) => {
                                         return <li>{medicine.Name}</li>;
                                         })
                                     }</ul></td>
-            <td><ul style={{"list-style-type":"none","padding-inline-start": "0px"}}>{prescription.medicines.map((medicine) => {
+            <td><ul style={{"list-style-type":"none","padding-inline-start": "0px"}}>{(prescription.medicines==null ||prescription.medicines.length==0 )?"":prescription.medicines.map((medicine) => {
                                         return <li>{medicine.Dosage}</li>;
                                         })
                                     }</ul></td>
-            <td><ul style={{"list-style-type":"none","padding-inline-start": "0px"}}>{prescription.medicines.map((medicine) => {
+            <td><ul style={{"list-style-type":"none","padding-inline-start": "0px"}}>{(prescription.medicines==null ||prescription.medicines.length==0 )?"":prescription.medicines.map((medicine) => {
                                         return <li>{medicine.fd}</li>;
                                         })
                                     }</ul></td>
-            <td><ul style={{"list-style-type":"none","padding-inline-start": "0px"}}>{prescription.tests.map((test) => {
+            <td><ul style={{"list-style-type":"none","padding-inline-start": "0px"}}>{(prescription.tests==null ||prescription.tests.length==0 )?"":prescription.tests.map((test) => {
                                         return <li>{test}</li>;
                                         })
                                     }</ul></td>

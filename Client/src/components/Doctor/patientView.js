@@ -1,153 +1,164 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import '../../css/dashboard.css';
+import { useHistory } from 'react-router-dom';
 import PatientViewPres from '../utilities/patientViewPres';
 import MedicaldDataCard from '../utilities/medicalDataCard';
 import { NavLink } from 'react-router-dom';
 import PatientDetails from '../utilities/patientDetails';
 
 const fetchPrescriptions = async (id) => {
+    console.log(id);
+    let patientID = id;
     try {
-        const res = await fetch("/register", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                id
-            })
+      const res = await fetch("/viewAppointmentPatient", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          patientID
+        })
+      });
+      const data = await res.json();
+      var tempdata = [];
+      if (res.status === 422 || !data) {
+        window.alert("Error while fetching appointments");
+        console.log("Error while fetching appointments");
+      } else {
+        console.log(" Appointments fetched successfully");
+        console.log(data);
+        data.appointments.map((appointment) => {
+          let tempappoint = { id: appointment._id,
+             doctorname: appointment.doctorID.firstname + appointment.doctorID.lastname, 
+             spec: appointment.doctorID.Specialization,
+             dateOfAppointment: DateTransform(appointment.appointmentDate),
+             diagnosis:appointment.diagnosis,
+             medicine:appointment.medicine,
+             followUp:DateTransform(appointment.followUp),
+             tests:appointment.tests,
+            };
+            tempdata.push(tempappoint);
         });
-        const data = await res.json();
-
-        if (res.status === 422 || !data) {
-            window.alert("Invailid Registration");
-            console.log("Invailid Registration");
-        } else {
-            window.alert("Registration Successful");
-            console.log("Registration Successfull");
-            // history.replace("/");
-        }
+        console.log(tempdata);
+      }
     }
     catch (e) {
-        console.log("error occured in fetching" + e);
+      console.log("error occured in fetching" + e);
     }
-    const tempdata = [{
-        "id": "565465",
-        "doctorname": "Dr. harish goyl",
-        "spec": "Surgeon",
-        "dateOfAppointment": "24 Oct 2021",
-        "diagnosis": ['Diffuse Alopicia', 'Hair Loss'],
-        "medicines": [{ "Name": "Berocin CZ Capsule", "Dosage": "0-0-1", "fd": "daily,10 days" }],
-        "tests": ["tpds", "rps"]
-    },
-    {
-        "id": "565465",
-        "doctorname": "Dr. Ramesh Sharma",
-        "spec": "Skin Doctor",
-        "dateOfAppointment": "16 Oct 2021",
-        "diagnosis": ['Diffuse Alopicia', 'Hair Loss'],
-        "medicines": [
-            { "Name": "Berocin CZ Capsule", "Dosage": "0-0-1", "fd": "daily,10 days" },
-            { "Name": "Ibugesic Plus", "Dosage": "0-1-0", "fd": "daily,5 days" },
-            { "Name": "HCQS", "Dosage": "1-0-1", "fd": "daily,10 days" }
-        ],
-        "tests": ["tpds", "rps"]
-    },];
     return tempdata;
-}
-const fetchMedicalData = async (id) => {
-    try{const res = await fetch("/register", {
+  }
+  
+var DateTransform = (date) => {
+    let milliseconds = Date.parse(date);
+    date = new Date(milliseconds)
+    console.log(date);
+    var d = (date.getDate())+"/"+(date.getMonth()+1)+"/"+(date.getFullYear());
+    return d;
+  }
+  const fetchMedicalData = async (id) => {
+    console.log(id);
+    let patientID = id;
+    let tempdata=[];
+      try{const res = await fetch("/patientviewMedicalData", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            patientID
+          })
+        });
+        const data = await res.json();
+        console.log(data);
+        
+        if (res.status === 422 || !data) {
+          window.alert("Error Occured while fetching medical data");
+          console.log("Error Occured while fetching medical data");
+        } else {
+          console.log("Medical fetch Successfull");
+          console.log(data);
+          data.map((medical)=>{
+            let tempmedical = {date:DateTransform(medical.date),bp:medical.bloodPressure,sugar:medical.sugar,temp:medical.bodyTempreture,pulse:medical.pulse};
+            tempdata.push(tempmedical);
+          });
+          console.log(tempdata);
+          // history.replace("/patients/medicaldata");
+        }}
+        catch(e)
+        {
+            console.log("error occured in fetching"+e);
+        }
+        return tempdata;
+  }
+  
+const fetchPatientData = async (id,history) => {
+    var calculateAge = (date)=>{
+        let milliseconds = Date.parse(date);
+        let nowmilli = Date.parse(new Date());
+        let age = Math.floor((nowmilli-milliseconds)/1000/86400/365);
+        return age;
+
+      }
+      var tempdata = null;
+    let patientID = id;
+    try{
+        const res = await fetch("/viewpatient", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          id
+            patientID
         })
       });
       const data = await res.json();
       
       if (res.status === 422 || !data) {
-        window.alert("Invailid Registration");
+        window.alert("Error Occured while fetchinf patient details");
         console.log("Invailid Registration");
+        history.back();
       } else {
-        window.alert("Registration Successful");
-        console.log("Registration Successfull");
+        console.log("Patient Details Fectched Successfully");
+        console.log(data);
+        tempdata = {
+            "name":data.firstname+" "+data.lastname,
+            "gender":data.gender,
+            "age":calculateAge(data.dateofbirth),
+            "Address":data.Address,
+            "city":data.city, 
+            "state":data.state,
+            "mobile":data.mobile,
+            "email":data.email,
+          };
         // history.replace("/");
       }}
       catch(e)
       {
           console.log("error occured in fetching"+e);
       }
-        const tempdata = [{
-        "date":"12 Nov 2017",
-        "bp":"120",
-        "sugar":"120",
-        "temp":"98.4",
-        "pulse":"72", 
-      },
-      {
-        "date":"13 Nov 2017",
-        "bp":"118",
-        "sugar":"110",
-        "temp":"96.5",
-        "pulse":"75", 
-      },];
-      return tempdata;
-}
-const fetchPatientData = async (id) => {
-    try{const res = await fetch("/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          id
-        })
-      });
-      const data = await res.json();
-      
-      if (res.status === 422 || !data) {
-        window.alert("Invailid Registration");
-        console.log("Invailid Registration");
-      } else {
-        window.alert("Registration Successful");
-        console.log("Registration Successfull");
-        // history.replace("/");
-      }}
-      catch(e)
-      {
-          console.log("error occured in fetching"+e);
-      }
-        const tempdata = {
-        "name":"Narendra Modi",
-        "gender":"male",
-        "age":"25",
-        "Address":"118/22 Amar Enclave",
-        "city":"ghaziabad", 
-        "state":"Uttar Pradesh",
-        "mobile":"9990892500",
-        "email":"bansal@gmail.com",
-      };
+        
       return tempdata;
 }
 
-function PatientView({id, setPage}) {
+function PatientView({patient,id, setPage}) {
+    console.log(patient);
     console.log('Patient View');
     console.log(id);
+    const history = useHistory();
     const [prescriptions, setPrescriptions] = useState(null);
     const [medicalData, setmedicalData] = useState(null);
     const [patientData, setpatientData] = useState(null);
     useEffect(() => {
         setPage('Patient Details');
-        fetchPrescriptions(id).then(tempdata => {
+        fetchPrescriptions(patient).then(tempdata => {
             setPrescriptions(tempdata);
         })
    
-    fetchMedicalData(id).then(tempdata => {
+    fetchMedicalData(patient).then(tempdata => {
         setmedicalData(tempdata);
     })
-    fetchPatientData(id).then(tempdata => {
+    fetchPatientData(patient,history).then(tempdata => {
         setpatientData(tempdata);
     })
 }, []);

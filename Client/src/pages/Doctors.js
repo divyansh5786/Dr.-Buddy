@@ -20,6 +20,7 @@ function Doctors(doctor) {
   let id = doctor.doctor.id;
   let name = doctor.doctor.name;
   const [page,setPage] = useState('Dashboard');
+  const [patient,setpatient] = useState(null);
   return (
     <>
       <SideBarDoctor />
@@ -37,10 +38,10 @@ function Doctors(doctor) {
            <Route exact path="/doctors/viewprescription"render={()=>{return(<ViewPrescription id={id} setPage={setPage} />)}}/>
            <Route exact path="/doctors/addprescription"render={()=>{return(<AddPrescription id={id} setPage={setPage} />)}} />
            <Route exact path="/doctors/addprofessional"render={()=>{return(<AddProfessional id={id} setPage={setPage} />)}} />
-        <Route exact path="/doctors/patientview" render={()=>{return(<PatientView id={id} setPage={setPage} />)}} />
+        <Route exact path="/doctors/patientview" render={()=>{return(<PatientView patient={patient} id={id} setPage={setPage} />)}} />
         <Route exact path="/doctors/patientlist" component={patientlist} />
         <Route exact path="/doctors/mypatient" render={()=>{return(<MyPatient id={id} setPage={setPage} />)}} />
-        <Route exact path="/doctors/appointments" render={()=>{return(<Appointments id={id} setPage={setPage} />)}} />
+        <Route exact path="/doctors/appointments" render={()=>{return(<Appointments id={id} setPage={setPage} setpatient={setpatient}/>)}} />
         <Route exact path="/doctors/prescription" render={()=>{return(<Prescriptions id={id} setPage={setPage} />)}} />
         {/* <Route exact path="/patients" component={Patients} />
         <Route exact path="/patientlist" component={PatientList} />
