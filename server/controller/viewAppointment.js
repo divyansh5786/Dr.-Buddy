@@ -34,7 +34,9 @@ viewAppointmentPatient = async(req, res) => {
         }
 
 
-        statusUpdate =async(req,res)=>{
+
+
+        statusUpdate = async(req,res)=>{
              const{id,status}= req.body;
              console.log(id);
              console.log(status);
