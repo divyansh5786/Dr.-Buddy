@@ -18,10 +18,8 @@ const fetchData = async (id) => {
       const data = await res.json();
       
       if (res.status === 422 || !data) {
-        window.alert("Invailid Registration");
         console.log("Invailid Registration");
       } else {
-        window.alert("Registration Successful");
         console.log("Registration Successfull");
         // history.replace("/");
       }}

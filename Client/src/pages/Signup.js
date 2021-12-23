@@ -57,7 +57,7 @@ function Signup({setDoctor}) {
 
       <div className="signupd">
 
-        <h2 className="text-center">Sign in</h2>
+        <h2 className="text-center">Sign Up</h2>
         <form method="POST" className="sign-in-form">
 
           <div className="form-floating mb-3">
