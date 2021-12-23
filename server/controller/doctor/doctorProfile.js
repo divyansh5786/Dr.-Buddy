@@ -1,8 +1,8 @@
 //to get the contestlist from mongo db and sending it to client
 const mongoose = require('mongoose');
-const Doctor = require("../module/doctorSchema");
-const Patient = require("../module/patientSchema");
-const Appointment= require("../module/appoitmentSchema")
+const Doctor = require("../../module/doctorSchema");
+const Patient = require("../../module/patientSchema");
+const Appointment= require("../../module/appoitmentSchema")
 
 addProfession = async(req, res) => {
     const {id,Online,Specialization,Fees,Degree}= req.body;

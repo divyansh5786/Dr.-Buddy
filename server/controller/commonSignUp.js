@@ -17,6 +17,10 @@ register = async (req, res) => {
   if (!check) {
     try {
       var newDoctor = new Doctor({ username, password, firstname, lastname, mobile, email, city, state, Address, dateofbirth, gender });
+
+      // if(password.length>=7 && mobile.lenght()==10  )
+      // { }
+      // else  res.status(422).json({ error: "sign Up properly" });
       await newDoctor.save();
     } catch (e) {
       console.log(e);
