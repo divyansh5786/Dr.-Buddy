@@ -74,14 +74,7 @@ const contestSchema = new mongoose.Schema({
         type: String,
         required: false
     },
-    Patients:{
-        type:Array,
-        required:false
-    },
-    Appointments: {
-        type: Array,
-        required: false
-    },
+  
 
  })
 
