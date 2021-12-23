@@ -94,42 +94,42 @@ const fetchAppointmentsData = async (id) => {
 
 
 const fetchPrescriptionData = async (id) => {
+  let patientID = id;
   try {
-    const res = await fetch("/register", {
+    const res = await fetch("/viewAppointmentPatient", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        id
+        patientID
       })
     });
     const data = await res.json();
-
+    var tempdata = [];
     if (res.status === 422 || !data) {
-      window.alert("Invailid Registration");
-      console.log("Invailid Registration");
+      console.log("Error while fetching Patient data");
     } else {
-      window.alert("Registration Successful");
-      console.log("Registration Successfull");
-      // history.replace("/");
+      console.log("Patient data fetched successfully");
+      console.log(data);
+      var len = data.appointments.length;
+      for(var i=0;i<2;i++)
+      {
+        let appointment = data.appointments[len-i-1];
+        let tempappoint = { id: appointment._id,
+           doctorname: appointment.doctorID.firstname + appointment.doctorID.lastname, 
+           spec: appointment.doctorID.Specialization,
+           dateOfAppointment: DateTransform(appointment.appointmentDate),
+           time: appointment.appointmentTime,
+          };
+          tempdata.push(tempappoint);
+      }
+
     }
   }
   catch (e) {
     console.log("error occured in fetching" + e);
   }
-  const tempdata = [{
-    "id": "565465",
-    "doctorName": "Dr. harish goyl",
-    "spec": "Surgeon",
-    "dateOfAppointment": "24 Oct 2021",
-  },
-  {
-    "id": "165165",
-    "doctorName": "Dr. kaunal bhardwaj",
-    "spec": "Dentist",
-    "dateOfAppointment": "24 Oct 2021",
-  },];
   return tempdata;
 }
 
@@ -206,7 +206,6 @@ function Dashboard({ id, setPage,alert,setalert}) {
                             <thead>
                                 <tr>
                                     <th>Date</th>
-                                    <th>Id</th>
                                     <th>Created By</th>
                                     <th></th>
                                 </tr>

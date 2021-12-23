@@ -13,7 +13,7 @@ import Appointments from '../components/Patients/appointments';
 import Prescriptions from '../components/Patients/prescriptions';
 import MedicalData from '../components/Patients/MedicalData';
 import Profile from '../components/Patients/profile';
-
+import ViewPrescription from '../components/utilities/viewPrescription';
 
 function Patients(patient) {
    let id = patient.patient.id;
@@ -31,6 +31,8 @@ function Patients(patient) {
         
         <Switch>
         <Route exact path="/patients/addmedical" render={()=>{return(<Addmedical id={id} setPage={setPage} setalert={setalert}/>)}}> 
+           </Route>
+           <Route exact path="/patients/viewprescriptions" render={()=>{return(<ViewPrescription />)}}> 
            </Route>
         <Route exact path="/patients/profile" render={()=>{return(<Profile id={id} setPage={setPage} alert={alert} setalert={setalert}/>)}}> 
            </Route>

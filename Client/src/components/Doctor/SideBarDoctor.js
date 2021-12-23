@@ -46,9 +46,9 @@ function SideBarDoctor() {
             </NavLink>
           </li>
           <li>
-          <NavLink to="/doctors/messages">
+          <NavLink to="/doctors/Pendingappointemnt">
               <i class='bx bx-message' ></i>
-              <span class="links_name">Messages</span>
+              <span class="links_name">Pending</span>
             </NavLink>
           </li>
           <li >

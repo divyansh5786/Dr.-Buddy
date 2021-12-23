@@ -5,70 +5,48 @@ import { useHistory } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import PatientCard from '../utilities/myPatientCard';
 
+var calculateAge = (date)=>{
+  let milliseconds = Date.parse(date);
+  let nowmilli = Date.parse(new Date());
+  let age = Math.floor((nowmilli-milliseconds)/1000/86400/365);
+  return age;
+
+}
 const fetchData = async (id) => {
-    try{const res = await fetch("/register", {
+  let doctorID = id;
+    try{const res = await fetch("/showDoctorspatient", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          id
+         doctorID
         })
       });
       const data = await res.json();
-      
+      var tempdata = [];
       if (res.status === 422 || !data) {
         console.log("Invailid Registration");
       } else {
-        console.log("Registration Successfull");
+        console.log(data);
         // history.replace("/");
+        data.map((patient)=>{
+          let temppatient =  {
+            id:patient.patientID._id,
+            patientname:patient.patientID.firstname +' '+patient.patientID.lastname,
+            age:calculateAge(patient.patientID.dateofbirth),
+            gender:patient.patientID.gender,
+            mobile:patient.patientID.mobile,
+            email:patient.patientID.email,
+          };
+          tempdata.push(temppatient);
+        });
       }}
       catch(e)
       {
           console.log("error occured in fetching"+e);
       }
-        const tempdata = [{
-        "id":"565465",
-        "patientname":"Prakhar Lokhande",
-        "Address":"Ghaziaad,Up",
-        "mobile":"8282829696",
-        "gender":"male",
-      },
-      {
-        "id":"565465",
-        "patientname":"Prakhar Lokhande",
-        "Address":"Ghaziaad,Up",
-        "mobile":"8282829696",
-        "gender":"male",
-      },
-      {
-        "id":"165165",
-        "patientname":"Prakhar Lokhande",
-        "Address":"Ghaziaad,Up",
-        "mobile":"8282829696",
-        "gender":"male",
-      },
-      {
-        "id":"565465",
-        "patientname":"Prakhar Lokhande",
-        "Address":"Ghaziaad,Up",
-        "mobile":"8282829696",
-        "gender":"male",
-      },
-      {
-        "id":"565465",
-        "patientname":"Prakhar Lokhande",
-        "Address":"Ghaziaad,Up",
-        "mobile":"8282829696",
-        "gender":"male",
-      },
-      {
-        "id":"565465",
-        "patientname":"Prakhar Lokhande",
-        "Address":"Ghaziaad,Up",
-        "mobile":"8282829696",
-        "gender":"male",
-      },];
+        
       return tempdata;
 }
 
@@ -92,10 +70,10 @@ function MyPatient({id,setPage}) {
                             <thead>
                                 <tr>
                                     <th>Patient Name</th>
-                                    <th>Id</th>
-                                    <th>Address</th>
-                                    <th>Mobile</th>
+                                    <th>Age</th>
                                     <th>Gender</th>
+                                    <th>Mobile</th>
+                                    <th>Email</th>
                                     <th></th>
                                 </tr>
                             </thead>

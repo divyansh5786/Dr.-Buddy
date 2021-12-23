@@ -14,17 +14,10 @@ function PatientCard({patient}) {
                     <a href="doctor-profile.html">{patient.patientname}</a>
                 </h2>
             </td>
-            <td>{patient.id}</td>
-            <td>{patient.Address}</td>
-            <td>{patient.mobile}</td>
+            <td>{patient.age}</td>
             <td>{patient.gender}</td>
-      <td class="text-right">
-                <div class="table-action">
-                    <a  class="btn btn-sm bg-info-light">
-                        <i class="far fa-eye"></i> View
-                    </a>
-                </div>
-            </td>
+            <td>{patient.mobile}</td>
+            <td>{patient.email}</td>
         </tr>
     </>
     )
