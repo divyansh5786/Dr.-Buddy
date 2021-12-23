@@ -38,6 +38,8 @@ router.post('/viewpatient',patientDetails.viewPatientProfile);
 router.post('/updatepatient',patientDetails.updatePatientProfile);
 
 router.post('/addPrescription',viewPrescription.addPrescription);
+router.post('/viewPrescription',viewPrescription.viewPrescriptions);
+
 
 
 

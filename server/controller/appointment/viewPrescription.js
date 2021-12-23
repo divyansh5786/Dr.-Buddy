@@ -25,7 +25,24 @@ addPrescription = async(req, res) => {
       
 }
 
+viewPrescriptions = async(req, res) => {
+    const{id}=req.body ;
+    try {
+        var  result = await Appointment.findById(id).populate('patientID').populate('doctorID')
+
+        
+        console.log("view Appointment genreated ");
+        console.log(result);
+        res.status(200).json({result});
+      } catch (e) {
+       
+        console.log(e);
+        res.status(422).json({message:"Appointment view Error"});
+      }
+    }
+
 module.exports = {
    
     addPrescription,
+    viewPrescriptions,
 };
