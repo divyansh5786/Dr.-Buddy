@@ -7,21 +7,36 @@ const jwt = require('jsonwebtoken');
 register = async (req, res) => {
   const { username, password, firstname, lastname, mobile, email, city, state, Address, type, dateofbirth, gender } = req.body;
   let check = true;
+   try{
+       
+        let   temp= await Doctor.find({username});
+        let   temp2= await Patient.find({username});
+        if(temp.length!=0  || temp2.length!=0)
+        {
+          console.log('username allready taken ')
+          return res.status(406).json({message:"username allready taken"})
+        
+          // 406   ---Not accesstable
+        }
+   }catch(e){
+     console.log(e);
+     res.status(422).json({message:"Error in selecting username"})
 
+   }
   if(type==='Doctor')
 
    check = false;
-  if (!username || !password || !firstname || !lastname || !mobile || !email || !city || !state || !Address) {
-    return res.status(422).json({ error: "please fill all the fields properly" });
+  if (!username || !password  || !firstname || !lastname || !mobile|| !email || !city || !state || !Address  || password.length<7 || mobile.length<10  ) {
+   {return res.status(422).json({ error: "please fill all the fields properly" });
+     
+  }
+  
   }
   if (!check) {
     try {
       var newDoctor = new Doctor({ username, password, firstname, lastname, mobile, email, city, state, Address, dateofbirth, gender });
-
-      // if(password.length>=7 && mobile.lenght()==10  )
-      // { }
-      // else  res.status(422).json({ error: "sign Up properly" });
       await newDoctor.save();
+      
     } catch (e) {
       console.log(e);
       res.status(422).json({ error: "Error while creating doctor" });
@@ -33,7 +48,7 @@ register = async (req, res) => {
     try {
       var newPatient = new Patient({ username, password, firstname, lastname, mobile, email, city, state, Address, dateofbirth, gender });
       await newPatient.save();
-      console.log("done")
+      console.log("patient regestred successfully")
       res.status(201).json({ message: "user registered successfully as Patient" });
     } catch (e) {
       console.log(e);

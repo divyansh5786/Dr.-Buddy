@@ -32,7 +32,7 @@ LogIn = async (req, res) => {
     }
 
   if (!user || user === null) {
-    console.log("not found");
+    console.log("user NOT found");
     return res.status(422).json({id:null});
   }
   else if (user.password === password) {
