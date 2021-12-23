@@ -78,10 +78,18 @@ updateDoctorProfile= async(req,res)=>{
   const{doctorID}=req.body ;
         console.log(doctorID);
         try {
-            var  result = await Appointment.find({doctorID}).populate('patientID',{ firstname: 1 ,lastname: 1, dateofbirth: 1, gender: 1}).select({patientID:1});
-            console.log(result);
+            var  result = await Appointment.find({doctorID})
+            .populate('patientID',{ firstname: 1 ,lastname: 1, dateofbirth: 1, gender: 1}).select({patientID:1});
+            
+function uniqueByKey( result, key) {
+  return [...new Map( result.map((x) => [x[key], x])).values()];
+}
+
+ const list=uniqueByKey( result, 'patientID');
+
+           // console.log(list);
             console.log("patient of doctor with given id ,successfully ")
-            res.status(201).json(result);
+            res.status(201).json(list);
           } catch (e) {
             console.log(e);
             res.status(422).json({message:"patient of doctor is not show, Error"});
