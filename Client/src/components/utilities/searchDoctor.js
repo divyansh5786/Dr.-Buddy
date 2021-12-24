@@ -22,7 +22,7 @@ function SearchDoctor({setDoctors}) {
       const { state, city, type, spec } = search;
       let Specialization = spec;
       let Online;
-      if(Online == "Online")
+      if(type == "Online")
       Online=true;
       else
       Online=false;
@@ -44,15 +44,20 @@ function SearchDoctor({setDoctors}) {
         });
         const data = await res.json();
 
-        if (res.status === 422 || !data) {
+        if (res.status === 404 ) {
+          window.alert("No Such Doctor Exists");
+          console.log("Error Occurred");
+      }
+      else  if (res.status === 422 || !data) {
             window.alert("Some error accured while fetching doctors, Please try again");
             console.log("Error Occurred");
         } else {
             console.log(" Doctors fetched successfully");
             console.log(data);
             data.map((doctor)=>{
-              let degreestring;
-              doctor.Degree.map((degree)=>{degreestring = degreestring + degree.Name});
+              let degreestring="";
+              doctor.Degree.map((degree)=>{degreestring = degreestring + degree.Name + ", "});
+              degreestring = degreestring.slice(0,degreestring.length-1);
               let tempdoctor = {name:doctor.firstname+doctor.lastname,spec:doctor.Specialization,Address:doctor.Address,city:doctor.city,state:doctor.state,fees:doctor.Fees,degree:degreestring,mobile:doctor.mobile,email:doctor.email,id:doctor._id};
               tempdata.push(tempdoctor);
             });

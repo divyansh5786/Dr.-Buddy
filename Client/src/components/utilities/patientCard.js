@@ -48,7 +48,6 @@ function PatientCard(props) {
                                     </div>}
                                 {props.show === false ? " " :
                                     <div className="clinic-booking">
-                                        <button className="btn btn-outline-primary">View Profile</button>
                                         <button className="btn btn-primary" style={{ width: 'auto' }} onClick={book}>Book Appointment</button>
 
                                     </div>
