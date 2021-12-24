@@ -133,7 +133,7 @@ const fetchPrescriptionData = async (id) => {
   return tempdata;
 }
 
-function Dashboard({ id, setPage,alert,setalert}) {
+function Dashboard({ id, setPage,alert,setalert,setappointment}) {
   const history = useHistory();
   const [medicalData, setmedicalData] = useState(null);
   const [prescriptions, setPrescriptions] = useState(null);
@@ -214,7 +214,7 @@ function Dashboard({ id, setPage,alert,setalert}) {
                             {prescriptions===null?"Loading..." :prescriptions.length===0?"No appointment made" :  
                     prescriptions.map((prescription)=>{
                         console.log(prescription);
-                        return (<DashPresPatient key={prescription.id} prescription={prescription} />   
+                        return (<DashPresPatient key={prescription.id} prescription={prescription} setappointment={setappointment} />   
                      )
                  })
                     }

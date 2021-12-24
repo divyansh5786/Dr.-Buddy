@@ -22,6 +22,7 @@ function Patients(patient) {
   const [doctorBook,setDoctorBook] = useState(null);
   const [page,setPage] = useState('Dashboard');
   const [alert,setalert] = useState(null);
+  const [appointment,setappointment] = useState(null);
   return (
     <div>
       <>
@@ -32,7 +33,7 @@ function Patients(patient) {
         <Switch>
         <Route exact path="/patients/addmedical" render={()=>{return(<Addmedical id={id} setPage={setPage} setalert={setalert}/>)}}> 
            </Route>
-           <Route exact path="/patients/viewprescriptions" render={()=>{return(<ViewPrescription />)}}> 
+           <Route exact path="/patients/viewprescriptions" render={()=>{return(<ViewPrescription appointment={appointment} />)}}> 
            </Route>
         <Route exact path="/patients/profile" render={()=>{return(<Profile id={id} setPage={setPage} alert={alert} setalert={setalert}/>)}}> 
            </Route>
@@ -42,7 +43,7 @@ function Patients(patient) {
            </Route>
         <Route exact path="/patients/medicaldata" render={()=>{return(<MedicalData id={id} setPage={setPage} alert={alert} setalert={setalert}/>)}}> 
            </Route>
-        <Route exact path="/patients/dashboard" render={()=>{return(<Dashboard id={id} setPage={setPage} alert={alert} setalert={setalert}/>)}}> 
+        <Route exact path="/patients/dashboard" render={()=>{return(<Dashboard id={id} setPage={setPage} alert={alert} setalert={setalert} setappointment={setappointment}/>)}}> 
            </Route>
         <Route exact path="/patients/bookapp" render={()=>{return(<Bookappointment setDoctorBook={setDoctorBook}setPage={setPage} />)}}> 
            </Route>
