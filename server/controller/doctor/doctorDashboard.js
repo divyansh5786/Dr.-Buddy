@@ -50,24 +50,19 @@ doctorDashboard = async(req, res) => {
          const doctor=await Doctor.findById(doctorID)
              var totalincome= completedPatient * (parseInt(doctor.Fees));
       
-<<<<<<< Updated upstream
-       console.log( totalPatient)
-       console.log( pendingPatient)
-       console.log(todayPendingPatient)
-       console.log(todayCompletedPatient)
-       console.log(completedPatient)
-       console.log(totalincome)
-           var result={totalPatient, pendingPatient,todayPendingPatient,todayCompletedPatient,completedPatient,totalincome}
-=======
-      const totalPatients= totalPatient.length;
+
+      //  console.log( totalPatient)
       //  console.log( pendingPatient)
       //  console.log(todayPendingPatient)
       //  console.log(todayCompletedPatient)
       //  console.log(completedPatient)
       //  console.log(totalincome)
+           var result={totalPatient, pendingPatient,todayPendingPatient,todayCompletedPatient,completedPatient,totalincome}
 
+      const totalPatients= totalPatient.length;
+     
            var result={totalPatients, pendingPatient,todayPendingPatient,todayCompletedPatient,completedPatient,totalincome}
->>>>>>> Stashed changes
+
         res.status(200).json({result});
       } catch (e) {
         res.status(422).json({message:"Error occured while fetching details of dashboard"});
