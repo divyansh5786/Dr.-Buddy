@@ -40,7 +40,12 @@ function Signup({setDoctor}) {
       })
     });
     const data = await res.json();
-    if (res.status === 422 || !data) {
+    if(res.status===406)
+    {
+      window.alert("User already exists with this username");
+      console.log("User already exists with this username");
+    }
+    else if (res.status === 422 || !data) {
       window.alert("Invailid Registration");
       console.log("Invailid Registration");
     } else {

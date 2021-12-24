@@ -1,161 +1,210 @@
 import { useState, useEffect } from 'react';
 import '../../css/prescriptions.css';
 import React from 'react'
+import jsPDF from  "jspdf";
+import html2canvas from  "html2canvas";
 //import '../../css/style.css';
 import { useHistory } from 'react-router-dom';
 
+var DateTransformtostring = (date) => {
+	const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+		"Jul", "Aug", "Sept", "Oct", "Nov", "Dec"
+	]
+	let milliseconds = Date.parse(date);
+	date = new Date(milliseconds)
+	//console.log(date);
+	var d = (date.getDate()) + "-" + monthNames[date.getMonth()] + "-" + (date.getFullYear());
+	return d;
+}
 
+
+
+var calculateAge = (date) => {
+	let milliseconds = Date.parse(date);
+	let nowmilli = Date.parse(new Date());
+	let age = Math.floor((nowmilli - milliseconds) / 1000 / 86400 / 365);
+	return age;
+
+}
 const fetchPrescriptionData = async (id) => {
 	try {
-	  const res = await fetch("/viewPrescription", {
-		method: "POST",
-		headers: {
-		  "Content-Type": "application/json"
-		},
-		body: JSON.stringify({
-		  id
-		})
-	  });
-	  const data = await res.json();
-	  var tempdata = [];
-	  if (res.status === 422 || !data) {
-		console.log("Error while fetching prescription");
-	  } else {
-		console.log("prescription data fetched successfully");
-		console.log(data);
-  
-	  }
+		const res = await fetch("/viewPrescription", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				id
+			})
+		});
+		const data = await res.json();
+		var tempdata = null;
+		if (res.status === 422 || !data) {
+			console.log("Error while fetching prescription");
+		} else {
+			console.log("prescription data fetched successfully");
+			console.log(data.result);
+			tempdata = {
+				id: data.result._id,
+				doctorname: "Dr." + data.result.doctorID.firstname + " " + data.result.doctorID.lastname,
+				spec: data.result.doctorID.Specialization,
+				degree: data.result.doctorID.Degree,
+				doctorcity: data.result.doctorID.city,
+				doctorstate: data.result.doctorID.state,
+				doctoraddress: data.result.doctorID.Address,
+				doctormobile: data.result.doctorID.mobile,
+				doctoremail: data.result.doctorID.email,
+				patientname: data.result.patientID.firstname + " " + data.result.patientID.lastname,
+				patientage: calculateAge(data.result.patientID.dateofbirth),
+				patientgender: data.result.patientID.gender,
+				patientmobile: data.result.patientID.mobile,
+				patientemail: data.result.patientID.email,
+				patientaddress: data.result.patientID.Address,
+				patientcity: data.result.patientID.city,
+				patientstate: data.result.patientID.state,
+				appointmentDate: DateTransformtostring(data.result.appointmentDate),
+				appointmentTime: data.result.appointmentTime,
+				diagnosis: data.result.diagnosis,
+				medicine: data.result.medicine,
+				tests: data.result.tests,
+				followUp: DateTransformtostring(data.result.followUp),
+			}
+
+		}
 	}
 	catch (e) {
-	  console.log("error occured in fetching" + e);
+		console.log("error occured in fetching" + e);
 	}
 	return tempdata;
-  }
-function ViewPrescription({appointment}) {
+}
+function ViewPrescription({ appointment }) {
+
+	const [prescriptions, setprescriptions] = useState(null);
 
 	useEffect(() => {
-       //setPage('View Prescription');
-	   fetchPrescriptionData(appointment);
-    }, []);
-    return (<>
-	<div class="prescription">
-		<div class="panel-body">
-			<div class="doctor-widget">
-				<div class="doctor-info-left">
-					<h4>Dr. Onkar Singh</h4>
-					<ul class="list-unstyled">
-						<li><ul class="list-unstyled rowmajor">
-						<li>M.B.B.S. ,</li>
-						<li>M.D. ,</li>
-						<li>M.S. </li>
-					</ul></li>
-					<li>Reg No. 27098</li>
-					</ul>
-				</div>
-				<div class="doctor-info-centre">
-					<h4><strong>Dr.Buddy</strong></h4>
-					<>Make life Simple</>
-				</div>
-				<div class="doctor-info-right">
-					<h4>Address</h4>
-					<h6>118/22 Amar Enclve Model Town East</h6>
-					<ul class="list-unstyled rowmajor">
-						<li>Ghaziabad , </li>
-						<li>Uttar Pardesh</li>
-					</ul>
-					<ul class="list-unstyled">
-						<li>Phone : 9990892500</li>
-						<li>Email : bansal@mail.com</li>
-					</ul>
+		//setPage('View Prescription');
+		fetchPrescriptionData(appointment).then(tempdata => {
+			setprescriptions(tempdata);
+		});
+	}, []);
 
-				</div>
+	return (<>
+		{(prescriptions === null) ? <></> :
+			<div class="prescription"  id="pres">
+				<div class="panel-body">
+					<div class="doctor-widget">
+						<div class="doctor-info-left">
+							<h4>{prescriptions.doctorname}</h4>
+							<ul class="list-unstyled">
+								<li>{prescriptions.spec}</li>
+								<li><br /></li>
+								<li><ul class="list-unstyled">
+									{prescriptions.degree.map((degree) => {
+										return <li>{degree.Name + " ( " + degree.Institute + "  " + degree.Duration + " )"}</li>
+									})}
+								</ul></li>
 
-			</div>
-			<div class="patientDetail">
-				<div class="patient-info-left">
-					<ul class="list-unstyled">
-						<li><ul class="list-unstyled rowmajor">
-						<li>ID : 1120193845 : </li>
-						<li>UNNATI BANSAL</li>
-						<li>(22y, Female)</li>
-						</ul></li>
-						<li>Phone Number: 8826501470</li>
-						<li>Email Id: unnati@gmail.com</li>
-						<li>Address: 118/22 Amar Encalve Model Town east Ghaziabd UttarPradesh</li>
+							</ul>
+						</div>
+						<div class="doctor-info-centre">
+							<h4><strong>Dr.Buddy</strong></h4>
+							<>Make life Simple</>
+						</div>
+						<div class="doctor-info-right">
+							<h4>Address</h4>
+							<h6>{prescriptions.doctoraddress}</h6>
+							<ul class="list-unstyled rowmajor">
+								<li>{prescriptions.doctorcity} , </li>
+								<li>{prescriptions.doctorstate}</li>
+							</ul>
+							<ul class="list-unstyled">
+								<li>Phone : {prescriptions.doctormobile}</li>
+								<li>Email : {prescriptions.doctoremail}</li>
+							</ul>
+
+						</div>
+
+					</div>
+					<div class="patientDetail">
+						<div class="patient-info-left">
+							<ul class="list-unstyled">
+								<li><ul class="list-unstyled rowmajor">
+									<li>Patient : </li>
+									<li>{prescriptions.patientname}</li>
+									<li>({prescriptions.patientage}y, {prescriptions.patientgender})</li>
+								</ul></li>
+								<li>Phone Number: {prescriptions.patientmobile}</li>
+								<li>Email Id: {prescriptions.patientemail}</li>
+								<li>Address: {prescriptions.patientaddress}</li>
+								<li>City/State: {prescriptions.patientcity + ", " + prescriptions.patientstate}</li>
+							</ul>
+						</div>
+						<div class="patient-info-right">
+							<ul class="list-unstyled">
+								<li>Date: {prescriptions.appointmentDate}</li>
+								<li>Time: {prescriptions.appointmentTime}</li>
+							</ul>
+						</div>
+					</div>
+					<div class="diagnosis">
+						<ul class="list-unstyled rowmajor">
+							<li><strong>Diagnosis : </strong></li>
+							<li>{prescriptions.diagnosis.map((diagnosis) => {
+								return <li>{" "+diagnosis+" ,"}</li>
+							})}</li>
 						</ul>
-				</div>
-				<div class="patient-info-right">
-					Date: 03-Mar-2021
-				</div>
-			</div>
-			<div class="diagnosis">
-				<ul class="list-unstyled rowmajor">
-					<li><strong>Diagnosis : </strong></li>
-					<li>Diffuse Alopecia,</li>
-					<li>Hair Loss</li>
-				</ul>
-			</div>
-			<div class="Medicines">
-				<div><strong>Medicines</strong></div>
-				<table class="table table-condensed nomargin">
-					<thead>
-						<tr>
-							<th>S.No.</th>
-							<th>Medicine</th>
-							<th>Dosage</th>
-							<th>Freq - Duration</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>1)</td>
-							<td><strong>BEROCIN CZ-CAPSULE</strong></td>
-							<td>0-0-1</td>
-							<td>daily,10days</td>
-						</tr>
-						<tr>
-							<td>2)</td>
-							<td><strong>BEROCIN CZ-CAPSULE</strong></td>
-							<td>0-0-1</td>
-							<td>daily,10days</td>
-						</tr>
-						<tr>
-							<td>2)</td>
-							<td><strong>BEROCIN CZ-CAPSULE</strong></td>
-							<td>0-0-1</td>
-							<td>daily,10days</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-			<div class="follow-up">
-				<ul class="list-unstyled rowmajor">
-					<li><strong>Follow Up:</strong></li>
-					<li>17-Mar-2021</li>
-				</ul>
-			</div>
-			<div class="tests">
-				<ul class="list-unstyled rowmajor">
-					<li><strong>Tests</strong></li>
-					<li>Tpd</li>
-					<li>Bp CC</li>
-				</ul>
-			</div>
-			<div>
-				<ul ul class="list-unstyled">
-					<li>Digital Signature</li>
-					<li>Dr. Onkar Singh</li>
-				</ul>
-			</div>
-			
-		</div>
-		<div class="panel-body2">
-			<a class="btn btn-success" href="page-invoice-print.html" target="_blank" style={{"width":"auto"}}><i class="fa fa-print"></i> PRINT</a>
-		</div>
-	</div>
+					</div>
+					<div class="Medicines">
+						<div><strong>Medicines</strong></div>
+						<table class="table table-condensed nomargin">
+							<thead>
+								<tr>
+									<th>S.No.</th>
+									<th>Medicine</th>
+									<th>Dosage</th>
+									<th>Freq - Duration</th>
+								</tr>
+							</thead>
+							<tbody>
+								{prescriptions.medicine.map((medicine, index) => {
+									return (<tr>
+										<td>{index + 1}</td>
+										<td>{medicine.medicinename}</td>
+										<td>{medicine.dosage}</td>
+										<td>{medicine.fd}</td>
+									</tr>)
+								})
+								}
+							</tbody>
+						</table>
+					</div>
+					<div class="follow-up">
+						<ul class="list-unstyled rowmajor">
+							<li><strong>Follow Up:</strong></li>
+							<li>{prescriptions.followUp}</li>
+						</ul>
+					</div>
+					<div class="tests">
+						<ul class="list-unstyled rowmajor">
+							<li><strong>Tests : </strong></li>
+							<li>{prescriptions.tests.map((test) => {
+								return <>{" "+test+" ,"}</>
+							})}</li>
+						</ul>
+					</div>
+					<div>
+						<ul ul class="list-unstyled">
+							<li>Digital Signature</li>
+							<li>{prescriptions.doctorname}</li>
+						</ul>
+					</div>
 
+				</div>
 	
-    </>)
+			</div>
+		}
+
+	</>)
 }
 
 export default ViewPrescription;

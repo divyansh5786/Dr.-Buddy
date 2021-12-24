@@ -62,6 +62,7 @@ function Appointments({ id, setPage,setpatient,setappointment }) {
                console.log(data);
                 data.map((appointment) => {
                     //console.log("patient id "+appointment.patientID._id);
+                    console.log(appointment);
                     let tempappoint = {
                         patientID:appointment.patientID._id,
                         id: appointment._id,
