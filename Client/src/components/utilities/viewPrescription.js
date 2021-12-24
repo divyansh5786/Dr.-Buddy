@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import '../../css/prescriptions.css';
 import React from 'react'
-import jsPDF from  "jspdf";
-import html2canvas from  "html2canvas";
 //import '../../css/style.css';
 import { useHistory } from 'react-router-dom';
 

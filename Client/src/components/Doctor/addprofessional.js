@@ -83,8 +83,9 @@ function AddProfessional({id,setPage}) {
         online=false;
         else
         online=true;
-        let details={"id":id.doctor,"Online":online,"Specialization":specialisation,"Fees":fees,"Degree":degrees};
+        let details={"id":id,"Online":online,"Specialization":specialisation,"Fees":fees,"Degree":degrees};
         console.log(details);
+        console.log(id);
         saveDetails(details,history);
     }
     return (< >
@@ -215,7 +216,7 @@ function AddProfessional({id,setPage}) {
                 </div>
             </div>
             <div class="panel-body2" >
-			<a class="btn btn-success" onClick={postdata} style={{"width":"auto","color":"white"}}> SUBMIT</a>
+			<a class="btn btn-success" onClick={()=>{postdata()}} style={{"width":"auto","color":"white"}}> SUBMIT</a>
 		</div>
         </div>
     </>
