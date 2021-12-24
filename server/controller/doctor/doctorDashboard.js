@@ -32,10 +32,10 @@ doctorDashboard = async(req, res) => {
        console.log(todayCompletedPatient)
        console.log(completedPatient)
        console.log(totalincome)
-           var result=[totalPatient, pendingPatient,todayPendingPatient,todayCompletedPatient,completedPatient,totalincome]
+           var result={totalPatient, pendingPatient,todayPendingPatient,todayCompletedPatient,completedPatient,totalincome}
         res.status(200).json({result});
       } catch (e) {
-        res.status(422).json({message:"Error occured while booking appointmnet"});
+        res.status(422).json({message:"Error occured while fetching details of dashboard"});
         console.log(e);
       }
     }
