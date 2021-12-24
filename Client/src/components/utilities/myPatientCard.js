@@ -11,7 +11,7 @@ function PatientCard({patient}) {
                     <a href="doctor-profile.html" class="avatar avatar-sm mr-2">
 
                     </a>
-                    <a href="doctor-profile.html">{patient.patientname}</a>
+                    <a>{patient.patientname}</a>
                 </h2>
             </td>
             <td>{patient.age}</td>

@@ -12,7 +12,7 @@ function PrescriptionCard({ prescription }) {
                 <h2 class="table-avatar">
                     <a href="doctor-profile.html" class="avatar avatar-sm mr-2">
                     </a>
-                    <a href="doctor-profile.html">{prescription.patientName}</a>
+                    <a>{prescription.patientName}</a>
                 </h2>
             </td>
             <td class="text-right">
