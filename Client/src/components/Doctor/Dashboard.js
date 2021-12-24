@@ -3,6 +3,41 @@ import { useState,useEffect } from 'react';
 import '../../css/dashboard.css';
 import { NavLink } from 'react-router-dom';
 
+const fetchPrescriptionData = async (id) => {
+  let doctorID = id;
+  try {
+    const res = await fetch("/viewAppointmentPatient", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        doctorID
+      })
+    });
+    const data = await res.json();
+    var tempdata = {};
+    if (res.status === 422 || !data) {
+      console.log("Error while fetching Patient data");
+    } else {
+      console.log("Patient data fetched successfully");
+      console.log(data);
+      tempdata = {
+        "totalpatient":data.totalpatient,
+        "earning":data.earning,
+        "approvalwaiting":data.approvalwaiting,
+        "appointmentleft":data.appointmentleft,
+        "appointmentdone":data.appointmentdone,
+        "totalappointment":data.appointmentdone,
+      }
+    }
+  }
+  catch (e) {
+    console.log("error occured in fetching" + e);
+  }
+  return tempdata;
+}
+
 function Dashboard({id,setPage}) {
   useEffect(() => {
     setPage('Dashboard');
