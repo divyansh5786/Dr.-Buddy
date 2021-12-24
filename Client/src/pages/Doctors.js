@@ -17,8 +17,10 @@ import MyPatient from '../components/Doctor/myPatients';
 import PatientView from '../components/Doctor/patientView';
 import PendingAppointments from '../components/Doctor/pendingApp';
 import ProfileDoctor from '../components/Doctor/profiledoctor';
+import { useHistory } from 'react-router-dom';
 
 function Doctors(doctor) {
+  const history = useHistory();
   let id = doctor.doctor.id;
   let name = doctor.doctor.name;
   const [page,setPage] = useState('Dashboard');
@@ -26,6 +28,17 @@ function Doctors(doctor) {
   const [patient,setpatient] = useState(null);
   const [appointment,setappointment] = useState(null);
   console.log("appointment "+appointment);
+
+  const logout = () => {
+    setpatient(null); 
+    setPage('Dashboard'); 
+    setalert(null);
+    setappointment(null); 
+    id = null; 
+    name = null; 
+    history.replace("/");
+ }
+
   return (
     <>
       <SideBarDoctor />
@@ -51,6 +64,8 @@ function Doctors(doctor) {
         <Route exact path="/doctors/appointments" render={()=>{return(<Appointments id={id} setPage={setPage} setpatient={setpatient} setappointment={setappointment} alert={alert} setalert={setalert}/>)}} />
         <Route exact path="/doctors/Pendingappointemnt" render={()=>{return(<PendingAppointments id={id} setPage={setPage} setpatient={setpatient} setappointment={setappointment} alert={alert} setalert={setalert}/>)}} />
         <Route exact path="/doctors/prescription" render={()=>{return(<Prescriptions id={id} setPage={setPage} />)}} />
+        <Route exact path="/doctors/logout" render={() => {logout()}}>
+                  </Route>
         {/* <Route exact path="/patients" component={Patients} />
         <Route exact path="/patientlist" component={PatientList} />
         <Route exact path="/bookapp" component={Bookapp} />

@@ -52,7 +52,7 @@ function SideBarDoctor() {
             </NavLink>
           </li>
           <li >
-          <NavLink to="/doctors/logOut">
+          <NavLink to="/doctors/logout">
               <i class='bx bx-log-out'></i>
               <span class="links_name">Log out</span>
             </NavLink>
