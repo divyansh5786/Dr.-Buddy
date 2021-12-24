@@ -3,9 +3,11 @@ import '../../css/prescriptions.css';
 import React from 'react'
 //import '../../css/style.css';
 import {useHistory} from 'react-router-dom';
+import AlertBar from '../utilities/alertbar';
 
 
-const saveDetails = async (details,history) => {
+const saveDetails = async (details,history,setalert) => {
+    
     const { id, Online, Specialization, Fees, Degree } = details;
     try {
         const res = await fetch("/addprofession", {
@@ -19,12 +21,13 @@ const saveDetails = async (details,history) => {
         });
         const data = await res.json();
 
-        if (res.status === 422 || !data) {
-            window.alert("Some error accured while processinf, Please try again");
+        if (res.status === 422 || !data || res.status === 404 ) {
+            setalert({color:"red",message:"Error Occure while saving professional details"});
+            history.replace("/doctors/dashboard");
             console.log("Error Occurred");
         } else {
-            window.alert("Details saved successfully");
             console.log("Details saved successfully"+data);
+            setalert({color:"green",message:" Professional Details Saved Successfully"});
             history.replace("/doctors/dashboard");
         }
     }
@@ -33,7 +36,7 @@ const saveDetails = async (details,history) => {
     }
 }
 
-function AddProfessional({id,setPage}) {
+function AddProfessional({id,setPage,alert,setalert}) {
     const history = useHistory();
     
     console.log(id);
@@ -45,9 +48,18 @@ function AddProfessional({id,setPage}) {
     const [specialisation, setspecialisation] = useState([]);
     const [fees, setfees] = useState(null);
     const [temporary, settemporary] = useState({mode:"",Name:"",Institute:"",Duration:"",specialisation:"",fees:" "});
-    
     const handleNULLId = ()=>{
         
+    }
+    const deleteDegree = (index)=>{
+        console.log(index);
+        degrees.splice(index, 1);
+        let tempdata = degrees.map(obj => ({...obj}));
+        if(tempdata===null)
+        upadtedegree([]);
+        else
+        upadtedegree(tempdata);
+        console.log(degrees);
     }
     useEffect(() => {
         setPage('Add Professional');
@@ -86,8 +98,9 @@ function AddProfessional({id,setPage}) {
         let details={"id":id,"Online":online,"Specialization":specialisation,"Fees":fees,"Degree":degrees};
         console.log(details);
         console.log(id);
-        saveDetails(details,history);
+        saveDetails(details,history,setalert);
     }
+    console.log(degrees);
     return (< >
         <div class="professionals" style={{ paddingTop: '10%', paddingInline: '10%' }}>
         <h4 style={{"paddingLeft":"10px"}}>Professional Details</h4>
@@ -157,15 +170,18 @@ function AddProfessional({id,setPage}) {
 							<th>Degree</th>
 							<th>Institute</th>
 							<th>Duration</th>
+                            <th></th>
 						</tr>
 					</thead>
 					<tbody>
-                    {degrees.map((degree,index) => {
+                    {
+                    degrees.map((degree,index) => {
                                 return (<tr>
                                     <td>{index+1}</td>
                                     <td>{degree.Name}</td>
                                     <td>{degree.Institute}</td>
                                     <td>{degree.Duration}</td>
+                                    <td><button class="deletebtn" onClick={()=>{deleteDegree(index)}}><i class="fa fa-trash"></i></button></td>
                                 </tr>)
                             })
                         }

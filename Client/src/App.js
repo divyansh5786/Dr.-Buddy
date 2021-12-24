@@ -24,7 +24,7 @@ function App() {
           }}> 
            </Route>
            <Route  path="/patients" render={()=>{
-            return(<Patients patient={patient}  />)
+            return(<Patients patient={patient} setPatient={setPatient}  />)
           }}> 
            </Route>
            <Route exact path="/SignUp" render={()=>{return(<Signup setDoctor={setDoctor} />)}}/> 

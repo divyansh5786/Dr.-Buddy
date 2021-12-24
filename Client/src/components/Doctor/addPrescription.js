@@ -14,7 +14,7 @@ var DateTransform = (date) => {
     console.log(year + " "+ month +" " + tareek +" " + d);
     return d;
   }
-const postprescription = async (appointment,prescription,history) => {
+const postprescription = async (appointment,prescription,history,alert,setalert) => {
     console.log(prescription);
     let diagnosis = prescription.diagnosis;
     let medicine =  prescription.medcines;
@@ -35,15 +35,16 @@ const postprescription = async (appointment,prescription,history) => {
         const data = await res.json();
 
         if (res.status === 422 || !data) {
+            setalert({color:"red",message:"Error Occure while posting prescription"});
             //window.alert("Invailid Registration");
             if(data)
             console.log(data.message);
             else
             console.log("error occured");
         } else {
-
+            setalert({color:"green",message:" Prescription Saved Successfully"});
             console.log("Prescription uploaded successfully");
-            history.replace("/doctors/patientview");
+            history.goBack();
         }
     }
     catch (e) {
@@ -99,7 +100,7 @@ const fetchPatientData = async (patient,history,) => {
       return tempdata;
 }
 
-function AddPrescription({patient,id,setPage,appointment}) {
+function AddPrescription({patient,id,setPage,appointment,alert,setalert}) {
     console.log(appointment);
     const history = useHistory();
     const [patientData, setpatientData] = useState(null);
@@ -116,7 +117,16 @@ function AddPrescription({patient,id,setPage,appointment}) {
             setpatientData(tempdata);
         })
     }, []);
-
+    const deleteDegree = (index)=>{
+        console.log(index);
+        medicines.splice(index, 1);
+        let tempdata = medicines.map(obj => ({...obj}));
+        if(tempdata===null)
+        upadtemedicines([]);
+        else
+        upadtemedicines(tempdata);
+        //console.log(medicines);
+    }
     const handleInputs = (e) => {
         let name, value;
         name = e.target.name;
@@ -144,7 +154,7 @@ function AddPrescription({patient,id,setPage,appointment}) {
     const postdata =()=>{
         let prescription={"diagnosis":diagnoisis,"medcines":medicines,"tests":tests,"followup":followup};
         console.log(prescription);
-        postprescription(appointment,prescription,history);
+        postprescription(appointment,prescription,history,alert,setalert);
     }
     return (< >
     
@@ -223,6 +233,7 @@ function AddPrescription({patient,id,setPage,appointment}) {
 							<th>Medicine</th>
 							<th>Dosage</th>
 							<th>Freq - Duration</th>
+                            <th></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -232,6 +243,7 @@ function AddPrescription({patient,id,setPage,appointment}) {
                                     <td>{medicine.medicinename}</td>
                                     <td>{medicine.dosage}</td>
                                     <td>{medicine.fd}</td>
+                                    <td><button class="deletebtn" onClick={()=>{deleteDegree(index)}}><i class="fa fa-trash"></i></button></td>
                                 </tr>)
                             })
                         }

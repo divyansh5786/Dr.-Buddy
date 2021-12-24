@@ -14,7 +14,7 @@ function AlertBar({ alert, setalert }) {
     console.log(alert);
     return (
         <>
-            {(alert === null) ? <></> : (alert.color === "green") ? <div class="alert alert-success" role="alert" style={{"marginInline":"5%"}}>
+            {(alert === null || !alert) ? <></> : (alert.color === "green") ? <div class="alert alert-success" role="alert" style={{"marginInline":"5%"}}>
                 {alert.message}
             </div> : <div class="alert alert-danger" role="alert">
                 {alert.message}

@@ -113,9 +113,14 @@ const fetchPrescriptionData = async (id) => {
       console.log("Patient data fetched successfully");
       console.log(data);
       var len = data.result.length;
-      for(var i=0;i<2;i++)
+      var count = 2;
+      var i = len-1;
+      while(count>0 && i>=0)
       {
-        let appointment = data.result[len-i-1];
+        let appointment = data.result[i];
+        if(appointment.status == "complete")
+        {
+          count--;
         let tempappoint = { id: appointment._id,
            doctorname: appointment.doctorID.firstname + appointment.doctorID.lastname, 
            spec: appointment.doctorID.Specialization,
@@ -124,6 +129,8 @@ const fetchPrescriptionData = async (id) => {
           };
           tempdata.push(tempappoint);
       }
+      i--;
+    }
 
     }
   }
@@ -211,7 +218,7 @@ function Dashboard({ id, setPage,alert,setalert,setappointment}) {
                                 </tr>
                             </thead>
                             <tbody>
-                            {prescriptions===null?"Loading..." :prescriptions.length===0?"No appointment made" :  
+                            {prescriptions===null?"Loading..." :prescriptions.length===0?"No prescription added" :  
                     prescriptions.map((prescription)=>{
                         console.log(prescription);
                         return (<DashPresPatient key={prescription.id} prescription={prescription} setappointment={setappointment} />   

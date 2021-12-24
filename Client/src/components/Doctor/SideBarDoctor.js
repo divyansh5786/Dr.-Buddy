@@ -8,7 +8,7 @@ function SideBarDoctor() {
       <div class="sidebar">
         <div class="logo-details">
           <i></i>
-          <span class="logo_name">Dr.Buddy</span>
+          <span class="logo_name">Doctor</span>
         </div>
         <ul class="nav-links">
           <li>
