@@ -20,6 +20,17 @@ width:90px;
   background-color: transparent;
   
 }
+.deletebtn:hover {
+  background-color: Red;
+}
+.deletebtn {
+  background-color: #ff726f;
+  border: none;
+  color: white;
+  padding: 12px 16px;
+  font-size: 16px;
+  cursor: pointer;
+}
 .user-tabs .nav-tabs > li > a {
   border: 0;
   border-bottom: 3px solid transparent;
@@ -253,7 +264,7 @@ nav .profile-details i{
 .home-content .overview-boxes{
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-evenly;
   flex-wrap: wrap;
   padding: 0 20px;
   margin-bottom: 26px;

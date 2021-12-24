@@ -32,7 +32,7 @@ const fetchData = async (id) => {
     } else {
       console.log(" Appointments fetched successfully");
       console.log(data);
-      data.appointments.map((appointment) => {
+      data.result.map((appointment) => {
         let tempappoint = { id: appointment._id,
            doctorname: appointment.doctorID.firstname + appointment.doctorID.lastname, 
            spec: appointment.doctorID.Specialization,

@@ -3,6 +3,41 @@ import { useState,useEffect } from 'react';
 import '../../css/dashboard.css';
 import { NavLink } from 'react-router-dom';
 
+const fetchPrescriptionData = async (id) => {
+  let doctorID = id;
+  try {
+    const res = await fetch("/viewAppointmentPatient", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        doctorID
+      })
+    });
+    const data = await res.json();
+    var tempdata = {};
+    if (res.status === 422 || !data) {
+      console.log("Error while fetching Patient data");
+    } else {
+      console.log("Patient data fetched successfully");
+      console.log(data);
+      tempdata = {
+        "totalpatient":data.totalpatient,
+        "earning":data.earning,
+        "approvalwaiting":data.approvalwaiting,
+        "appointmentleft":data.appointmentleft,
+        "appointmentdone":data.appointmentdone,
+        "totalappointment":data.appointmentdone,
+      }
+    }
+  }
+  catch (e) {
+    console.log("error occured in fetching" + e);
+  }
+  return tempdata;
+}
+
 function Dashboard({id,setPage}) {
   useEffect(() => {
     setPage('Dashboard');
@@ -14,8 +49,8 @@ function Dashboard({id,setPage}) {
     
   return (
     <>
-<div class="home-content">
-<div class="overview-boxes">
+<div class="home-content"style={{"PaddingTop":"50%"}}>
+<div class="overview-boxes" >
   <div class="box">
     <div class="right-side">
       <div class="box-topic">Total Patients</div>
@@ -29,132 +64,62 @@ function Dashboard({id,setPage}) {
   </div>
   <div class="box">
     <div class="right-side">
-      <div class="box-topic">Appointments</div>
-      <div class="number">7</div>
+      <div class="box-topic"> Today Earning</div>
+      <div class="number">₹7</div>
       <div class="indicator">
         <i class='bx bx-up-arrow-alt'></i>
         <span class="text">Today only</span>
-      </div>
-    </div>
-    <span class="iconify" data-icon="clarity:list-line" data-width="50" data-height="50"></span>
-  </div>
-  <div class="box">
-    <div class="right-side">
-      <div class="box-topic">Total Profit</div>
-      <div class="number">$12,876</div>
-      <div class="indicator">
-        <i class='bx bx-up-arrow-alt'></i>
-        <span class="text">Up from yesterday</span>
       </div>
     </div>
     <i class='bx bx-cart cart three' ></i>
   </div>
   <div class="box">
     <div class="right-side">
-      <div class="box-topic">Total Return</div>
-      <div class="number">$1100</div>
+      <div class="box-topic">Approval waiting</div>
+      <div class="number">170</div>
       <div class="indicator">
-        <i class='bx bx-down-arrow-alt down'></i>
-        <span class="text">Down From Today</span>
+        <i class='bx bx-up-arrow-alt'></i>
+        <span class="text">Up from yesterday</span>
       </div>
     </div>
-    <i class='bx bxs-cart-download cart four' ></i>
+    <img src="https://img.icons8.com/external-flatart-icons-outline-flatarticons/64/000000/external-checklist-news-flatart-icons-outline-flatarticons.png"/>
   </div>
 </div>
-
-<div class="sales-boxes">
-  <div class="recent-sales box">
-    <div class="title">Patient Appointment</div>
-    <div class="sales-details">
-      <ul class="details">
-        <li class="topic">Date</li>
-        <li><a href="#">02 Jan 2021</a></li>
-        <li><a href="#">02 Jan 2021</a></li>
-        <li><a href="#">02 Jan 2021</a></li>
-        <li><a href="#">02 Jan 2021</a></li>
-      </ul>
-      <ul class="details">
-      <li class="topic">Patient Name</li>
-      <li><a href="#">Alex Doe</a></li>
-      <li><a href="#">David Mart</a></li>
-      <li><a href="#">Roe Parter</a></li>
-      <li><a href="#">Diana Penty</a></li>
-    </ul>
-    <ul class="details">
-      <li class="topic">Purpose</li>
-      <li><a href="#">X-rays report</a></li>
-      <li><a href="#">MRI Scan report</a></li>
-      <li><a href="#">General CheckUp</a></li>
-      <li><a href="#">Dental CheckUp</a></li>
-    </ul>
-    <ul class="details">
-      <li class="topic">Earn Amount</li>
-      <li><a href="#">$204.98</a></li>
-      <li><a href="#">$24.55</a></li>
-      <li><a href="#">$25.88</a></li>
-      <li><a href="#">$170.66</a></li>
-    </ul>
+<br/>
+<br/>
+<div class="overview-boxes">
+  <div class="box">
+    <div class="right-side">
+      <div class="box-topic">Appointment left</div>
+      <div class="number">170</div>
+      <div class="indicator">
+        <i class='bx bx-up-arrow-alt'></i>
+        <span class="text">Up from yesterday</span>
+      </div>
     </div>
-    <div class="button">
-      <a href="#">See All</a>
-    </div>
+    <img src="https://img.icons8.com/ios-glyphs/30/000000/ingredients-list.png"/>
   </div>
-  <div class="top-sales box">
-    <div class="title">Top Patients Reviews</div>
-    <ul class="top-sales-details">
-      <li>
-      <a href="#">
-        <img src="images/sunglasses.jpg" alt=""/>
-        <span class="product">Vuitton Sunglasses</span>
-      </a>
-      <span class="price">
-      <span class="fa fa-star checked"></span>
-      <span class="fa fa-star checked"></span>
-      <span class="fa fa-star checked"></span>
-      <span class="fa fa-star checked"></span>
-      <span class="fa fa-star checked"></span>
-      </span>
-    </li>
-    <li>
-      <a href="#">
-         <img src="images/jeans.jpg" alt=""/>
-        <span class="product">Hourglass Jeans </span>
-      </a>
-      <span class="price">
-      <span class="fa fa-star checked"></span>
-      <span class="fa fa-star checked"></span>
-      <span class="fa fa-star checked"></span>
-      <span class="fa fa-star checked"></span>
-      <span class="fa fa-star"></span>
-      </span>
-    </li>
-    <li>
-      <a href="#">
-       <img src="images/nike.jpg" alt=""/>
-        <span class="product">Nike Sport Shoe</span>
-      </a>
-      <span class="price">
-      <span class="fa fa-star checked"></span>
-      <span class="fa fa-star checked"></span>
-      <span class="fa fa-star checked"></span>
-      <span class="fa fa-star checked"></span>
-      <span class="fa fa-star"></span>
-      </span>
-    </li>
-    <li>
-      <a href="#">
-        <img src="images/scarves.jpg" alt=""/>
-        <span class="product">Hermes Silk Scarves.</span>
-      </a>
-      <span class="price">
-      <span class="fa fa-star checked"></span>
-      <span class="fa fa-star checked"></span>
-      <span class="fa fa-star checked"></span>
-      <span class="fa fa-star"></span>
-      <span class="fa fa-star"></span>
-      </span>
-    </li>
-    </ul>
+  <div class="box">
+    <div class="right-side">
+      <div class="box-topic">Appointment Served today</div>
+      <div class="number">7</div>
+      <div class="indicator">
+        <i class='bx bx-up-arrow-alt'></i>
+        <span class="text">Today only</span>
+      </div>
+    </div>
+    <img src="https://img.icons8.com/color/48/000000/checked-2--v1.png"/>
+  </div>
+  <div class="box">
+    <div class="right-side">
+      <div class="box-topic">Total Appointment served</div>
+      <div class="number">170</div>
+      <div class="indicator">
+        <i class='bx bx-up-arrow-alt'></i>
+        <span class="text">Up from yesterday</span>
+      </div>
+    </div>
+    <img src="https://img.icons8.com/external-wanicon-solid-wanicon/49/000000/external-appointment-health-checkup-wanicon-solid-wanicon.png"/>
   </div>
 </div>
 </div>

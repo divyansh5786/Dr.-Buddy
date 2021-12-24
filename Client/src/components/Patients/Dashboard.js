@@ -69,10 +69,10 @@ const fetchAppointmentsData = async (id) => {
     } else {
       console.log(" Appointments fetched successfully");
       console.log(data);
-      var len = data.appointments.length;
+      var len = data.result.length;
       for(var i=0;i<2;i++)
       {
-        let appointment = data.appointments[len-i-1];
+        let appointment = data.result[len-i-1];
         let tempappoint = { id: appointment._id,
            doctorname: appointment.doctorID.firstname + appointment.doctorID.lastname, 
            spec: appointment.doctorID.Specialization,
@@ -112,10 +112,10 @@ const fetchPrescriptionData = async (id) => {
     } else {
       console.log("Patient data fetched successfully");
       console.log(data);
-      var len = data.appointments.length;
+      var len = data.result.length;
       for(var i=0;i<2;i++)
       {
-        let appointment = data.appointments[len-i-1];
+        let appointment = data.result[len-i-1];
         let tempappoint = { id: appointment._id,
            doctorname: appointment.doctorID.firstname + appointment.doctorID.lastname, 
            spec: appointment.doctorID.Specialization,
@@ -133,7 +133,7 @@ const fetchPrescriptionData = async (id) => {
   return tempdata;
 }
 
-function Dashboard({ id, setPage,alert,setalert}) {
+function Dashboard({ id, setPage,alert,setalert,setappointment}) {
   const history = useHistory();
   const [medicalData, setmedicalData] = useState(null);
   const [prescriptions, setPrescriptions] = useState(null);
@@ -214,7 +214,7 @@ function Dashboard({ id, setPage,alert,setalert}) {
                             {prescriptions===null?"Loading..." :prescriptions.length===0?"No appointment made" :  
                     prescriptions.map((prescription)=>{
                         console.log(prescription);
-                        return (<DashPresPatient key={prescription.id} prescription={prescription} />   
+                        return (<DashPresPatient key={prescription.id} prescription={prescription} setappointment={setappointment} />   
                      )
                  })
                     }

@@ -4,10 +4,39 @@ import React from 'react'
 //import '../../css/style.css';
 import { useHistory } from 'react-router-dom';
 
-function ViewPrescription() {
-	//useEffect(() => {
-       // setPage('View Prescription');
-    //}, []);
+
+const fetchPrescriptionData = async (id) => {
+	try {
+	  const res = await fetch("/viewPrescription", {
+		method: "POST",
+		headers: {
+		  "Content-Type": "application/json"
+		},
+		body: JSON.stringify({
+		  id
+		})
+	  });
+	  const data = await res.json();
+	  var tempdata = [];
+	  if (res.status === 422 || !data) {
+		console.log("Error while fetching prescription");
+	  } else {
+		console.log("prescription data fetched successfully");
+		console.log(data);
+  
+	  }
+	}
+	catch (e) {
+	  console.log("error occured in fetching" + e);
+	}
+	return tempdata;
+  }
+function ViewPrescription({appointment}) {
+
+	useEffect(() => {
+       //setPage('View Prescription');
+	   fetchPrescriptionData(appointment);
+    }, []);
     return (<>
 	<div class="prescription">
 		<div class="panel-body">
