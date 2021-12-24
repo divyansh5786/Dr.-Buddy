@@ -14,7 +14,7 @@ viewAppointment=require("../controller/appointment/viewAppointment")
 patientDetails=require("../controller/patient/patientDetails")
 viewPrescription=require("../controller/appointment/viewPrescription")
 doctorPendingAppointment= require("../controller/doctor/doctorPendingAppointment")
-
+doctorDashboard=require("../controller/doctor/doctorDashboard");
 //  router.get('/profile',Authenticate,doctorProfile.profile)
 router.post('/register', userSignup.register);
 router.post('/searchDoctor', searchDoctor.doctorlist);
@@ -40,6 +40,8 @@ router.post('/updatepatient',patientDetails.updatePatientProfile);
 router.post('/addPrescription',viewPrescription.addPrescription);
 router.post('/viewPrescription',viewPrescription.viewPrescriptions);
 
+
+router.post('/doctorDashboard',doctorDashboard.doctorDashboard);
 
 
 
