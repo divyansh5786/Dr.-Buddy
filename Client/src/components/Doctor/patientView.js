@@ -6,6 +6,7 @@ import PatientViewPres from '../utilities/patientViewPres';
 import MedicaldDataCard from '../utilities/medicalDataCard';
 import { NavLink } from 'react-router-dom';
 import PatientDetails from '../utilities/patientDetails';
+import AlertBar from '../utilities/alertbar';
 
 const fetchPrescriptions = async (id) => {
     console.log(id);
@@ -28,7 +29,7 @@ const fetchPrescriptions = async (id) => {
       } else {
         console.log(" Appointments fetched successfully");
         console.log(data);
-        data.appointments.map((appointment) => {
+        data.result.map((appointment) => {
           let tempappoint = { id: appointment._id,
              doctorname: appointment.doctorID.firstname + appointment.doctorID.lastname, 
              spec: appointment.doctorID.Specialization,
@@ -141,7 +142,7 @@ const fetchPatientData = async (id,history) => {
       return tempdata;
 }
 
-function PatientView({patient,id, setPage}) {
+function PatientView({patient,id, setPage,alert,setalert}) {
     console.log(patient);
     console.log('Patient View');
     console.log(id);
@@ -164,6 +165,7 @@ function PatientView({patient,id, setPage}) {
 }, []);
 
     return (<div class="patientview" style={{ paddingTop: '10%', paddingInline: '10%' }}>
+      <AlertBar alert = {alert} setalert={setalert}/>
         {patientData === null ? "Loading..." : <PatientDetails patient={patientData}/>}
         <div class="card">
             <div class="card-body pt-0">

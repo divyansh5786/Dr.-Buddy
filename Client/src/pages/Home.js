@@ -34,7 +34,7 @@ function Home({setPatient,setDoctor}) {
       window.alert("Invailid Credentials");
       console.log("Invailid Credentials");
     } else {
-      window.alert("Login Successful");
+      //window.alert("Login Successful");
       console.log("Login Successfull",data.id);
       
       if(type=='Doctor')

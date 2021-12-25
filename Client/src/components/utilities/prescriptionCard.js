@@ -13,7 +13,7 @@ function PrescriptionCard({prescription}) {
                     <a href="doctor-profile.html" class="avatar avatar-sm mr-2">
 
                     </a>
-                    <a href="doctor-profile.html">{prescription.patientname}</a>
+                    <a>{prescription.patientname}</a>
                 </h2>
             </td>
             <td>{prescription.dateOfAppointment}</td>

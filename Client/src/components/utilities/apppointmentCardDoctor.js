@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 
 
 
-function AppointmentCard({appointment,appointments,setAppointments,setpatient,setappointment}) {
+function AppointmentCard({appointment,appointments,setAppointments,setpatient,setappointment,setalert}) {
     setpatient(null);
     const history = useHistory();
 
@@ -20,7 +20,7 @@ function AppointmentCard({appointment,appointments,setAppointments,setpatient,se
         
 
     }
-    const changestatus = async(id,status)=>{
+    const changestatus = async(id,status,setalert)=>{
         const res = await fetch("/statusUpdate", {
             method: "POST",
             headers: {
@@ -32,10 +32,10 @@ function AppointmentCard({appointment,appointments,setAppointments,setpatient,se
           });
           const data = await res.json();
           if (res.status === 422 || !data) {
-            // setalert({color:"red",message:"Error Occure while changing status"});
+             setalert({color:"red",message:"Error Occure while changing status"});
           } else {
-            alert("Status Changed successfully");
-            // console.log("Successfully updated");
+            setalert({color:"green",message:"successfully changed "+status});
+            //console.log("Successfully updated");
             appointment.status=status;
             Object.assign(tempdata, appointments);
             setAppointments(tempdata);
@@ -67,19 +67,19 @@ function AppointmentCard({appointment,appointments,setAppointments,setpatient,se
                 <>
                     <a class="btn btn-sm bg-primary-light">Accepted
                     </a>
-                    <a  class="btn btn-sm bg-danger-light" onClick={()=>{changestatus(appointment.id,"cancel")}}>
+                    <a  class="btn btn-sm bg-danger-light" onClick={()=>{changestatus(appointment.id,"cancel",setalert)}}>
                     <i class="fas fa-times"></i>Cancel
                     </a>
-                    <a class="btn btn-sm bg-warning-light" onClick={()=>{changestatus(appointment.id,"complete")}}>
+                    <a class="btn btn-sm bg-warning-light" onClick={()=>{changestatus(appointment.id,"complete",setalert)}}>
                     <i class="fas fa-check"></i> Complete
                     </a>
                     </>
                     :appointment.status=="pending"?
                     <>
-                    <a class="btn btn-sm bg-success-light" onClick={()=>{changestatus(appointment.id,"confirm")}}>
+                    <a class="btn btn-sm bg-success-light" onClick={()=>{changestatus(appointment.id,"confirm",setalert)}}>
                     <i class="fas fa-check"></i> Accept
                     </a>
-                    <a  class="btn btn-sm bg-danger-light"onClick={()=>{changestatus(appointment.id,"cancel")}}>
+                    <a  class="btn btn-sm bg-danger-light"onClick={()=>{changestatus(appointment.id,"cancel",setalert)}}>
                     <i class="fas fa-times"></i>Cancel
                     </a></>:
                     <></>}

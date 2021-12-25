@@ -5,10 +5,10 @@ import { useHistory } from 'react-router-dom';
 import AppointmentCard from '../utilities/apppointmentCardDoctor'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import AlertBar from '../utilities/alertbar';
 
 
-
-function Appointments({ id, setPage,setpatient,setappointment }) {
+function Appointments({ id, setPage,setpatient,setappointment,alert,setalert}) {
 
     const history = useHistory();
     const [appointments, setAppointments] = useState(null);
@@ -55,7 +55,7 @@ function Appointments({ id, setPage,setpatient,setappointment }) {
             const data = await res.json();
             var tempdata = [];
             if (res.status === 422 || !data) {
-                window.alert("Error while fetching appointments");
+                setalert("Error while fetching appointments");
                 console.log("Error while fetching appointments");
             } else {
               // console.log(" Appointments fetched successfully");
@@ -116,6 +116,7 @@ function Appointments({ id, setPage,setpatient,setappointment }) {
 
     return (
         <div class="appointments" style={{ paddingTop: '10%', paddingInline: '8%' }}>
+            <AlertBar alert = {alert} setalert={setalert}/>
             <div class="tab-content pt-0 box ">
                 <div style={{ display: 'flex', justifyContent: "center", paddingTop: "10px", paddingBottom: "10px" }}>
                     <span style={{ fontSize: 'x-large', fontWeight: '600', width: '100px' }}>Selectdate</span>
@@ -140,7 +141,7 @@ function Appointments({ id, setPage,setpatient,setappointment }) {
                                 {appointments === null ? "Loading..." : appointments.length === 0 ? "No appointment made" :
                                     appointments.map((appointment) => {
                                        // console.log(appointment.doctorname);
-                                        return (<AppointmentCard key={appointment.id} appointment={appointment} appointments={appointments} setAppointments={setAppointments} setpatient={setpatient} setappointment={setappointment} />
+                                        return (<AppointmentCard key={appointment.id} appointment={appointment} appointments={appointments} setAppointments={setAppointments} setpatient={setpatient} setappointment={setappointment} alert={alert} setalert={setalert}/>
                                         )
                                     })
                                 }

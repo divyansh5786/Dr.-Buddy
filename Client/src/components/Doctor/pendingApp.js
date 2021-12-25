@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import AppointmentCard from '../utilities/apppointmentCardDoctor'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import AlertBar from '../utilities/alertbar';
 
 
 const DateTransform = (date) => {
@@ -94,7 +95,7 @@ const fetchpending = async(id) => {
    // console.log(typeof (tempdata));
 
 }
-function PendingAppointments({ id, setPage,setpatient,setappointment }) {
+function PendingAppointments({ id, setPage,setpatient,setappointment,alert,setalert }) {
 
     const history = useHistory();
     const [appointments, setAppointments] = useState(null);
@@ -115,6 +116,7 @@ function PendingAppointments({ id, setPage,setpatient,setappointment }) {
 
     return (
         <div class="appointments" style={{ paddingTop: '10%', paddingInline: '8%' }}>
+            <AlertBar alert = {alert} setalert={setalert}/>
             <div class="tab-content pt-0 box ">
                 <div id="pat_appointments" class="tab-pane fade show active ">
                     <div class="card card-table mb-0 card-body table-responsive">
@@ -135,7 +137,7 @@ function PendingAppointments({ id, setPage,setpatient,setappointment }) {
                                 {appointments === null ? "Loading..." : appointments.length === 0 ? "No appointment made" :
                                     appointments.map((appointment) => {
                                        // console.log(appointment.doctorname);
-                                        return (<AppointmentCard key={appointment.id} appointment={appointment} appointments={appointments} setAppointments={setAppointments} setpatient={setpatient} setappointment={setappointment} />
+                                        return (<AppointmentCard key={appointment.id} appointment={appointment} appointments={appointments} setAppointments={setAppointments} setpatient={setpatient} setappointment={setappointment} alert={alert} setalert={setalert}/>
                                         )
                                     })
                                 }
