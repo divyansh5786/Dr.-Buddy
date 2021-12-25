@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { useState,useContext  } from 'react';
 import React from 'react'
 import '../../src/css/style.css';
 import { NavLink } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
-
+import { AuthContext } from '../context/auth-context';
 
 function Home({setPatient,setDoctor}) {
+  const auth = useContext(AuthContext);
   const history = useHistory();
   const [user, setUser] = useState({ username: "", password: "",type:"" });
 
@@ -36,7 +37,8 @@ function Home({setPatient,setDoctor}) {
     } else {
       //window.alert("Login Successful");
       console.log("Login Successfull",data.id);
-      
+      console.log("Token"+data.token);
+      auth.token=data.token;
       if(type=='Doctor')
       {
         setDoctor(data);

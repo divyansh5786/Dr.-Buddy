@@ -49,7 +49,7 @@ LogIn = async (req, res) => {
     }
     console.log("token   /userlogin")
    // console.log(token);
-    return res.status(200).json({id:user.id,name:user.firstname+" "+user.lastname,token});
+    return res.status(200).json({id:user.id,name:user.firstname+" "+user.lastname,token:token});
   }
   
   else

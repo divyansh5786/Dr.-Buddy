@@ -15,8 +15,8 @@ module.exports = (req, res, next) => {
     console.log("I am Middleware Authentication");
     next();
   } catch (err) {
-   
-    console.log("Authentication Failed");
+    console.log("Authentication Failed ");
+    console.log(err);
     return next(error);
   }
 };

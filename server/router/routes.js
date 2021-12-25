@@ -29,7 +29,7 @@ router.post('/showDoctorspatient',doctorProfile.showDoctorsPatient);
 router.post('/doctorPendingAppointment',doctorPendingAppointment.PendingAppointment)
 router.post('/newAppointment',newAppointment.addAppointment);
 
-router.post('/viewAppointmentPatient',viewAppointment.viewAppointmentPatient);
+router.post('/viewAppointmentPatient',Authenticate,viewAppointment.viewAppointmentPatient);
 router.post('/viewAppointmentDoctor',viewAppointment.viewAppointmentDoctor);
 router.post('/statusUpdate',viewAppointment.statusUpdate);
 

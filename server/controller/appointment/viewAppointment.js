@@ -4,7 +4,7 @@ const Patient = require("../../module/patientSchema");
 const Appointment= require("../../module/appoitmentSchema")
 
 
-viewAppointmentPatient = async(req, res) => {
+viewAppointmentPatient = async(req, res,next) => {
     const{patientID}=req.body ;
     try {
         var  result = await Appointment.find({patientID:patientID}).populate('doctorID',{ firstname: 1 ,lastname: 1,Specialization:1});
@@ -13,7 +13,7 @@ viewAppointmentPatient = async(req, res) => {
         console.log(result);
         res.status(201).json({result});
       } catch (e) {
-       
+       console.log("here come");
         console.log(e);
         res.status(422).json({message:"Appointment view Error"});
       }

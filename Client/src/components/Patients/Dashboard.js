@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState, useEffect } from 'react';
+import { useState, useEffect,useContext  } from 'react';
 import { useHistory } from 'react-router-dom';
 import '../../css/dashboard.css';
 import DashMedPatient from '../utilities/dashMedPatient';
@@ -7,6 +7,7 @@ import DashAppointPatient from '../utilities/dashAppointPatient';
 import DashPresPatient from '../utilities/dashPresPatient';
 import { NavLink } from 'react-router-dom';
 import AlertBar from '../utilities/alertbar';
+import { AuthContext } from '../../context/auth-context';
 
 var DateTransform = (date) => {
   let milliseconds = Date.parse(date);
@@ -48,14 +49,15 @@ const fetchMedicalData = async (id) => {
       }
       return tempdata;
 }
-const fetchAppointmentsData = async (id) => {
+const fetchAppointmentsData = async (id,auth) => {
   console.log(id);
   let patientID = id;
   try {
     const res = await fetch("/viewAppointmentPatient", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: 'Bearer ' + auth.token
       },
       body: JSON.stringify({
         patientID
@@ -93,13 +95,14 @@ const fetchAppointmentsData = async (id) => {
 }
 
 
-const fetchPrescriptionData = async (id) => {
+const fetchPrescriptionData = async (id,auth) => {
   let patientID = id;
   try {
     const res = await fetch("/viewAppointmentPatient", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: 'Bearer ' + auth.token,
       },
       body: JSON.stringify({
         patientID
@@ -141,6 +144,7 @@ const fetchPrescriptionData = async (id) => {
 }
 
 function Dashboard({ id, setPage,alert,setalert,setappointment}) {
+  const auth = useContext(AuthContext);
   const history = useHistory();
   const [medicalData, setmedicalData] = useState(null);
   const [prescriptions, setPrescriptions] = useState(null);
@@ -159,10 +163,10 @@ function Dashboard({ id, setPage,alert,setalert,setappointment}) {
         };
       setmedicalData(tempdata);
     });
-    fetchAppointmentsData(id).then(tempdata => {
+    fetchAppointmentsData(id,auth).then(tempdata => {
       setAppointments(tempdata);
     });
-    fetchPrescriptionData(id).then(tempdata => {
+    fetchPrescriptionData(id,auth).then(tempdata => {
       setPrescriptions(tempdata);
     });
 
