@@ -1,3 +1,4 @@
+
 const express = require('express');
 const router = express.Router();
 require('../db/conn');
@@ -42,7 +43,6 @@ router.post('/viewPrescription',viewPrescription.viewPrescriptions);
 
 
 router.post('/doctorDashboard',doctorDashboard.doctorDashboard);
-
 
 
 module.exports = router;
