@@ -8,7 +8,7 @@ function SideBarDoctor() {
       <div class="sidebar">
         <div class="logo-details">
           <i></i>
-          <span class="logo_name">Dr.Buddy</span>
+          <span class="logo_name">Doctor</span>
         </div>
         <ul class="nav-links">
           <li>
@@ -52,7 +52,7 @@ function SideBarDoctor() {
             </NavLink>
           </li>
           <li >
-          <NavLink to="/doctors/logOut">
+          <NavLink to="/doctors/logout">
               <i class='bx bx-log-out'></i>
               <span class="links_name">Log out</span>
             </NavLink>

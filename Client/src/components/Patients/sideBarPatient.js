@@ -8,7 +8,7 @@ function SideBarPatient() {
       <div class="sidebar">
         <div class="logo-details">
           <i></i>
-          <span class="logo_name">Dr.Buddy</span>
+          <span class="logo_name">Patient</span>
         </div>
         <ul class="nav-links">
           <li>
@@ -45,12 +45,6 @@ function SideBarPatient() {
           <NavLink to="/patients/profile">
               <i class='bx bx-cog' ></i>
               <span class="links_name" >Profile</span>
-            </NavLink>
-          </li>
-          <li>
-          <NavLink to="/patients/messages">
-              <i class='bx bx-message' ></i>
-              <span class="links_name">Messages</span>
             </NavLink>
           </li>
           <li >

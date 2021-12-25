@@ -2,6 +2,7 @@ import React from 'react';
 import { useState,useEffect } from 'react';
 import '../../css/dashboard.css';
 import { NavLink } from 'react-router-dom';
+import AlertBar from '../utilities/alertbar';
 
 const fetchPrescriptionData = async (id) => {
   let doctorID = id;
@@ -40,7 +41,7 @@ const fetchPrescriptionData = async (id) => {
   return tempdata;
 }
 
-function Dashboard({id,setPage}) {
+function Dashboard({id,setPage,alert,setalert}) {
   const [details, setdetails] = useState(null);
   useEffect(() => {
     setPage('Dashboard');
@@ -58,6 +59,7 @@ function Dashboard({id,setPage}) {
     <>
    
 <div class="home-content"style={{"PaddingTop":"50%"}}>
+<AlertBar alert = {alert} setalert={setalert}/>
 {(details===null)?<>Loading....</>: 
 <>
 <div class="overview-boxes" >

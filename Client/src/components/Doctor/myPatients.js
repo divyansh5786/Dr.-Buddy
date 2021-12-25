@@ -4,6 +4,7 @@ import { useState,useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import PatientCard from '../utilities/myPatientCard';
+import AlertBar from '../utilities/alertbar';
 
 var calculateAge = (date)=>{
   let milliseconds = Date.parse(date);
@@ -50,7 +51,7 @@ const fetchData = async (id) => {
       return tempdata;
 }
 
-function MyPatient({id,setPage}) {
+function MyPatient({id,setPage,alert,setalert}) {
     const history = useHistory();
     const [patients, setPatients] = useState(null);
 
@@ -63,6 +64,7 @@ function MyPatient({id,setPage}) {
 
     return (
         <div class="appointments" style={{ paddingTop: '10%', paddingInline: '8%' }}>
+          <AlertBar alert = {alert} setalert={setalert}/>
             <div class="tab-content pt-0 box ">
                 <div id="pat_appointments" class="tab-pane fade show active ">
                     <div class="card card-table mb-0 card-body table-responsive">
@@ -81,7 +83,7 @@ function MyPatient({id,setPage}) {
                                 {patients === null ? "Loading..." : patients.length === 0 ? "No appointment made" :
                                 patients.map((patient) => {
                                         //console.log(appointment.doctorname);
-                                        return (<PatientCard key={patient.id} patient={patient} />
+                                        return (<PatientCard key={patient.id} patient={patient} setalert={setalert}/>
                                         )
                                     })
                                 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import '../../css/dashboard.css';
 import { NavLink } from 'react-router-dom';
 import { useState, useEffect } from 'react';
@@ -24,7 +24,7 @@ var DateTransformtoString = (date) => {
 }
 
 
-function ProfileDoctor({ id, setPage }) {
+function ProfileDoctor({ id, setPage, setalert }) {
     const history = useHistory();
     const [user, setUser] = useState(null);
     const [profile, setprofile] = useState('view');
@@ -56,8 +56,8 @@ const deleteDegree = (index)=>{
     //         setUser(tempdata);
     //     })
     // }, []);
-    const postData = async (e) => {
-        e.preventDefault();
+    const postData = async (setalert) => {
+        //e.preventDefault();
         //const { firstname, lastname, mobile, email, city, state, Address } = user;
         let updatedDoctor = user;
         updatedDoctor.dateofbirth = DateTransformtoobject(updatedDoctor.dateofbirth);
@@ -74,10 +74,10 @@ const deleteDegree = (index)=>{
         });
         const data = await res.json();
         if (res.status === 422 || !data) {
-            //setalert({color:"red",message:"Error Occured while saving new details"});
+            setalert({color:"red",message:"Error Occured while saving updating prof"});
             console.log("Error Occured while saving new details");
         } else {
-            //setalert({color:"green",message:"Details saved Successfull"});
+            setalert({color:"green",message:"Details saved Successfull"});
             console.log("Details saved Successfull");
             //   history.replace("/");
             console.log(profile +" "+ typeof(profile));
@@ -91,8 +91,6 @@ const deleteDegree = (index)=>{
             {(profile === 'view') ? <ProfileViewDoctor id={id} setPage={setPage} user={user} setUser={setUser} setprofile={setprofile} /> : <div class="box">
                 <div class="card">
                     <div class="card-body" >
-
-                        <form >
                             {user === null ? "Loading" :
                                 <>
                                     <div class="row form-row">
@@ -273,11 +271,10 @@ const deleteDegree = (index)=>{
                                         </div>
                                     </div>
                                     <div class="submit-section" >
-                                        <button type="submit" class="btn btn-primary submit-btn" onClick={postData}>Save Changes</button>
+                                        <button type="submit" class="btn btn-primary submit-btn" onClick={()=>{postData(setalert)}}>Save Changes</button>
                                     </div>
                                 </>
                             }
-                        </form>
 
                     </div>
                 </div>

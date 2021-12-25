@@ -27,17 +27,19 @@ const fetchPrescriptions = async (id) => {
       console.log(" Appointments fetched successfully");
       console.log(data);
       data.result.map((appointment) => {
-        let tempappoint = {
-          id: appointment._id,
-          doctorname: appointment.doctorID.firstname + appointment.doctorID.lastname,
-          spec: appointment.doctorID.Specialization,
-          dateOfAppointment: DateTransform(appointment.appointmentDate),
-          diagnosis: appointment.diagnosis,
-          medicine: appointment.medicine,
-          followUp: DateTransform(appointment.followUp),
-          tests: appointment.tests,
-        };
-        tempdata.push(tempappoint);
+        if (appointment.status == "complete") {
+          let tempappoint = {
+            id: appointment._id,
+            doctorname: appointment.doctorID.firstname + appointment.doctorID.lastname,
+            spec: appointment.doctorID.Specialization,
+            dateOfAppointment: DateTransform(appointment.appointmentDate),
+            diagnosis: appointment.diagnosis,
+            medicine: appointment.medicine,
+            followUp: DateTransform(appointment.followUp),
+            tests: appointment.tests,
+          };
+          tempdata.push(tempappoint);
+        }
       });
       console.log(tempdata);
     }
