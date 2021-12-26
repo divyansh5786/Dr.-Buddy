@@ -2,11 +2,7 @@ const mongoose = require('mongoose');
 const Doctor = require("../../module/doctorSchema");
 const Patient = require("../../module/patientSchema");
 const Appointment= require("../../module/appoitmentSchema")
-<<<<<<< Updated upstream
-// simply  booking new appointmnet -> by data given by clinet side
-// form req.body
-=======
-<<<<<<< HEAD
+
 const jwt = require("jsonwebtoken");
 const rp = require("request-promise");
 
@@ -58,11 +54,7 @@ var createZoomMeeting = async() =>{
 return meetingDetails;
 }
 
-=======
-// simply  booking new appointmnet -> by data given by clinet side
-// form req.body
->>>>>>> 62f07072c7bd47f43fb81bf14b4884ab29cd96a6
->>>>>>> Stashed changes
+
 addAppointment = async(req, res) => {
     // taking input fomr req.body which send by client
     const{doctorID,patientID,concern,status,fee, bookingDate, appointmentDate,appointmentTime}=req.body ;
