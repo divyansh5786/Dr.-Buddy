@@ -22,7 +22,7 @@ const doctorSchema = new mongoose.Schema({
     },
     mobile: {
         type: String,
-        required: true
+        required: false
     },
     email: {
         type: String,
@@ -39,7 +39,7 @@ const doctorSchema = new mongoose.Schema({
     },
     Address: {
         type: String,
-        required: true
+        required: false
     },
     dateofbirth:{
         type: String,

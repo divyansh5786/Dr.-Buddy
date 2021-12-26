@@ -8,7 +8,9 @@ const bcrypt = require('bcrypt');
 
 googleLogin = async (req, res) => {
   const {email,firstname,username,lastname,password,city,state,type } = req.body;
+  console.log(req.body)
   let check = true;
+  
    try{
        let   doctorgoogle= await Doctor.find({email});
         let   patientgoogle= await Patient.find({email});
