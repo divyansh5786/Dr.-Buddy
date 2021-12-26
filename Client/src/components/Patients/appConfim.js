@@ -6,7 +6,8 @@ import PatientCard from '../utilities/patientCard';
 import DatePicker from "react-datepicker";
 import SearchDoctor from '../utilities/searchDoctor';
 import { useHistory } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect,useContext  } from 'react';
+import { AuthContext } from '../../context/auth-context';
 
 
 var DateTransform = (date) => {
@@ -14,6 +15,7 @@ var DateTransform = (date) => {
     return d;
 }
 function AppConfirm({ doctor, patient, setPage,setalert }) {
+    const auth = useContext(AuthContext);
     const [startDate, setStartDate] = useState(new Date());
     useEffect(() => {
         setPage('Confirm Appointment');
@@ -61,7 +63,8 @@ function AppConfirm({ doctor, patient, setPage,setalert }) {
         const res = await fetch("/newAppointment", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                Authorization: 'Bearer ' + auth.token,
             },
             body: JSON.stringify({
                 doctorID, patientID, concern, status, fee,bookingDate,appointmentDate,appointmentTime

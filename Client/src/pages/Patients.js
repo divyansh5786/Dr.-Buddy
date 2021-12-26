@@ -1,8 +1,8 @@
 import React from 'react';
-import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import '../../src/css/dashboard.css';
 import SideBarPatient from '../components/Patients/sideBarPatient';
+import { useState, useEffect,useContext  } from 'react';
 import NavBarPatient from '../components/Patients/navBarPatient';
 import Dashboard from '../components/Patients/Dashboard';
 import Bookappointment from '../components/Patients/bookappointment';
@@ -15,29 +15,44 @@ import MedicalData from '../components/Patients/MedicalData';
 import Profile from '../components/Patients/profile';
 import ViewPrescription from '../components/utilities/viewPrescription';
 import { useHistory } from 'react-router-dom';
+import { AuthContext } from '../context/auth-context';
 
 
-function Patients({ patient, setPatient }) {
+function Patients({ patient, setPatient ,setalertapp}) {
+   const auth = useContext(AuthContext);
    const history = useHistory();
-   console.log(patient);
-   let id = patient.id;
-   let name = patient.name;
-   console.log(name);
    const [doctorBook, setDoctorBook] = useState(null);
    const [page, setPage] = useState('Dashboard');
    const [alert, setalert] = useState(null);
    const [appointment, setappointment] = useState(null);
+   let id,name;
+   if(auth.token==null)
+   {
+      
+     history.replace("/");
+     setalertapp({color:"red",message:"Please Login first"});
+     return (<></>);
+   }
+   else{
+   console.log(patient);
+    id = patient.id;
+    name = patient.name;
+   console.log(name);
 
+   
    const logout = () => {
       setPatient(null); 
       setDoctorBook(null); 
       setPage('Dashboard'); 
       setalert(null);
       setappointment(null); 
+      auth.token=null;
       id = null; 
       name = null; 
+      setalertapp({color:"green",message:"Logged Out Successfully"});
       history.replace("/");
    }
+
    return (
       <div>
          <>
@@ -81,6 +96,7 @@ function Patients({ patient, setPatient }) {
          </>
       </div>
    )
+}
 }
 
 export default Patients

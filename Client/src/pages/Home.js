@@ -8,7 +8,7 @@ import GoogleLogin from 'react-google-login';
 import axios from 'axios';
 
 
-function Home({setPatient,setDoctor}) {
+function Home({setPatient,setDoctor,setalertapp}) {
   const auth = useContext(AuthContext);
   const history = useHistory();
   const [user, setUser] = useState({ username: "", password: "",type:"" });
@@ -36,8 +36,8 @@ function Home({setPatient,setDoctor}) {
     });
     console.log(res);
     const data = await res.json();
-    if (res.status == 422 || !data) {
-      window.alert("Invailid Credentials");
+    if (res.status == 422 || !data || !data.id || !data.token) {
+      setalertapp({color:"red",message:"Invalid Credentials"});
       console.log("Invailid Credentials");
     } else {
       //window.alert("Login Successful");

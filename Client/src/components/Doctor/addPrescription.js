@@ -1,9 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect,useContext  } from 'react';
 import '../../css/prescriptions.css';
 import React from 'react'
 import PatientDetails from '../utilities/patientDetails';
 //import '../../css/style.css';
 import { useHistory } from 'react-router-dom';
+
+import { AuthContext } from '../../context/auth-context';
 
 var DateTransform = (date) => {
     console.log(date);
@@ -14,7 +16,7 @@ var DateTransform = (date) => {
     console.log(year + " "+ month +" " + tareek +" " + d);
     return d;
   }
-const postprescription = async (appointment,prescription,history,alert,setalert) => {
+const postprescription = async (appointment,prescription,history,alert,setalert,auth) => {
     console.log(prescription);
     let diagnosis = prescription.diagnosis;
     let medicine =  prescription.medcines;
@@ -26,7 +28,8 @@ const postprescription = async (appointment,prescription,history,alert,setalert)
         const res = await fetch("/addPrescription", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                Authorization: 'Bearer ' + auth.token,
             },
             body: JSON.stringify({
                 id,diagnosis,medicine,tests,followUp
@@ -51,7 +54,7 @@ const postprescription = async (appointment,prescription,history,alert,setalert)
         console.log("error occured " + e);
     }
 }
-const fetchPatientData = async (patient,history,) => {
+const fetchPatientData = async (patient,history,auth) => {
     var calculateAge = (date)=>{
         let milliseconds = Date.parse(date);
         let nowmilli = Date.parse(new Date());
@@ -65,7 +68,8 @@ const fetchPatientData = async (patient,history,) => {
         const res = await fetch("/viewpatient", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          Authorization: 'Bearer ' + auth.token,
         },
         body: JSON.stringify({
             patientID
@@ -109,11 +113,11 @@ function AddPrescription({patient,id,setPage,appointment,alert,setalert}) {
     const [tests, upadtetest] = useState([]);
     const [followup, setfollowup] = useState(null);
     const [temporary, settemporary] = useState({diagnos:"",medicinename:"",dosage:"",fd:"",test:"",followup:""});
-    
+    const auth = useContext(AuthContext);
 
     useEffect(() => {
         setPage('Add Prescription');
-        fetchPatientData(patient,history).then(tempdata => {
+        fetchPatientData(patient,history,auth).then(tempdata => {
             setpatientData(tempdata);
         })
     }, []);
@@ -154,7 +158,7 @@ function AddPrescription({patient,id,setPage,appointment,alert,setalert}) {
     const postdata =()=>{
         let prescription={"diagnosis":diagnoisis,"medcines":medicines,"tests":tests,"followup":followup};
         console.log(prescription);
-        postprescription(appointment,prescription,history,alert,setalert);
+        postprescription(appointment,prescription,history,alert,setalert,auth);
     }
     return (< >
     

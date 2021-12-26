@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const Doctor = require("../module/doctorSchema");
 const Patient = require("../module/patientSchema");
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+
 
 register = async (req, res) => {
   const { username, password, firstname, lastname, mobile, email, city, state, Address, type, dateofbirth, gender } = req.body;

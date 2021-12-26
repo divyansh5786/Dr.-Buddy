@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect,useContext  } from 'react';
 import React from 'react'
 import '../../css/style.css';
 import {useHistory} from 'react-router-dom';
+import { AuthContext } from '../../context/auth-context';
 
 function SearchDoctor({setDoctors}) {
+  const auth = useContext(AuthContext);
     const history = useHistory();
     const [search, setSearch] = useState({
       state: "", city: "", type: "", spec: ""
@@ -36,7 +38,8 @@ function SearchDoctor({setDoctors}) {
         const res = await fetch("/searchDoctor", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                Authorization: 'Bearer ' + auth.token,
             },
             body: JSON.stringify({
               city, state, Specialization,Online

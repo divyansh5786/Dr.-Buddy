@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect,useContext  } from 'react';
 import React from 'react'
 import '../../css/style.css';
 import { useHistory } from 'react-router-dom';
+import { AuthContext } from '../../context/auth-context';
 
 function DashAppointPatient({appointment}) {
     return (<>

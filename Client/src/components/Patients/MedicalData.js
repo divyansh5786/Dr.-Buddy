@@ -1,9 +1,10 @@
-import { useState,useEffect } from 'react';
+import { useState, useEffect,useContext  } from 'react';
 import React from 'react'
 import '../../css/style.css';
 import { NavLink, useHistory } from 'react-router-dom';
 import MedicaldDataCard from '../utilities/medicalDataCard';
 import AlertBar from '../utilities/alertbar';
+import { AuthContext } from '../../context/auth-context';
 
 var DateTransform = (date) => {
   let milliseconds = Date.parse(date);
@@ -12,14 +13,15 @@ var DateTransform = (date) => {
   var d = (date.getDate())+"/"+(date.getMonth()+1)+"/"+(date.getFullYear());
   return d;
 }
-const fetchData = async (id) => {
+const fetchData = async (id,auth) => {
   console.log(id);
   let patientID = id;
   let tempdata=[];
     try{const res = await fetch("/patientviewMedicalData", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          Authorization: 'Bearer ' + auth.token,
         },
         body: JSON.stringify({
           patientID
@@ -52,10 +54,11 @@ function MedicalData({id,setPage,alert,setalert}) {
 
     const history = useHistory ();
     const [medicalData, setmedicalData] = useState(null);
+    const auth = useContext(AuthContext);
 
     useEffect(() => {
         setPage('MedicalData');
-        fetchData(id).then(tempdata => {
+        fetchData(id,auth).then(tempdata => {
           setmedicalData(tempdata);
         })
       }, []);

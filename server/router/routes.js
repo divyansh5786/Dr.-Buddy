@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 const Authenticate = require('../middleware/auth');
 
+/// require  files for routes
 userSignup = require("../controller/commonSignUp");
 userLogin = require("../controller/commonLogin")
 doctorProfile= require("../controller/doctor/doctorProfile")
@@ -15,34 +16,42 @@ viewAppointment=require("../controller/appointment/viewAppointment")
 patientDetails=require("../controller/patient/patientDetails")
 viewPrescription=require("../controller/appointment/viewPrescription")
 doctorPendingAppointment= require("../controller/doctor/doctorPendingAppointment")
+patientProfile=require("../controller/patient/patientProfile")
 doctorDashboard=require("../controller/doctor/doctorDashboard");
-//  router.get('/profile',Authenticate,doctorProfile.profile)
+
+
+
+
+ // common login-singup ---1
+
 router.post('/register', userSignup.register);
-router.post('/searchDoctor', searchDoctor.doctorlist);
 router.post('/login', userLogin.LogIn);
+router.post('/searchDoctor',Authenticate, searchDoctor.doctorlist);
 
-router.post('/addprofession',doctorProfile.addProfession);
-router.post('/viewdoctor',doctorProfile.viewDoctor);
-router.post('/updateDoctorProfile',doctorProfile.updateDoctorProfile);
-router.post('/showDoctorspatient',doctorProfile.showDoctorsPatient);
+// doctor's part ,profile and all   ---2 
+router.post('/addprofession',Authenticate,doctorProfile.addProfession);
+router.post('/viewdoctor',Authenticate,doctorProfile.viewDoctor);
+router.post('/updateDoctorProfile',Authenticate,doctorProfile.updateDoctorProfile);
+router.post('/showDoctorspatient',Authenticate,doctorProfile.showDoctorsPatient);
 
-router.post('/doctorPendingAppointment',doctorPendingAppointment.PendingAppointment)
-router.post('/newAppointment',newAppointment.addAppointment);
-
+ // all about Appointment's  -- 3
+router.post('/doctorPendingAppointment',Authenticate,doctorPendingAppointment.PendingAppointment)
+router.post('/newAppointment',Authenticate,newAppointment.addAppointment);
 router.post('/viewAppointmentPatient',Authenticate,viewAppointment.viewAppointmentPatient);
-router.post('/viewAppointmentDoctor',viewAppointment.viewAppointmentDoctor);
-router.post('/statusUpdate',viewAppointment.statusUpdate);
+router.post('/viewAppointmentDoctor',Authenticate,viewAppointment.viewAppointmentDoctor);
+router.post('/statusUpdate',Authenticate,viewAppointment.statusUpdate);
 
-router.post('/patientAddMedicalData',patientDetails.addMedicalData);
-router.post('/patientviewMedicalData',patientDetails.viewMedicalData);
-router.post('/viewpatient',patientDetails.viewPatientProfile);
-router.post('/updatepatient',patientDetails.updatePatientProfile);
-
-router.post('/addPrescription',viewPrescription.addPrescription);
-router.post('/viewPrescription',viewPrescription.viewPrescriptions);
+// patient's part ,profile and all  ---4
+router.post('/patientAddMedicalData',Authenticate,patientDetails.addMedicalData);
+router.post('/patientviewMedicalData',Authenticate,patientDetails.viewMedicalData);
+router.post('/viewpatient',Authenticate,patientProfile.viewPatientProfile);
+router.post('/updatepatient',Authenticate,patientProfile.updatePatientProfile);
 
 
-router.post('/doctorDashboard',doctorDashboard.doctorDashboard);
+// about Prescription -- 5
+router.post('/addPrescription',Authenticate,viewPrescription.addPrescription);
+router.post('/viewPrescription',Authenticate,viewPrescription.viewPrescriptions);
+
 
 
 module.exports = router;

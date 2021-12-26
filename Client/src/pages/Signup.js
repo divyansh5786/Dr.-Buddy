@@ -12,7 +12,7 @@ var DateTransform = (date) => {
   console.log(year + " "+ month +" " + tareek +" " + d);
   return d;
 }
-function Signup({setDoctor}) {
+function Signup({setDoctor,setalertapp}) {
   const history = useHistory();
   const [user, setUser] = useState({
     username: "", password: "", firstname: "", lastname: "", mobile: "", email: "", city: "", state: "", Address: "", type: "", dateofbirth:"", gender:""
@@ -55,14 +55,14 @@ function Signup({setDoctor}) {
     const data = await res.json();
     if(res.status===406)
     {
-      window.alert("User already exists with this username");
+      setalertapp({color:"red",message:"User already exists with this username"});
       console.log("User already exists with this username");
     }
     else if (res.status === 422 || !data) {
-      window.alert("Invailid Registration");
+      setalertapp({color:"red",message:"Some details are invalid"});
       console.log("Invailid Registration");
     } else {
-      window.alert("Registration Successful");
+      setalertapp({color:"green",message:"Registeration Successfull"});
       console.log("Registration Successfull");
       console.log(type);
         history.replace("/");

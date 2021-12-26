@@ -1,9 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState,useContext } from 'react';
 import React from 'react'
 import '../../css/style.css';
 import {useHistory} from 'react-router-dom';
+import { AuthContext } from '../../context/auth-context';
 
 function Addmedical({id,setPage,setalert}) {
+  const auth = useContext(AuthContext);
   useEffect(() => {
     setPage('Add Medical data');
 }, []);
@@ -30,7 +32,8 @@ function Addmedical({id,setPage,setalert}) {
       const res = await fetch("/patientAddMedicalData", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          Authorization: 'Bearer ' + auth.token,
         },
         body: JSON.stringify({
           id, medicalData

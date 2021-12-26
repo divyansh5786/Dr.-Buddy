@@ -1,19 +1,21 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect,useContext  } from 'react';
 import '../../css/prescriptions.css';
 import React from 'react'
 //import '../../css/style.css';
 import {useHistory} from 'react-router-dom';
 import AlertBar from '../utilities/alertbar';
 
+import { AuthContext } from '../../context/auth-context';
 
-const saveDetails = async (details,history,setalert) => {
+const saveDetails = async (details,history,setalert,auth) => {
     
     const { id, Online, Specialization, Fees, Degree } = details;
     try {
         const res = await fetch("/addprofession", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                Authorization: 'Bearer ' + auth.token,
             },
             body: JSON.stringify({
                 id,Online,Specialization,Fees,Degree
@@ -38,7 +40,7 @@ const saveDetails = async (details,history,setalert) => {
 
 function AddProfessional({id,setPage,alert,setalert}) {
     const history = useHistory();
-    
+    const auth = useContext(AuthContext);
     console.log(id);
     // if(id==null)
     // history.replace("/");
@@ -98,7 +100,7 @@ function AddProfessional({id,setPage,alert,setalert}) {
         let details={"id":id,"Online":online,"Specialization":specialisation,"Fees":fees,"Degree":degrees};
         console.log(details);
         console.log(id);
-        saveDetails(details,history,setalert);
+        saveDetails(details,history,setalert,auth);
     }
     console.log(degrees);
     return (< >

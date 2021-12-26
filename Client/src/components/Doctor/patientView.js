@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState, useEffect } from 'react';
+//import { useState, useEffect } from 'react';
 import '../../css/dashboard.css';
 import { useHistory } from 'react-router-dom';
 import PatientViewPres from '../utilities/patientViewPres';
@@ -7,15 +7,19 @@ import MedicaldDataCard from '../utilities/medicalDataCard';
 import { NavLink } from 'react-router-dom';
 import PatientDetails from '../utilities/patientDetails';
 import AlertBar from '../utilities/alertbar';
+import { useState, useEffect,useContext  } from 'react';
 
-const fetchPrescriptions = async (id) => {
+import { AuthContext } from '../../context/auth-context';
+
+const fetchPrescriptions = async (id,auth) => {
     console.log(id);
     let patientID = id;
     try {
       const res = await fetch("/viewAppointmentPatient", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          Authorization: 'Bearer ' + auth.token,
         },
         body: JSON.stringify({
           patientID
@@ -57,14 +61,15 @@ var DateTransform = (date) => {
     var d = (date.getDate())+"/"+(date.getMonth()+1)+"/"+(date.getFullYear());
     return d;
   }
-  const fetchMedicalData = async (id) => {
+  const fetchMedicalData = async (id,auth) => {
     console.log(id);
     let patientID = id;
     let tempdata=[];
       try{const res = await fetch("/patientviewMedicalData", {
           method: "POST",
           headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            Authorization: 'Bearer ' + auth.token,
           },
           body: JSON.stringify({
             patientID
@@ -93,7 +98,7 @@ var DateTransform = (date) => {
         return tempdata;
   }
   
-const fetchPatientData = async (id,history) => {
+const fetchPatientData = async (id,history,auth) => {
     var calculateAge = (date)=>{
         let milliseconds = Date.parse(date);
         let nowmilli = Date.parse(new Date());
@@ -107,7 +112,8 @@ const fetchPatientData = async (id,history) => {
         const res = await fetch("/viewpatient", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          Authorization: 'Bearer ' + auth.token,
         },
         body: JSON.stringify({
             patientID
@@ -143,7 +149,8 @@ const fetchPatientData = async (id,history) => {
 }
 
 function PatientView({patient,id, setPage,alert,setalert}) {
-    console.log(patient);
+  const auth = useContext(AuthContext);  
+  console.log(patient);
     console.log('Patient View');
     console.log(id);
     const history = useHistory();
@@ -152,14 +159,14 @@ function PatientView({patient,id, setPage,alert,setalert}) {
     const [patientData, setpatientData] = useState(null);
     useEffect(() => {
         setPage('Patient Details');
-        fetchPrescriptions(patient).then(tempdata => {
+        fetchPrescriptions(patient,auth).then(tempdata => {
             setPrescriptions(tempdata);
         })
    
-    fetchMedicalData(patient).then(tempdata => {
+    fetchMedicalData(patient,auth).then(tempdata => {
         setmedicalData(tempdata);
     })
-    fetchPatientData(patient,history).then(tempdata => {
+    fetchPatientData(patient,history,auth).then(tempdata => {
         setpatientData(tempdata);
     })
 }, []);

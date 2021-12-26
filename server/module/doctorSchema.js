@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
-// const bcrypt = require('bcryptjs');
+ const bcrypt = require('bcrypt');
 // const jwt = require('jsonwebtoken');
 
-const contestSchema = new mongoose.Schema({
+const doctorSchema = new mongoose.Schema({
     username: {
         type: String,
         required: true,
@@ -80,8 +80,16 @@ const contestSchema = new mongoose.Schema({
 
  })
 
+ // We are hashing Password
+ doctorSchema.pre('save', async function(next) {
+    if (this.isModified('password')) {
+        this.password = await bcrypt.hash(this.password, 12);
+    }
+    next();
+
+})
 
 
-const doctor = mongoose.model('Doctor', contestSchema);
+const doctor = mongoose.model('Doctor', doctorSchema);
 
 module.exports = doctor;

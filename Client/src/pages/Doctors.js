@@ -1,6 +1,6 @@
 import React from 'react'
 import '../../src/css/dashboard.css';
-import { useState } from 'react';
+import { useState, useEffect,useContext  } from 'react';
 import { NavLink } from 'react-router-dom';
 import SideBarDoctor from '../components/Doctor/SideBarDoctor';
 import Navbar from './Navbar';
@@ -18,17 +18,32 @@ import PatientView from '../components/Doctor/patientView';
 import PendingAppointments from '../components/Doctor/pendingApp';
 import ProfileDoctor from '../components/Doctor/profiledoctor';
 import { useHistory } from 'react-router-dom';
+import { AuthContext } from '../context/auth-context';
 
-function Doctors(doctor) {
+function Doctors({doctor,setalertapp}) {
+  const auth = useContext(AuthContext);
   const history = useHistory();
-  let id = doctor.doctor.id;
-  let name = doctor.doctor.name;
   const [page,setPage] = useState('Dashboard');
   const [alert, setalert] = useState(null);
   const [patient,setpatient] = useState(null);
   const [appointment,setappointment] = useState(null);
+  let name,id;
+  if(auth.token==null)
+  {
+    history.replace("/");
+    setalertapp({color:"red",message:"Please Login first"});
+    return (<></>);
+  }
+  else{
+
+console.log(doctor);
+   id = doctor.id;
+   name = doctor.name;
+  
   console.log("appointment "+appointment);
 
+
+  
   const logout = () => {
     setpatient(null); 
     setPage('Dashboard'); 
@@ -36,6 +51,8 @@ function Doctors(doctor) {
     setappointment(null); 
     id = null; 
     name = null; 
+    auth.token=null;
+    setalertapp({color:"green",message:"Logged Out Successfully"});
     history.replace("/");
  }
 
@@ -78,6 +95,7 @@ function Doctors(doctor) {
 
     </>
   )
+}
 }
 
 export default Doctors

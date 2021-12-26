@@ -16,14 +16,15 @@ var DateTransform = (date) => {
   var d = (date.getDate())+"/"+(date.getMonth()+1)+"/"+(date.getFullYear());
   return d;
 }
-const fetchMedicalData = async (id) => {
+const fetchMedicalData = async (id,auth) => {
   console.log(id);
   let patientID = id;
   let tempdata=null;
     try{const res = await fetch("/patientviewMedicalData", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          Authorization: 'Bearer ' + auth.token,
         },
         body: JSON.stringify({
           patientID
@@ -152,7 +153,7 @@ function Dashboard({ id, setPage,alert,setalert,setappointment}) {
 
   useEffect(() => {
     setPage('DashBoard');
-    fetchMedicalData(id).then(tempdata => {
+    fetchMedicalData(id,auth).then(tempdata => {
       if (tempdata === null)
         tempdata = {
           "date": " ",

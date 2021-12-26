@@ -5,6 +5,7 @@ import '../../css/bookapp.css';
 import { NavLink } from 'react-router-dom';
 import PatientCard from '../utilities/patientCard';
 import SearchDoctor from '../utilities/searchDoctor';
+import { AuthContext } from '../../context/auth-context';
 
 function Bookappointment({setDoctorBook,setPage}) {
 

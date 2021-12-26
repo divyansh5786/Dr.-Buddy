@@ -1,8 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect,useContext  } from 'react';
 import '../../css/prescriptions.css';
 import React from 'react'
 //import '../../css/style.css';
 import { useHistory } from 'react-router-dom';
+
+import { AuthContext } from '../../context/auth-context';
 
 var DateTransformtostring = (date) => {
 	const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
@@ -24,12 +26,13 @@ var calculateAge = (date) => {
 	return age;
 
 }
-const fetchPrescriptionData = async (id) => {
+const fetchPrescriptionData = async (id,auth) => {
 	try {
 		const res = await fetch("/viewPrescription", {
 			method: "POST",
 			headers: {
-				"Content-Type": "application/json"
+				"Content-Type": "application/json",
+				Authorization: 'Bearer ' + auth.token,
 			},
 			body: JSON.stringify({
 				id
@@ -78,10 +81,10 @@ const fetchPrescriptionData = async (id) => {
 function ViewPrescription({ appointment }) {
 
 	const [prescriptions, setprescriptions] = useState(null);
-
+	const auth = useContext(AuthContext);
 	useEffect(() => {
 		//setPage('View Prescription');
-		fetchPrescriptionData(appointment).then(tempdata => {
+		fetchPrescriptionData(appointment,auth).then(tempdata => {
 			setprescriptions(tempdata);
 		});
 	}, []);
