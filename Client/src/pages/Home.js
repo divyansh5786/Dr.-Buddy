@@ -4,17 +4,22 @@ import '../../src/css/style.css';
 import { NavLink } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../context/auth-context';
+import GoogleLogin from 'react-google-login';
+import axios from 'axios';
+
 
 function Home({setPatient,setDoctor}) {
   const auth = useContext(AuthContext);
   const history = useHistory();
   const [user, setUser] = useState({ username: "", password: "",type:"" });
 
+  const [errors,setErrors] = useState({});
   let name, value;
   const handleInputs = (e) => {
     name = e.target.name;
     value = e.target.value;
     setUser({ ...user, [name]: value });
+    setErrors({});
   }
 
   const postData = async (e) => {
@@ -53,6 +58,47 @@ function Home({setPatient,setDoctor}) {
       
     }
   }
+  const valid = (x) => {
+    let errors = {}
+    if(!x.type){
+      errors.type = "Select a Type."
+  } 
+  return errors;
+  }
+  const responseSuccessGoogle = async (response) => {
+    
+    var x = valid(user);
+    console.log(x);
+    if(Object.keys(x).length !== 0){
+      setErrors(x);
+      return;
+    }
+    else{
+      
+    const email = response.profileObj.email;
+    var firstname = response.profileObj.givenName;
+    var username = firstname+'_#$%^';
+    const lastname = response.profileObj.familyName;
+    var password = "password@123";
+    var city = "Junagadh";
+    var state = "Gujarat";
+    const type = user.type;
+    const res = await fetch("/googlelogin", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        email,firstname,username,lastname,password,city,state,type
+      })
+    });
+    console.log(res);
+
+  }
+  }
+  const responseErrorGoogle = (response) => {
+    
+  }
   return (
     <>
       <div className="container">
@@ -83,10 +129,18 @@ function Home({setPatient,setDoctor}) {
                     <option>Select</option>
                   <option>Doctor</option>
                   <option>Patient</option>
-                </select>
+                </select><hr/>
+                {errors.type && <option style={{"color":"red"}}>{errors.type}</option>}
               </div>
+              <a href='/forgetpassword'>Forget Password</a>
             <button className="btn btn-primary" type="submit" onClick={postData}>Login</button>
-
+            <GoogleLogin
+              clientId="1084728443379-1kmmbt96l1cj2n7kd7r8uvmvbtpamn23.apps.googleusercontent.com"
+              buttonText="Login with Google"
+              onSuccess={responseSuccessGoogle}
+              onFailure={responseErrorGoogle}
+              cookiePolicy={'single_host_origin'}
+            />
             </form>
 
 

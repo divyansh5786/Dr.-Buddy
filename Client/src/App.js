@@ -9,6 +9,7 @@ import Signup from './pages/Signup';
 import {Switch, Route, Redirect} from 'react-router-dom';
 import './css/App.css';
 import Profile from './components/utilities/patientProfileForDoctor';
+import ForgetPassword from './pages/ForgetPassword';
 
 
 function App() {
@@ -30,6 +31,8 @@ function App() {
            <Route exact path="/SignUp" render={()=>{return(<Signup setDoctor={setDoctor} />)}}/> 
         <Route exact path="/patientProfile" component={Profile} />
         <Route exact path="/" render={()=>{return(<Home setPatient={setPatient} setDoctor={setDoctor} />)}}> 
+           </Route>
+           <Route exact path="/forgetpassword" render={()=>{return(<ForgetPassword />)}}> 
            </Route>
         <Redirect to="/" />
       </Switch>
