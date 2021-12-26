@@ -131,9 +131,9 @@ function Home({setPatient,setDoctor,setalertapp}) {
                   <option>Doctor</option>
                   <option>Patient</option>
                 </select><br/>
-                {errors.type && <option style={{"color":"red","background-color":"#FFBABA","background-image":"url('https://i.imgur.com/GnyDvKN.png');"}}>{errors.type}</option>}
+                {errors.type && <p className="error" style={{"color":"red"}}>{errors.type}</p>}
               </div><br/>
-              <a href='/forgetpassword'>Forget Password</a>
+              <a href='/forgetpassword'>Forget Password ?</a>
             <button className="btn btn-primary" type="submit" onClick={postData}>Login</button>
             <GoogleLogin
               clientId="1084728443379-1kmmbt96l1cj2n7kd7r8uvmvbtpamn23.apps.googleusercontent.com"
