@@ -94,7 +94,28 @@ function Home({setPatient,setDoctor,setalertapp}) {
       })
     });
     console.log(res);
-
+    const data = await res.json();
+    if (res.status == 422 || !data || !data.id || !data.token) {
+      setalertapp({color:"red",message:"Invalid Credentials"});
+      console.log("Invailid Credentials");
+    } else {
+      //window.alert("Login Successful");
+      console.log("Login Successfull",data.id);
+      console.log("Token"+data.token);
+      auth.token=data.token;
+      if(type=='Doctor')
+      {
+        setDoctor(data);
+        history.replace("/doctors/dashboard");
+      }
+      else
+      {
+        //console.log(data.name);
+        setPatient(data);
+        history.replace("/patients/dashboard");
+      }
+      
+    }
   }
   }
   const responseErrorGoogle = (response) => {
