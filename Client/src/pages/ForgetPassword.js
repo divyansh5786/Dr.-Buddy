@@ -8,7 +8,7 @@ import { useState,useEffect } from 'react';
 function ForgetPassword({setDoctor}) {
 
   const history = useHistory();
-  const [user, setUser] = useState({ username: "", password: "",dateofbirth:"",secret:"",type:"" });
+  const [user, setUser] = useState({ username: "", password: "",email:"",type:"" });
 
   let name, value;
   const handleInputs = (e) => {
@@ -19,14 +19,14 @@ function ForgetPassword({setDoctor}) {
 
   const postData = async (e) => {
     e.preventDefault();
-    const { username, password,dateofbirth,secret, type } = user;
-    const res = await fetch("/login", {
+    const { username, password,email, type } = user;
+    const res = await fetch("/forgetPassword", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        username, password,dateofbirth,secret, type
+        username, password,email, type
       })
     });
     console.log(res);
@@ -89,10 +89,10 @@ function ForgetPassword({setDoctor}) {
             <div className="col-md">
               <div className="form-floating mb-3">
                 <input type="text" className="form-control" id="floatingInput" placeholder="dateofbirth"
-                  name="dateofbirth"
-                  value={user.dateofbirth}
+                  name="email"
+                  value={user.email}
                   onChange={handleInputs} />
-                <label for="floatingInput">Date of birth in (dd/mm/yyyy)</label>
+                <label for="floatingInput">Email</label>
                 
               </div>
             </div>
