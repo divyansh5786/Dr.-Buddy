@@ -97,16 +97,6 @@ function ForgetPassword({setDoctor}) {
               </div>
             </div>
 
-            <div className="col-md">
-              <div className="form-floating mb-3">
-                <input type="text" className="form-control" id="floatingInput" placeholder="secret"
-                  name="secret"
-                  value={user.secret}
-                  onChange={handleInputs} />
-                <label for="floatingInput">Secret</label>
-                
-              </div>
-            </div>
           </div>
 
           <div className="text-center">
