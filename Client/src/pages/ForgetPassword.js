@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { useState,useEffect } from 'react';
 
 
-function ForgetPassword({setDoctor}) {
+function ForgetPassword({setDoctor,setalertapp}) {
 
   const history = useHistory();
   const [user, setUser] = useState({ username: "", password: "",email:"",type:"" });
@@ -32,10 +32,10 @@ function ForgetPassword({setDoctor}) {
     console.log(res);
     const data = await res.json();
    if (res.status === 422 || !data) {
-      window.alert("Invailid Details");
+    setalertapp({ color: "red", message: "Invalid Credentials" });
       console.log("Invailid Details");
     } else {
-      window.alert("Password change Successfully");
+      setalertapp({ color: "green", message: "Password changed Successfully" });
       console.log("Password change Successfully");
       console.log(type);
         history.replace("/");

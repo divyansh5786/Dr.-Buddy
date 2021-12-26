@@ -57,6 +57,7 @@ const DateTransform = (date) => {
               console.log(" Prescription fetched successfully");
               console.log(data);
               data.map((appointment) => {
+                if (appointment.status == "complete") {
                 let tempappoint = { patientID:appointment.patientID._id,
                     id: appointment._id,
                     patientname: appointment.patientID.firstname + appointment.patientID.lastname,
@@ -67,6 +68,7 @@ const DateTransform = (date) => {
                    tests:appointment.tests,
                   };
                   tempdata.push(tempappoint);
+                }
               });
               console.log(tempdata);
             }

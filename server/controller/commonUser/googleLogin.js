@@ -7,22 +7,26 @@ const bcrypt = require('bcrypt');
 
 
 googleLogin = async (req, res) => {
-  var { email, firstname, username, lastname, password, city, state, type } = req.body;
-  lastname = "chudasama"
+  var { email, firstname, username, lastname, type } = req.body;
+  //lastname = "chudasama"
   // console.log(req.body)
   let check = true;
 
   try {
     let doctorgoogle = await Doctor.findOne({ email });
     let patientgoogle = await Patient.findOne({ email });
-    if (doctorgoogle != 0 || patientgoogle != 0) {
+    if (doctorgoogle != null || patientgoogle != null) {
       if (type === 'Doctor') check = false;
-      if (!check) {
+      if (!check && doctorgoogle!=null) {
         fxn(doctorgoogle, res);
         //  console.log(doctorgoogle)
       }
-      else {
+      else if(patientgoogle != null) {
         fxn(patientgoogle, res);
+      }
+      else
+      {
+        res.status(422).json({ error: "Registered with another type" });
       }
 
 
@@ -32,7 +36,7 @@ googleLogin = async (req, res) => {
       if (type === 'Doctor') check = false;
       if (!check) {
         try {
-          var newDoctor = new Doctor({ email, firstname, username, lastname, password, city, state, type });
+          var newDoctor = new Doctor({ email, firstname, username, lastname, type });
           console.log(newDoctor);
           await newDoctor.save();
 
@@ -45,7 +49,7 @@ googleLogin = async (req, res) => {
       }
       else {
         try {
-          var newPatient = new Patient({ email, firstname, username, lastname, password, city, state, type });
+          var newPatient = new Patient({ email, firstname, username, lastname, type });
           await newPatient.save();
           console.log("patient regestred successfully")
           res.status(201).json({ message: "user registered successfully as Patient" });

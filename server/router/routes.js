@@ -33,6 +33,7 @@ router.post('/addprofession',Authenticate,doctorProfile.addProfession);
 router.post('/viewdoctor',Authenticate,doctorProfile.viewDoctor);
 router.post('/updateDoctorProfile',Authenticate,doctorProfile.updateDoctorProfile);
 router.post('/showDoctorspatient',Authenticate,doctorProfile.showDoctorsPatient);
+router.post('/doctorDashboard',Authenticate,doctorDashboard.doctorDashboard);
 
  // all about Appointment's  -- 3
 router.post('/doctorPendingAppointment',Authenticate,doctorPendingAppointment.PendingAppointment)

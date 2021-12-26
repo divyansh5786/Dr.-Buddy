@@ -57,21 +57,26 @@ doctorDashboard = async(req, res) => {
       });
    
       // searching in DB for doctor fees of diven doctorID
+      function uniqueByKey(totalPatient, key) {
+        return [...new Map(totalPatient.map((x) => [x[key], x])).values()];
+      }
+  
+      const list = uniqueByKey(totalPatient, 'patientID');
 
          const doctor=await Doctor.findById(doctorID)
              var totalincome= completedPatient * (parseInt(doctor.Fees));
       
-
-       console.log( totalPatient)
+             const totalPatients= list.length;
+       console.log( totalPatients)
        console.log( pendingPatient)
        console.log(todayPendingPatient)
        console.log(todayCompletedPatient)
        console.log(completedPatient)
        console.log(totalincome)
 
-           var result={totalPatient, pendingPatient,todayPendingPatient,todayCompletedPatient,completedPatient,totalincome}
+ //          var result={totalPatient, pendingPatient,todayPendingPatient,todayCompletedPatient,completedPatient,totalincome}
 // sending json to client side
-      const totalPatients= totalPatient.length;
+     
      
            var result={totalPatients, pendingPatient,todayPendingPatient,todayCompletedPatient,completedPatient,totalincome}
 

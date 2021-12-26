@@ -34,6 +34,7 @@ const fetchPrescriptions = async (id,auth) => {
         console.log(" Appointments fetched successfully");
         console.log(data);
         data.result.map((appointment) => {
+          if (appointment.status == "complete") {
           let tempappoint = { id: appointment._id,
              doctorname: appointment.doctorID.firstname + appointment.doctorID.lastname, 
              spec: appointment.doctorID.Specialization,
@@ -44,6 +45,7 @@ const fetchPrescriptions = async (id,auth) => {
              tests:appointment.tests,
             };
             tempdata.push(tempappoint);
+          }
         });
         console.log(tempdata);
       }

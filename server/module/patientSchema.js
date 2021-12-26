@@ -10,7 +10,7 @@ const patientSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: true
+        required: false
     },
     firstname: {
         type: String,
@@ -22,7 +22,7 @@ const patientSchema = new mongoose.Schema({
     },
     mobile: {
         type: String,
-        required: true
+        required: false
     },
     email: {
         type: String,
@@ -31,15 +31,15 @@ const patientSchema = new mongoose.Schema({
     },
     state: {
         type: String,
-        required: true
+        required: false
     },
     city: {
         type: String,
-        required: true
+        required: false
     },
     Address: {
         type: String,
-        required: true
+        required: false
     },
     dateofbirth:{
         type: String,

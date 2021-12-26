@@ -28,7 +28,7 @@ const fetchPrescriptionData = async (id,auth) => {
       console.log("Patient data fetched successfully");
       console.log(data);
       tempdata = {
-        "totalPatient":data.result.totalPatient,
+        "totalPatient":data.result.totalPatients,
         "totalincome":data.result.totalincome,
         "pendingPatient":data.result.pendingPatient,
         "todayPendingPatient":data.result.todayPendingPatient,

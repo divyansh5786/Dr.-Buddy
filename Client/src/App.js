@@ -35,7 +35,7 @@ function App() {
         <Route exact path="/patientProfile" component={Profile} />
         <Route exact path="/" render={()=>{return(<Home setPatient={setPatient} setDoctor={setDoctor} setalertapp={setalertapp}/>)}}> 
            </Route>
-           <Route exact path="/forgetpassword" render={()=>{return(<ForgetPassword />)}}> 
+           <Route exact path="/forgetpassword" render={()=>{return(<ForgetPassword setalertapp={setalertapp}/>)}}> 
            </Route>
         <Redirect to="/" />
       </Switch>
