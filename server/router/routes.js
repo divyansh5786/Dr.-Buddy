@@ -18,7 +18,7 @@ viewPrescription=require("../controller/appointment/viewPrescription")
 doctorPendingAppointment= require("../controller/doctor/doctorPendingAppointment")
 patientProfile=require("../controller/patient/patientProfile")
 doctorDashboard=require("../controller/doctor/doctorDashboard");
-
+googleLogin=require("../controller/googleLogin")
 
 
 
@@ -51,6 +51,10 @@ router.post('/updatepatient',Authenticate,patientProfile.updatePatientProfile);
 // about Prescription -- 5
 router.post('/addPrescription',Authenticate,viewPrescription.addPrescription);
 router.post('/viewPrescription',Authenticate,viewPrescription.viewPrescriptions);
+
+//google Login
+router.post('/googlelogin',googleLogin.googleLogin);
+
 
 
 
