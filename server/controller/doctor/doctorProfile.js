@@ -23,6 +23,7 @@ addProfession = async (req, res) => {
   try {
     const result = await user.save();
     // sending json to client side
+    console.log('add professional sucess')
     res.status(200).send(user);
   } catch (e) {
     console.log(e);

@@ -3,11 +3,13 @@ const mongoose = require('mongoose');
 const Doctor = require("../module/doctorSchema");
 const Patient = require("../module/patientSchema");
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 
 
 LogIn = async (req, res) => {
   const { username, password, type } = req.body;
+
  
   console.log(username, password, type, '/userlogin 11');
   if (type == 'Doctor')
@@ -20,6 +22,11 @@ LogIn = async (req, res) => {
    {
      try { 
        user = await Doctor.findOne({ username: username });
+       const isMatch = await bcrypt.compare(password, user.password);
+       if (!isMatch) {
+         res.status(400).json({ error: "Invalid credentials  " });
+       }
+
     }catch(e){
       console.log(e);
     }
@@ -27,6 +34,11 @@ LogIn = async (req, res) => {
   else
    { 
      try {user = await Patient.findOne({ username: username });
+     const isMatch = await bcrypt.compare(password, user.password);
+       if (!isMatch) {
+         res.status(400).json({ error: "Invalid credentials  password " });
+       }
+
     }catch(e){
       console.log(e);
     }
@@ -36,7 +48,7 @@ LogIn = async (req, res) => {
     console.log("user NOT found");
     return res.status(422).json({id:null});
   }
-  else if (user.password === password) {
+  else  {
     res.status(201);
     let token;
     try {
@@ -53,11 +65,11 @@ LogIn = async (req, res) => {
     return res.status(200).json({id:user.id,name:user.firstname+" "+user.lastname,token:token});
   }
   
-  else
-  {
-    console.log("password os wrong");
-    return res.status(422).json({id:null});
-  }
+  // else
+  // {
+  //   console.log("password os wrong");
+  //   return res.status(422).json({id:null});
+  // }
     
 
 }

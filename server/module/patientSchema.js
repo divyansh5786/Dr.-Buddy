@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-// const bcrypt = require('bcryptjs');
+ const bcrypt = require('bcrypt');
 // const jwt = require('jsonwebtoken');
 
 const patientSchema = new mongoose.Schema({
@@ -76,6 +76,16 @@ const patientSchema = new mongoose.Schema({
     }],
     
  })
+
+ 
+ // We are hashing Password
+ patientSchema.pre('save', async function(next) {
+    if (this.isModified('password')) {
+        this.password = await bcrypt.hash(this.password, 12);
+    }
+    next();
+
+})
 
 
 

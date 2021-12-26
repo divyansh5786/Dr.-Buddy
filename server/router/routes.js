@@ -16,43 +16,17 @@ viewAppointment=require("../controller/appointment/viewAppointment")
 patientDetails=require("../controller/patient/patientDetails")
 viewPrescription=require("../controller/appointment/viewPrescription")
 doctorPendingAppointment= require("../controller/doctor/doctorPendingAppointment")
-<<<<<<< Updated upstream
-doctorDashboard=require("../controller/doctor/doctorDashboard");
-//  router.get('/profile',Authenticate,doctorProfile.profile)
-router.post('/register', userSignup.register);//post
-router.post('/searchDoctor', searchDoctor.doctorlist);//get
-router.post('/login', userLogin.LogIn);//post
-
-router.post('/addprofession',doctorProfile.addProfession);//put
-router.post('/viewdoctor',doctorProfile.viewDoctor);//post
-router.post('/updateDoctorProfile',doctorProfile.updateDoctorProfile);//put
-router.post('/showDoctorspatient',doctorProfile.showDoctorsPatient);//post
-
-router.post('/doctorPendingAppointment',doctorPendingAppointment.PendingAppointment)//post
-router.post('/newAppointment',newAppointment.addAppointment);//post
-
-router.post('/viewAppointmentPatient',Authenticate,viewAppointment.viewAppointmentPatient);//post
-router.post('/viewAppointmentDoctor',viewAppointment.viewAppointmentDoctor);//post
-router.post('/statusUpdate',viewAppointment.statusUpdate);//put
-
-router.post('/patientAddMedicalData',patientDetails.addMedicalData);//put
-router.post('/patientviewMedicalData',patientDetails.viewMedicalData);//post
-router.post('/viewpatient',patientDetails.viewPatientProfile);//post
-router.post('/updatepatient',patientDetails.updatePatientProfile);//put
-
-router.post('/addPrescription',viewPrescription.addPrescription);//put
-router.post('/viewPrescription',viewPrescription.viewPrescriptions);//post
-=======
 patientProfile=require("../controller/patient/patientProfile")
+doctorDashboard=require("../controller/doctor/doctorDashboard");
+
+
+
 
  // common login-singup ---1
 
 router.post('/register', userSignup.register);
 router.post('/login', userLogin.LogIn);
 router.post('/searchDoctor',Authenticate, searchDoctor.doctorlist);
-router.get('/profile',Authenticate,doctorProfile.profile)
-
-
 
 // doctor's part ,profile and all   ---2 
 router.post('/addprofession',Authenticate,doctorProfile.addProfession);
@@ -75,9 +49,9 @@ router.post('/updatepatient',Authenticate,patientProfile.updatePatientProfile);
 
 
 // about Prescription -- 5
-router.post('/addPrescription',viewPrescription.addPrescription);
-router.post('/viewPrescription',viewPrescription.viewPrescriptions);
->>>>>>> Stashed changes
+router.post('/addPrescription',Authenticate,viewPrescription.addPrescription);
+router.post('/viewPrescription',Authenticate,viewPrescription.viewPrescriptions);
+
 
 
 module.exports = router;

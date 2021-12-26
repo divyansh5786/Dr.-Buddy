@@ -10,6 +10,7 @@ viewPatientProfile = async(req,res)=>{
    const {patientID}= req.body;
    try{
     const patient= await Patient.findById(patientID);
+    console.log('viewpatient run sucessfully')
       // sending function info back to routes
     res.status(201).json(patient);
    }catch(e)

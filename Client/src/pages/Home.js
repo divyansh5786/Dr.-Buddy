@@ -31,7 +31,7 @@ function Home({setPatient,setDoctor,setalertapp}) {
     });
     console.log(res);
     const data = await res.json();
-    if (res.status == 422 || !data) {
+    if (res.status == 422 || !data || !data.id || !data.token) {
       setalertapp({color:"red",message:"Invalid Credentials"});
       console.log("Invailid Credentials");
     } else {

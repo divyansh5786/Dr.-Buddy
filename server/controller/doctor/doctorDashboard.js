@@ -62,12 +62,12 @@ doctorDashboard = async(req, res) => {
              var totalincome= completedPatient * (parseInt(doctor.Fees));
       
 
-      //  console.log( totalPatient)
-      //  console.log( pendingPatient)
-      //  console.log(todayPendingPatient)
-      //  console.log(todayCompletedPatient)
-      //  console.log(completedPatient)
-      //  console.log(totalincome)
+       console.log( totalPatient)
+       console.log( pendingPatient)
+       console.log(todayPendingPatient)
+       console.log(todayCompletedPatient)
+       console.log(completedPatient)
+       console.log(totalincome)
 
            var result={totalPatient, pendingPatient,todayPendingPatient,todayCompletedPatient,completedPatient,totalincome}
 // sending json to client side

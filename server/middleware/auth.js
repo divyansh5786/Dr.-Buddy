@@ -11,13 +11,13 @@ module.exports = (req, res, next) => {
     if (!token) {
       throw new Error('token split Error');
     }
-    console.log(req.body);
+  
    
    
 
     const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET_KEY);
     req.userData = { userId: decodedToken.userId };
-    console.log(req.body);
+    
     console.log("I am Middleware Authentication");
     next();
   } catch (err) {
