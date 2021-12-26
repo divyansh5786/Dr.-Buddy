@@ -74,7 +74,7 @@ function Home({setPatient,setDoctor,setalertapp}) {
       return;
     }
     else{
-      
+
     const email = response.profileObj.email;
     var firstname = response.profileObj.givenName;
     var username = firstname+'_#$%^';
@@ -83,6 +83,7 @@ function Home({setPatient,setDoctor,setalertapp}) {
     var city = "Junagadh";
     var state = "Gujarat";
     const type = user.type;
+    
     const res = await fetch("/googlelogin", {
       method: "POST",
       headers: {
@@ -129,9 +130,9 @@ function Home({setPatient,setDoctor,setalertapp}) {
                     <option>Select</option>
                   <option>Doctor</option>
                   <option>Patient</option>
-                </select><hr/>
-                {errors.type && <option style={{"color":"red"}}>{errors.type}</option>}
-              </div>
+                </select><br/>
+                {errors.type && <option style={{"color":"red","background-color":"#FFBABA","background-image":"url('https://i.imgur.com/GnyDvKN.png');"}}>{errors.type}</option>}
+              </div><br/>
               <a href='/forgetpassword'>Forget Password</a>
             <button className="btn btn-primary" type="submit" onClick={postData}>Login</button>
             <GoogleLogin

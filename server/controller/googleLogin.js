@@ -17,17 +17,17 @@ googleLogin = async (req, res) => {
         if(doctorgoogle!=0  || patientgoogle!=0)
         {    if(doctorgoogle!=0)
             {
-                fxn(temp);
+                fxn(doctorgoogle);
             }
             else {
-                fxn(temp2)
+                fxn(patientgoogle);
             }
       
          
         }
-        fxn(user)
+        async  function fxn(user)
         {
-          
+          console.log(user);
             let token;
             try {
               token = await jwt.sign(
@@ -40,7 +40,9 @@ googleLogin = async (req, res) => {
             }
             console.log("token   /userlogin")
            // console.log(token);
-            return res.status(200).json({id:user.id,name:user.firstname+" "+user.lastname,token:token});
+           console.log(user.id);
+           console.log(user.firstname);
+            res.status(200).json({id:user.id,name:user.firstname+" "+user.lastname,token:token});
         }
    }catch(e){
      console.log(e);
