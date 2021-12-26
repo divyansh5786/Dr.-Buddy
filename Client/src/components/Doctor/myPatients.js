@@ -1,10 +1,11 @@
 import React from 'react'
 import '../../css/dashboard.css';
-import { useState,useEffect } from 'react';
+import { useState, useEffect,useContext  } from 'react';
 import { useHistory } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import PatientCard from '../utilities/myPatientCard';
 import AlertBar from '../utilities/alertbar';
+import { AuthContext } from '../../context/auth-context';
 
 var calculateAge = (date)=>{
   let milliseconds = Date.parse(date);
@@ -13,12 +14,13 @@ var calculateAge = (date)=>{
   return age;
 
 }
-const fetchData = async (id) => {
+const fetchData = async (id,auth) => {
   let doctorID = id;
     try{const res = await fetch("/showDoctorspatient", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          Authorization: 'Bearer ' + auth.token,
         },
         body: JSON.stringify({
          doctorID
@@ -54,10 +56,10 @@ const fetchData = async (id) => {
 function MyPatient({id,setPage,alert,setalert}) {
     const history = useHistory();
     const [patients, setPatients] = useState(null);
-
+    const auth = useContext(AuthContext);
     useEffect(() => {
         setPage('My Patients');
-        fetchData(id).then(tempdata => {
+        fetchData(id,auth).then(tempdata => {
             setPatients(tempdata);
         })
       }, []);

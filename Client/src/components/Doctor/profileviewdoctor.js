@@ -1,9 +1,10 @@
 import React from 'react'
 import '../../css/dashboard.css';
 import { NavLink } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect,useContext  } from 'react';
 import { useHistory } from 'react-router-dom';
 import AlertBar from '../utilities/alertbar';
+import { AuthContext } from '../../context/auth-context';
 
 var DateTransformtoobject = (date) => {
     let tareek = parseInt(date.substring(0, 2));
@@ -21,7 +22,7 @@ var DateTransformtoString = (date) => {
     //console.log(res);
     return res;
 }
-const fetchData = async (id) => {
+const fetchData = async (id,auth) => {
     let doctorID = id;
     console.log("here" + id);
     let tempdata;
@@ -30,7 +31,8 @@ const fetchData = async (id) => {
         const res = await fetch("/viewdoctor", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                Authorization: 'Bearer ' + auth.token,
             },
             body: JSON.stringify({ doctorID })
         });
@@ -58,10 +60,10 @@ const fetchData = async (id) => {
 }
 
 function ProfileViewDoctor({ id, setPage, user, setUser,setprofile }) {
-
+    const auth = useContext(AuthContext);
     useEffect(() => {
         setPage('Profile');
-        fetchData(id).then(tempdata => {
+        fetchData(id,auth).then(tempdata => {
             setUser(tempdata);
         })
     }, []);

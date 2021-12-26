@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect,useContext  } from 'react';
 import React from 'react'
 import '../../css/style.css';
 import { useHistory } from 'react-router-dom';
@@ -6,6 +6,7 @@ import AppointmentCard from '../utilities/apppointmentCardDoctor'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import AlertBar from '../utilities/alertbar';
+import { AuthContext } from '../../context/auth-context';
 
 
 const DateTransform = (date) => {
@@ -30,14 +31,15 @@ var DateTransformtostring= (date) => {
 
   }
 
-const fetchpending = async(id) => {
+const fetchpending = async(id,auth) => {
     
     let doctorID = id;
     try {
         const res = await fetch("/doctorPendingAppointment", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                Authorization: 'Bearer ' + auth.token,
             },
             body: JSON.stringify({
                 doctorID
@@ -101,12 +103,12 @@ function PendingAppointments({ id, setPage,setpatient,setappointment,alert,setal
     const [appointments, setAppointments] = useState(null);
     // const [status, setStatus] = useState(null);
     const [startDate, setStartDate] = useState(new Date());
-    
+    const auth = useContext(AuthContext);
 
     
     useEffect(() => {
         setPage('Pending Appointments');
-        fetchpending(id).then(tempdata => {
+        fetchpending(id,auth).then(tempdata => {
             setAppointments(tempdata);
           });
     }, []);

@@ -1,12 +1,15 @@
-import { useState } from 'react';
+//import { useState } from 'react';
 import React from 'react'
 import '../../css/style.css';
 import { useHistory } from 'react-router-dom';
+import { useState, useEffect,useContext  } from 'react';
 
+import { AuthContext } from '../../context/auth-context';
 
 
 
 function AppointmentCard({appointment,appointments,setAppointments,setpatient,setappointment,setalert}) {
+    const auth = useContext(AuthContext);
     setpatient(null);
     const history = useHistory();
 
@@ -24,7 +27,8 @@ function AppointmentCard({appointment,appointments,setAppointments,setpatient,se
         const res = await fetch("/statusUpdate", {
             method: "POST",
             headers: {
-              "Content-Type": "application/json"
+              "Content-Type": "application/json",
+              Authorization: 'Bearer ' + auth.token,
             },
             body: JSON.stringify({
               id, status

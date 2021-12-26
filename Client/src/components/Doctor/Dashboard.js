@@ -1,17 +1,20 @@
 import React from 'react';
-import { useState,useEffect } from 'react';
+import { useState, useEffect,useContext  } from 'react';
 import '../../css/dashboard.css';
 import { NavLink } from 'react-router-dom';
 import AlertBar from '../utilities/alertbar';
 
-const fetchPrescriptionData = async (id) => {
+import { AuthContext } from '../../context/auth-context';
+
+const fetchPrescriptionData = async (id,auth) => {
   let doctorID = id;
   var tempdata = {};
   try {
     const res = await fetch("/doctorDashboard", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: 'Bearer ' + auth.token,
       },
       body: JSON.stringify({
         doctorID
@@ -42,10 +45,11 @@ const fetchPrescriptionData = async (id) => {
 }
 
 function Dashboard({id,setPage,alert,setalert}) {
+  const auth = useContext(AuthContext);
   const [details, setdetails] = useState(null);
   useEffect(() => {
     setPage('Dashboard');
-    fetchPrescriptionData(id).then(tempdata => {
+    fetchPrescriptionData(id,auth).then(tempdata => {
       console.log(tempdata);
       setdetails(tempdata);
       console.log(details);

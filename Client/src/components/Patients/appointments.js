@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect,useContext  } from 'react';
 import React from 'react'
 import '../../css/style.css';
 import { useHistory } from 'react-router-dom';
 import AppointmentCard from '../utilities/appointmentCardPatient';
+import { AuthContext } from '../../context/auth-context';
 
 var DateTransform = (date) => {
   let milliseconds = Date.parse(date);
@@ -11,14 +12,15 @@ var DateTransform = (date) => {
   var d = (date.getDate())+"/"+(date.getMonth()+1)+"/"+(date.getFullYear());
   return d;
 }
-const fetchData = async (id) => {
+const fetchData = async (id,auth) => {
   console.log(id);
   let patientID = id;
   try {
     const res = await fetch("/viewAppointmentPatient", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: 'Bearer ' + auth.token,
       },
       body: JSON.stringify({
         patientID
@@ -80,14 +82,14 @@ const fetchData = async (id) => {
 }
 
 function Appointments({ id, setPage }) {
-
+  const auth = useContext(AuthContext);
   const history = useHistory();
   const [appointments, setAppointments] = useState(null);
 
   useEffect(() => {
     console.log("here");
     setPage('Appointments');
-    fetchData(id).then(tempdata => {
+    fetchData(id,auth).then(tempdata => {
       setAppointments(tempdata);
     })
   }, []);

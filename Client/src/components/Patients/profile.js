@@ -1,10 +1,11 @@
 import React from 'react'
 import '../../css/dashboard.css';
 import { NavLink } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect,useContext  } from 'react';
 import { useHistory } from 'react-router-dom';
 import AlertBar from '../utilities/alertbar';
 import ProfileViewPatient from './profileviewPatient';
+import { AuthContext } from '../../context/auth-context';
 
 var DateTransformtoobject = (date) => {
     let tareek = parseInt(date.substring(0,2));
@@ -22,7 +23,7 @@ var DateTransformtoString = (date) => {
     //console.log(res);
     return res;
   }
-const fetchData = async (id) => {
+const fetchData = async (id,auth) => {
     let patientID = id;
     let tempdata;
     try {
@@ -30,7 +31,8 @@ const fetchData = async (id) => {
         const res = await fetch("/viewpatient", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                Authorization: 'Bearer ' + auth.token,
             },
             body: JSON.stringify({ patientID })
         });
@@ -64,6 +66,7 @@ const fetchData = async (id) => {
 }
 
 function Profile({ id, setPage,alert,setalert }) {
+    const auth = useContext(AuthContext);
     const [profile, setprofile] = useState('view');
     const history = useHistory();
     const [user, setUser] = useState(null);
@@ -77,7 +80,7 @@ function Profile({ id, setPage,alert,setalert }) {
 
     useEffect(() => {
         setPage('Profile');
-        fetchData(id).then(tempdata => {
+        fetchData(id,auth).then(tempdata => {
             setUser(tempdata);
         })
     }, []);

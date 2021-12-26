@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect,useContext  } from 'react';
 import React from 'react'
 import '../../css/style.css';
 import { useHistory } from 'react-router-dom';
@@ -6,10 +6,12 @@ import AppointmentCard from '../utilities/apppointmentCardDoctor'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import AlertBar from '../utilities/alertbar';
+import { AuthContext } from '../../context/auth-context';
 
 
 function Appointments({ id, setPage,setpatient,setappointment,alert,setalert}) {
-
+    
+    const auth = useContext(AuthContext);
     const history = useHistory();
     const [appointments, setAppointments] = useState(null);
     // const [status, setStatus] = useState(null);
@@ -36,7 +38,7 @@ function Appointments({ id, setPage,setpatient,setappointment,alert,setalert}) {
 
       }
 
-    const handleChange = async(date) => {
+    const handleChange = async(date,auth) => {
         setAppointments(null);
         console.log(date);
         setStartDate(date);
@@ -46,7 +48,8 @@ function Appointments({ id, setPage,setpatient,setappointment,alert,setalert}) {
             const res = await fetch("/viewAppointmentDoctor", {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    Authorization: 'Bearer ' + auth.token,
                 },
                 body: JSON.stringify({
                     doctorID, appointmentDate
@@ -108,7 +111,7 @@ function Appointments({ id, setPage,setpatient,setappointment,alert,setalert}) {
     }
     useEffect(() => {
         setPage('Appointments');
-        handleChange(startDate);
+        handleChange(startDate,auth);
     }, []);
 
 
@@ -120,7 +123,7 @@ function Appointments({ id, setPage,setpatient,setappointment,alert,setalert}) {
             <div class="tab-content pt-0 box ">
                 <div style={{ display: 'flex', justifyContent: "center", paddingTop: "10px", paddingBottom: "10px" }}>
                     <span style={{ fontSize: 'x-large', fontWeight: '600', width: '100px' }}>Selectdate</span>
-                    <span style={{ marginLeft: "15%" }}><DatePicker selected={startDate} onChange={(date) => handleChange(date)} /></span>
+                    <span style={{ marginLeft: "15%" }}><DatePicker selected={startDate} onChange={(date) => handleChange(date,auth)} /></span>
                 </div>
                 <div id="pat_appointments" class="tab-pane fade show active ">
                     <div class="card card-table mb-0 card-body table-responsive">

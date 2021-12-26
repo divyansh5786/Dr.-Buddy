@@ -1,18 +1,19 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect,useContext  } from 'react';
 import React from 'react'
 import '../../css/style.css';
 import { useHistory } from 'react-router-dom';
 import PatientViewPres from '../utilities/patientViewPres';
+import { AuthContext } from '../../context/auth-context';
 
-
-const fetchPrescriptions = async (id) => {
+const fetchPrescriptions = async (id,auth) => {
   console.log(id);
   let patientID = id;
   try {
     const res = await fetch("/viewAppointmentPatient", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: 'Bearer ' + auth.token,
       },
       body: JSON.stringify({
         patientID
@@ -59,12 +60,13 @@ var DateTransform = (date) => {
 }
 function Prescriptions({ id, setPage }) {
 
+  const auth = useContext(AuthContext);
   const history = useHistory();
   const [prescriptions, setPrescriptions] = useState(null);
 
   useEffect(() => {
     setPage('Prescription');
-    fetchPrescriptions(id).then(tempdata => {
+    fetchPrescriptions(id,auth).then(tempdata => {
       setPrescriptions(tempdata);
     })
   }, []);

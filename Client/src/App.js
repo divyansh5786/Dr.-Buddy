@@ -9,27 +9,29 @@ import Signup from './pages/Signup';
 import {Switch, Route, Redirect} from 'react-router-dom';
 import './css/App.css';
 import Profile from './components/utilities/patientProfileForDoctor';
-
+import AlertBar from './components/utilities/alertbar';
 
 function App() {
   const [doctor,setDoctor] = useState(null);
   const [patient,setPatient] = useState(null);
+  const [alert, setalertapp] = useState(null);
   const id='';
   return (
     <>
       <Navbar/>
+      <AlertBar alert = {alert} setalert={setalertapp}/>
       <Switch>
       <Route  path="/doctors" render={()=>{
-            return(<Doctors doctor={doctor} />)
+            return(<Doctors doctor={doctor} setalertapp={setalertapp}/>)
           }}> 
            </Route>
            <Route  path="/patients" render={()=>{
-            return(<Patients patient={patient} setPatient={setPatient}  />)
+            return(<Patients patient={patient} setPatient={setPatient} setalertapp={setalertapp}  />)
           }}> 
            </Route>
-           <Route exact path="/SignUp" render={()=>{return(<Signup setDoctor={setDoctor} />)}}/> 
+           <Route exact path="/SignUp" render={()=>{return(<Signup setDoctor={setDoctor} setalertapp={setalertapp}/>)}}/> 
         <Route exact path="/patientProfile" component={Profile} />
-        <Route exact path="/" render={()=>{return(<Home setPatient={setPatient} setDoctor={setDoctor} />)}}> 
+        <Route exact path="/" render={()=>{return(<Home setPatient={setPatient} setDoctor={setDoctor} setalertapp={setalertapp}/>)}}> 
            </Route>
         <Redirect to="/" />
       </Switch>

@@ -1,10 +1,11 @@
 import React from 'react';
 import '../../css/dashboard.css';
 import { NavLink } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect,useContext  } from 'react';
 import { useHistory } from 'react-router-dom';
 import AlertBar from '../utilities/alertbar';
 import ProfileViewDoctor from './profileviewdoctor';
+import { AuthContext } from '../../context/auth-context';
 
 var DateTransformtoobject = (date) => {
     let tareek = parseInt(date.substring(0, 2));
@@ -29,6 +30,7 @@ function ProfileDoctor({ id, setPage, setalert }) {
     const [user, setUser] = useState(null);
     const [profile, setprofile] = useState('view');
     const [temporary, settemporary] = useState({Name:"",Institute:"",Duration:""});
+    const auth = useContext(AuthContext);
 
     let name, value;
     const handleInputs = (e) => {
@@ -66,7 +68,8 @@ const deleteDegree = (index)=>{
         const res = await fetch("/updateDoctorProfile", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                Authorization: 'Bearer ' + auth.token,
             },
             body: JSON.stringify({
                 id, updatedDoctor

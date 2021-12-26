@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect,useContext  } from 'react';
 import React from 'react'
 import '../../css/style.css';
 import { NavLink,useHistory } from 'react-router-dom';
@@ -6,6 +6,7 @@ import AppointmentCard from '../utilities/apppointmentCardDoctor'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import PrescriptionCard from '../utilities/prescriptionCard';
+import { AuthContext } from '../../context/auth-context';
 
 
 
@@ -14,7 +15,7 @@ function Prescriptions({id,setPage}) {
     const history = useHistory();
     const [prescriptions, setPrescriptions] = useState(null);
     const [startDate, setStartDate] = useState(new Date());
-
+    const auth = useContext(AuthContext);
 
   
 var DateTransformtostring = (date) => {
@@ -40,7 +41,8 @@ const DateTransform = (date) => {
             const res = await fetch("/viewAppointmentDoctor", {
               method: "POST",
               headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                Authorization: 'Bearer ' + auth.token,
               },
               body: JSON.stringify({
                 doctorID,appointmentDate
