@@ -1,7 +1,7 @@
 //to get the contestlist from mongo db and sending it to client
 const mongoose = require('mongoose');
-const Doctor = require("../module/doctorSchema");
-const Patient = require("../module/patientSchema");
+const Doctor = require("../../module/doctorSchema");
+const Patient = require("../../module/patientSchema");
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
@@ -64,18 +64,28 @@ LogIn = async (req, res) => {
    // console.log(token);
     return res.status(200).json({id:user.id,name:user.firstname+" "+user.lastname,token:token});
   }
-  
-  // else
-  // {
-  //   console.log("password os wrong");
-  //   return res.status(422).json({id:null});
-  // }
-    
+}
+forgetPassword = async (req, res) => {
+  const{username,password,email,type} = req.body;
+  if(type==='Doctor')
+  {
+           const doctor= await Doctor.findOne({ $and: [ { username } , { email} ] })
+           doctor.password=password;
+           await doctor.save();
+           res.status(201).json({message:'password changed sucessfully'})
+  }
+  else {
+    const patient= await Patient.findOne({ $and: [ { username } , { email} ] })
+    patient.password=password;
+    await patient.save();
+    res.status(201).json({message:'password changed sucessfully'})
+
+  }
 
 }
 
 
-
 module.exports = {
   LogIn,
+  forgetPassword,
 };

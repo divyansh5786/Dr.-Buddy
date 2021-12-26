@@ -7,8 +7,8 @@ const path = require('path');
 const Authenticate = require('../middleware/auth');
 
 /// require  files for routes
-userSignup = require("../controller/commonSignUp");
-userLogin = require("../controller/commonLogin")
+userSignup = require("../controller/commonUser/commonSignUp");
+userLogin = require("../controller/commonUser/commonLogin")
 doctorProfile= require("../controller/doctor/doctorProfile")
 searchDoctor= require("../controller/doctor/searchDoctor")
 newAppointment=require("../controller/appointment/newAppointment")
@@ -18,7 +18,7 @@ viewPrescription=require("../controller/appointment/viewPrescription")
 doctorPendingAppointment= require("../controller/doctor/doctorPendingAppointment")
 patientProfile=require("../controller/patient/patientProfile")
 doctorDashboard=require("../controller/doctor/doctorDashboard");
-googleLogin=require("../controller/googleLogin")
+googleLogin=require("../controller/commonUser/googleLogin")
 
 
 
@@ -54,8 +54,7 @@ router.post('/viewPrescription',Authenticate,viewPrescription.viewPrescriptions)
 
 //google Login
 router.post('/googlelogin',googleLogin.googleLogin);
-
-
+router.post('/forgetPassword',userLogin.forgetPassword);
 
 
 module.exports = router;

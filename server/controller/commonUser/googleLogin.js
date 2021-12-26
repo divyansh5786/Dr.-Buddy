@@ -1,7 +1,7 @@
 //to get the contestlist from mongo db and sending it to client
 const mongoose = require('mongoose');
-const Doctor = require("../module/doctorSchema");
-const Patient = require("../module/patientSchema");
+const Doctor = require("../../module/doctorSchema");
+const Patient = require("../../module/patientSchema");
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
