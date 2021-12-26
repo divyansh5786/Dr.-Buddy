@@ -73,6 +73,8 @@ function Appointments({ id, setPage,setpatient,setappointment,alert,setalert}) {
                         dateOfAppointment: DateTransformtostring(appointment.appointmentDate),
                         time: appointment.appointmentTime,
                         fees: appointment.fee,
+                        meetingID:appointment.meetingID,
+                        meetingpwd:appointment.meetingpwd,
                         concern: appointment.concern,
                         status: appointment.status,
                         age:calculateAge(appointment.patientID.dateofbirth),

@@ -36,7 +36,14 @@ const contestSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    
+    meetingID : {
+        type:String,
+        reuired: false
+    },
+    meetingpwd : {
+        type:String,
+        reuired: false
+    },
     diagnosis: {
         type: Array,
         required: false

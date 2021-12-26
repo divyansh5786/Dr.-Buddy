@@ -40,6 +40,8 @@ const fetchData = async (id,auth) => {
            spec: appointment.doctorID.Specialization,
            dateOfBooking: DateTransform(appointment.bookingDate),
            dateOfAppointment: DateTransform(appointment.appointmentDate),
+           meetingID:appointment.meetingID,
+           meetingpwd:appointment.meetingpwd,
            time: appointment.appointmentTime,
            fees: appointment.fee,
            concern:appointment.concern,
