@@ -62,7 +62,7 @@ function Signup({setDoctor,setalertapp}) {
       setalertapp({color:"red",message:"Some details are invalid"});
       console.log("Invailid Registration");
     } else {
-      setalertapp({color:"red",message:"Registeration Successfull"});
+      setalertapp({color:"green",message:"Registeration Successfull"});
       console.log("Registration Successfull");
       console.log(type);
         history.replace("/");
