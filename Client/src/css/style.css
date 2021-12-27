@@ -318,6 +318,13 @@ form.sign-in-form {
   transform: translateX(800px);
 }
 
+.graphrow{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-bottom: 25px;
+}
+
 /* ANIMATION */
 
 .container.sign-up-mode:before {

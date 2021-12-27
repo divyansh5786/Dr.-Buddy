@@ -9,6 +9,7 @@ import { NavLink } from 'react-router-dom';
 import AlertBar from '../utilities/alertbar';
 import { AuthContext } from '../../context/auth-context';
 
+
 var DateTransform = (date) => {
   let milliseconds = Date.parse(date);
   date = new Date(milliseconds)
@@ -172,6 +173,9 @@ function Dashboard({ id, setPage,alert,setalert,setappointment}) {
     });
 
   }, []);
+
+  
+
   return (
     <>
 
