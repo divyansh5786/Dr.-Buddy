@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../context/auth-context';
 import GoogleLogin from 'react-google-login';
 import GoogleButton from 'react-google-login';
-import axios from 'axios';
+
 
 
 function Home({ setPatient, setDoctor, setalertapp }) {
@@ -131,9 +131,13 @@ function Home({ setPatient, setDoctor, setalertapp }) {
   const responseErrorGoogle = (response) => {
 
   }
+
   return (
     <>
+
+      
       <div className="container">
+        
         <div className="forms-container">
           <div className="signin-signup">
             <form method="POST" className="sign-in-form">
@@ -173,13 +177,14 @@ function Home({ setPatient, setDoctor, setalertapp }) {
                 onFailure={responseErrorGoogle}
                 cookiePolicy={'single_host_origin'}
               />
-              </a></div>
-              
+              </a>
+              </div>
+              <div>
+              </div>
             </form>
-
-
           </div>
         </div>
+        
 
         <div className="panels-container">
           <div className="panel left-panel">
