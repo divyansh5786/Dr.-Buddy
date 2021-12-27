@@ -19,6 +19,7 @@ import PendingAppointments from '../components/Doctor/pendingApp';
 import ProfileDoctor from '../components/Doctor/profiledoctor';
 import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../context/auth-context';
+import ViewReview from '../components/Doctor/review';
 
 function Doctors({doctor,setalertapp}) {
   const auth = useContext(AuthContext);
@@ -81,6 +82,7 @@ console.log(doctor);
         <Route exact path="/doctors/appointments" render={()=>{return(<Appointments id={id} setPage={setPage} setpatient={setpatient} setappointment={setappointment} alert={alert} setalert={setalert}/>)}} />
         <Route exact path="/doctors/Pendingappointemnt" render={()=>{return(<PendingAppointments id={id} setPage={setPage} setpatient={setpatient} setappointment={setappointment} alert={alert} setalert={setalert}/>)}} />
         <Route exact path="/doctors/prescription" render={()=>{return(<Prescriptions id={id} setPage={setPage} />)}} />
+        <Route exact path="/doctors/review" render={()=>{return(<ViewReview id={id} setPage={setPage} />)}} />
         <Route exact path="/doctors/logout" render={() => {logout()}}>
                   </Route>
         {/* <Route exact path="/patients" component={Patients} />

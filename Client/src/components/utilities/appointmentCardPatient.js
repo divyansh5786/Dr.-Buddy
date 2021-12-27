@@ -7,7 +7,20 @@ const startmeeting = (appointment)=>{
     const url = 'https://us04web.zoom.us/j/'+appointment.meetingID+'?pwd='+appointment.meetingpwd;
     window.open(url);
 }
-function AppointmentCard({ appointment }) {
+
+    //console.log((!appointment.meetingID));
+
+    
+
+
+function AppointmentCard({ appointment, setDoctorBook}) {
+    const history = useHistory();
+    const viewdoctor = async (doctorID) => {
+        if (doctorID != null) {
+            setDoctorBook(doctorID);
+            history.push("/patients/viewdoctor");
+        }
+    }
     return (<>
         <tr>
             <td>
@@ -15,7 +28,7 @@ function AppointmentCard({ appointment }) {
                     <a href="doctor-profile.html" class="avatar avatar-sm mr-2">
 
                     </a>
-                    <a href="doctor-profile.html">{appointment.doctorname}<span>{appointment.spec}</span></a>
+                    <a  onClick={()=>{viewdoctor(appointment.doctorID)}}>{appointment.doctorname}<span>{appointment.spec}</span></a>
                 </h2>
             </td>
             <td>{appointment.dateOfAppointment}<span class="d-block text-info">{appointment.time}</span></td>

@@ -10,7 +10,7 @@ ratingDoctor = async (req, res) => {
     const{ doctorID,text,rating,title,date, patientName }=req.body;
     try{
         var review =[{patientName,rating,text,title,date}];
-    
+        console.log(review);
        // console.log(review)
         var doctor= await Doctor.findById(doctorID);
 

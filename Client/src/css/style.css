@@ -12,7 +12,134 @@ body,
 input {
   font-family: "Poppins", sans-serif;
 }
-
+.widget {
+  margin-bottom: 30px;
+}
+.widget-title {
+  margin-bottom: 15px;
+}
+.experience-box {
+  position: relative;
+}
+.experience-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+.experience-list::before {
+  background: #ddd;
+  bottom: 0;
+  content: "";
+  left: 8px;
+  position: absolute;
+  top: 8px;
+  width: 2px;
+}
+.experience-list > li {
+  position: relative;
+  display: list-item;
+    text-align: -webkit-match-parent
+}
+.experience-list > li .experience-user {
+  background: #fff;
+  height: 10px;
+  left: 4px;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 4px;
+  width: 10px;
+}
+.before-circle {
+  background-color: rgba(32, 192, 243, 0.2);
+  border-radius: 50%;
+  height: 12px;
+  width: 12px;
+  border: 2px solid #20c0f3;
+}
+.experience-list > li .experience-content {
+  background-color: #fff;
+  margin: 0 0 20px 40px;
+  padding: 0;
+  position: relative;
+}
+.experience-list > li .experience-content .timeline-content {
+  color: #757575;
+}
+.experience-list > li .experience-content .timeline-content a.name {
+  font-weight: 500;
+}
+.experience-list > li .time {
+  color: #757575;
+  display: block;
+  font-size: 13px;
+}
+.review_form{
+display: block;
+    margin-top: 0em;
+}
+.star-rating {
+  direction: rtl;
+}
+.star-rating input[type=radio] {
+  display: none;
+}
+.star-rating label {
+  color: #bbb;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 0;
+  -webkit-transition: all .3s ease-in-out;
+  transition: all .3s ease-in-out;
+}
+.review-listing {
+  border-bottom: 3px solid #646b7e77;
+  margin-top: 20px;
+  padding-bottom: 30px;
+}
+.review-listing > ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.review-listing > ul li .comment {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 30px;
+}
+.review-listing > ul li .comment .comment-body {
+  margin-left: 16px;
+  width: 100%;
+}
+.review-listing > ul li .comment .comment-body .meta-data {
+  position: relative;
+  margin-bottom: 10px;
+}
+.review-listing > ul li .comment .comment-body .meta-data span.comment-author {
+  font-weight: 800;
+  font-size: large;
+  color: #272b41;
+  text-transform: capitalize;
+}
+.review-listing > ul li .comment .comment-body .meta-data span {
+  display: block;
+  font-size: 16px;
+  color: #757575;
+}
+.review-listing > ul li .comment .comment-body .meta-data span.comment-date {
+  font-size: 14px;
+}
+.review-listing > ul li .comment .comment-body .meta-data .review-count {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: absolute;
+  top: 3px;
+  right: 0;
+  width: auto;
+}
 .container {
   position: absolute;
   width: 10vh;

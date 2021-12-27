@@ -57,6 +57,12 @@ function SideBarDoctor() {
               <span class="links_name">Log out</span>
             </NavLink>
           </li>
+          <li >
+          <NavLink to="/doctors/review">
+              <i class='bx bx-log-out'></i>
+              <span class="links_name">Reviews</span>
+            </NavLink>
+          </li>
         </ul>
       </div>
     </>

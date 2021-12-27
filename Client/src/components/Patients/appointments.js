@@ -36,6 +36,7 @@ const fetchData = async (id,auth) => {
       console.log(data);
       data.result.map((appointment) => {
         let tempappoint = { id: appointment._id,
+          doctorID:appointment.doctorID._id,
            doctorname: appointment.doctorID.firstname + appointment.doctorID.lastname, 
            spec: appointment.doctorID.Specialization,
            dateOfBooking: DateTransform(appointment.bookingDate),
@@ -83,7 +84,7 @@ const fetchData = async (id,auth) => {
   return tempdata;
 }
 
-function Appointments({ id, setPage }) {
+function Appointments({ id, setPage,setDoctorBook }) {
   const auth = useContext(AuthContext);
   const history = useHistory();
   const [appointments, setAppointments] = useState(null);
@@ -120,7 +121,7 @@ function Appointments({ id, setPage }) {
                 {appointments === null ? "Loading..." : appointments.length === 0 ? "No appointment made" :
                   appointments.map((appointment) => {
                     console.log(appointment.doctorname);
-                    return (<AppointmentCard key={appointment.id} appointment={appointment} />
+                    return (<AppointmentCard key={appointment.id} appointment={appointment} setDoctorBook={setDoctorBook} />
                     )
                   })
                 }

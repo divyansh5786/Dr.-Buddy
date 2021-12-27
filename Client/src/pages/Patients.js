@@ -16,6 +16,7 @@ import Profile from '../components/Patients/profile';
 import ViewPrescription from '../components/utilities/viewPrescription';
 import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../context/auth-context';
+import ViewDoctor from '../components/utilities/doctorview';
 
 
 function Patients({ patient, setPatient ,setalertapp}) {
@@ -67,7 +68,7 @@ function Patients({ patient, setPatient ,setalertapp}) {
                   </Route>
                   <Route exact path="/patients/profile" render={() => { return (<Profile id={id} setPage={setPage} alert={alert} setalert={setalert} />) }}>
                   </Route>
-                  <Route exact path="/patients/appointments" render={() => { return (<Appointments id={id} setPage={setPage} />) }}>
+                  <Route exact path="/patients/appointments" render={() => { return (<Appointments id={id} setPage={setPage} setDoctorBook={setDoctorBook}/>) }}>
                   </Route>
                   <Route exact path="/patients/prescription" render={() => { return (<Prescriptions id={id} setPage={setPage} />) }}>
                   </Route>
@@ -76,6 +77,8 @@ function Patients({ patient, setPatient ,setalertapp}) {
                   <Route exact path="/patients/dashboard" render={() => { return (<Dashboard id={id} setPage={setPage} alert={alert} setalert={setalert} setappointment={setappointment} />) }}>
                   </Route>
                   <Route exact path="/patients/bookapp" render={() => { return (<Bookappointment setDoctorBook={setDoctorBook} setPage={setPage} />) }}>
+                  </Route>
+                  <Route exact path="/patients/viewdoctor" render={() => { return (<ViewDoctor doctorBook={doctorBook} patientname={name} setPage={setPage}/>) }}>
                   </Route>
                   <Route exact path="/patients/" render={() => { return (<Dashboard id={id} setPage={setPage} />) }}>
                   </Route>

@@ -47,6 +47,12 @@ function SideBarPatient() {
               <span class="links_name" >Profile</span>
             </NavLink>
           </li>
+          <li>
+          <NavLink to="/patients/viewdoctor">
+              <i class='bx bx-cog' ></i>
+              <span class="links_name" >View Doctor</span>
+            </NavLink>
+          </li>
           <li >
           <NavLink to="/patients/logOut">
               <i class='bx bx-log-out'></i>
