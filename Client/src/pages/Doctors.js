@@ -78,7 +78,7 @@ console.log(doctor);
            <Route exact path="/doctors/profile"render={()=>{return(<ProfileDoctor id={id} setPage={setPage} alert={alert} setalert={setalert}  />)}} />
         <Route exact path="/doctors/patientview" render={()=>{return(<PatientView patient={patient} id={id} setPage={setPage}  alert={alert} setalert={setalert} />)}} />
         <Route exact path="/doctors/patientlist" component={patientlist} />
-        <Route exact path="/doctors/mypatient" render={()=>{return(<MyPatient id={id} setPage={setPage} alert={alert} setalert={setalert}  />)}} />
+        <Route exact path="/doctors/mypatient" render={()=>{return(<MyPatient id={id} setPage={setPage} alert={alert} setalert={setalert} setpatient={setpatient}  />)}} />
         <Route exact path="/doctors/appointments" render={()=>{return(<Appointments id={id} setPage={setPage} setpatient={setpatient} setappointment={setappointment} alert={alert} setalert={setalert}/>)}} />
         <Route exact path="/doctors/Pendingappointemnt" render={()=>{return(<PendingAppointments id={id} setPage={setPage} setpatient={setpatient} setappointment={setappointment} alert={alert} setalert={setalert}/>)}} />
         <Route exact path="/doctors/prescription" render={()=>{return(<Prescriptions id={id} setPage={setPage} />)}} />

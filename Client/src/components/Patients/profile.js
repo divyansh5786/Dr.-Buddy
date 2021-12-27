@@ -65,7 +65,7 @@ const fetchData = async (id,auth) => {
     return tempdata;
 }
 
-function Profile({ id, setPage,alert,setalert }) {
+function Profile({ id, setPage,alert,setalert, }) {
     const auth = useContext(AuthContext);
     const [profile, setprofile] = useState('view');
     const history = useHistory();
@@ -93,7 +93,8 @@ function Profile({ id, setPage,alert,setalert }) {
         const res = await fetch("/updatepatient", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                Authorization: 'Bearer ' + auth.token,
             },
             body: JSON.stringify({
                 id,updatedPatient

@@ -4,8 +4,7 @@ import { NavLink } from 'react-router-dom';
 
 function NavBarDoctor({page,name}) {
   return (
-    <>
-    <nav>
+    <nav style={{"position":"sticky","width":"auto"}}>
           <div class="sidebar-button">
             <span class="dashboard">{page}</span>
           </div>
@@ -17,7 +16,6 @@ function NavBarDoctor({page,name}) {
           </div>
           </NavLink>
         </nav>
-    </>
   )
 }
 

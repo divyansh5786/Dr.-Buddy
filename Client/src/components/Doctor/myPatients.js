@@ -82,7 +82,7 @@ function MyPatient({id,setPage,alert,setalert}) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {patients === null ? "Loading..." : patients.length === 0 ? "No appointment made" :
+                                {(patients === null  && !patients)? "Loading..." : patients.length === 0 ? "No appointment made" :
                                 patients.map((patient) => {
                                         //console.log(appointment.doctorname);
                                         return (<PatientCard key={patient.id} patient={patient} setalert={setalert}/>

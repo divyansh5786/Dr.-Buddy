@@ -59,7 +59,7 @@ function ViewReview({ id, setPage }) {
         setPage('View Review');
         fectchReviews(doctorID, auth).then(tempdata => {
             setprevreviews(tempdata.review);
-            settotalRating(tempdata.totalRating);
+            settotalRating(tempdata.totalRating.toFixed(1));
             settotalReviews(tempdata.totalReviews);
             console.log(tempdata.review);
         })
@@ -78,7 +78,7 @@ function ViewReview({ id, setPage }) {
                             {(totalRating >= 2) ? <i class="fas fa-star filled" style={{ "color": "#f4c150" }}></i> : <i class="fas fa-star" style={{ "color": "#dedfe0" }}></i>}
                             {(totalRating >= 3) ? <i class="fas fa-star filled" style={{ "color": "#f4c150" }}></i> : <i class="fas fa-star" style={{ "color": "#dedfe0" }}></i>}
                             {(totalRating >= 4) ? <i class="fas fa-star filled" style={{ "color": "#f4c150" }}></i> : <i class="fas fa-star" style={{ "color": "#dedfe0" }}></i>}
-                            {(totalRating >= 5) ? <i class="fas fa-star filled" style={{ "color": "#f4c150" }}></i> : <i class="fas fa-star" style={{ "color": "#dedfe0" }}></i>}</>}
+                            {(totalRating >= 5) ? <i class="fas fa-star filled" style={{ "color": "#f4c150" }}></i> : <i class="fas fa-star" style={{ "color": "#dedfe0" }}></i>}</>} ({totalRating})
                         </div>
                         <div><strong>Total Reviews : </strong>{(totalReviews === null) ? <>Loading..</> : <>{totalReviews} </>}
                         </div>

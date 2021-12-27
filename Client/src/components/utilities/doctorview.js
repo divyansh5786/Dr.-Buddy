@@ -35,11 +35,11 @@ const fetchDoctorData = async (doctorID, auth) => {
             console.log("Details fetched Successfull");
             tempdata = data;
             var degreestring = "";
-            data.Degree.map((degree)=>{
-                degreestring = degreestring + degree.Name+" , ";
+            data.Degree.map((degree) => {
+                degreestring = degreestring + degree.Name + " , ";
             });
-            degreestring= degreestring.substring(0,degreestring.length-2); 
-            data.degreestring= degreestring;
+            degreestring = degreestring.substring(0, degreestring.length - 2);
+            data.degreestring = degreestring;
             if (data.Online == false)
                 data.Online = "false";
             else
@@ -84,8 +84,8 @@ const fectchReviews = async (doctorID, auth) => {
     return tempdata;
 }
 
-const postReviews = async(doctorID,patientName,rating,time,text,title,auth,history)=>{
-    console.log(doctorID+" "+patientName+" "+rating+" "+time+" "+text+" "+title,auth);
+const postReviews = async (doctorID, patientName, rating, time, text, title, auth, history) => {
+    console.log(doctorID + " " + patientName + " " + rating + " " + time + " " + text + " " + title, auth);
     console.log(doctorID);
     let date = time;
     try {
@@ -95,7 +95,7 @@ const postReviews = async(doctorID,patientName,rating,time,text,title,auth,histo
                 "Content-Type": "application/json",
                 Authorization: 'Bearer ' + auth.token,
             },
-            body: JSON.stringify({ doctorID,text,rating,title,date, patientName})
+            body: JSON.stringify({ doctorID, text, rating, title, date, patientName })
         });
         const data = await res.json();
         console.log(data);
@@ -124,8 +124,8 @@ function ViewDoctor({ doctorBook, patientname, setPage }) {
     const [doctor, setdoctor] = useState(null);
     const [prevreviews, setprevreviews] = useState(null);
     const auth = useContext(AuthContext);
-    const [totalRating,settotalRating] = useState(null);
-    const [totalReviews,settotalReviews] = useState(null);
+    const [totalRating, settotalRating] = useState(null);
+    const [totalReviews, settotalReviews] = useState(null);
     useEffect(() => {
         setPage('View Doctor');
         fetchDoctorData(doctorID, auth).then(tempdata => {
@@ -133,7 +133,8 @@ function ViewDoctor({ doctorBook, patientname, setPage }) {
         })
         fectchReviews(doctorID, auth).then(tempdata => {
             setprevreviews(tempdata.review);
-            settotalRating(tempdata.totalRating);
+            if(tempdata.totalRating)
+            settotalRating(tempdata.totalRating.toFixed(1));
             settotalReviews(tempdata.totalReviews);
         })
     }, []);
@@ -148,9 +149,9 @@ function ViewDoctor({ doctorBook, patientname, setPage }) {
             value = parseInt(value);
         setreview({ ...review, [name]: value });
     }
-    const handlesubmit = (e)=>{
+    const handlesubmit = (e) => {
         var time = new Date();
-        postReviews(doctorID,patientname,review.rating,time,review.text,review.title,auth,history);
+        postReviews(doctorID, patientname, review.rating, time, review.text, review.title, auth, history);
     }
 
     return (
@@ -163,7 +164,7 @@ function ViewDoctor({ doctorBook, patientname, setPage }) {
                                 <div className="doctor-widget">
                                     <div className="doc-info-left">
                                         <div className="doc-info-cont">
-                                            <h3 className="doc-name"><a href="doctor-profile.html" style={{ "fontSize": "25px", "color": "black" }}>{doctor.firstname + " "+ doctor.lastname}</a></h3>
+                                            <h3 className="doc-name"><a href="doctor-profile.html" style={{ "fontSize": "25px", "color": "black" }}>{doctor.firstname + " " + doctor.lastname}</a></h3>
                                             <p className="doc-speciality" style={{ "fontSize": "20px" }}>{doctor.degreestring}</p>
                                             <h5 className="doc-department" style={{ "fontSize": "20px" }}>{doctor.Specialization}</h5>
                                             <div className="clinic-details">
@@ -179,12 +180,15 @@ function ViewDoctor({ doctorBook, patientname, setPage }) {
                                             <li><i className="far fa-money-bill-alt"></i>{doctor.Fees}</li>
                                             <li><i className="fas fa-phone"></i>{doctor.mobile}</li>
                                             <li><i className="fas fa-envelope"></i>{doctor.email}</li>
+                                            <li><br /></li>
                                             <li><span>Average Rating : {(totalRating === null) ? <>Loading..</> : <><div>{(totalRating >= 1) ? <i class="fas fa-star filled" style={{ "color": "#f4c150" }}></i> : <i class="fas fa-star" style={{ "color": "#dedfe0" }}></i>}
-                            {(totalRating >= 2) ? <i class="fas fa-star filled" style={{ "color": "#f4c150" }}></i> : <i class="fas fa-star" style={{ "color": "#dedfe0" }}></i>}
-                            {(totalRating >= 3) ? <i class="fas fa-star filled" style={{ "color": "#f4c150" }}></i> : <i class="fas fa-star" style={{ "color": "#dedfe0" }}></i>}
-                            {(totalRating >= 4) ? <i class="fas fa-star filled" style={{ "color": "#f4c150" }}></i> : <i class="fas fa-star" style={{ "color": "#dedfe0" }}></i>}
-                            {(totalRating >= 5) ? <i class="fas fa-star filled" style={{ "color": "#f4c150" }}></i> : <i class="fas fa-star" style={{ "color": "#dedfe0" }}></i>}</div></>}
-                      </span>  </li>
+                                                {(totalRating >= 2) ? <i class="fas fa-star filled" style={{ "color": "#f4c150" }}></i> : <i class="fas fa-star" style={{ "color": "#dedfe0" }}></i>}
+                                                {(totalRating >= 3) ? <i class="fas fa-star filled" style={{ "color": "#f4c150" }}></i> : <i class="fas fa-star" style={{ "color": "#dedfe0" }}></i>}
+                                                {(totalRating >= 4) ? <i class="fas fa-star filled" style={{ "color": "#f4c150" }}></i> : <i class="fas fa-star" style={{ "color": "#dedfe0" }}></i>}
+                                                {(totalRating >= 5) ? <i class="fas fa-star filled" style={{ "color": "#f4c150" }}></i> : <i class="fas fa-star" style={{ "color": "#dedfe0" }}></i>} ({totalRating})</div></>}
+                                            </span>  </li>
+                                            <li><div>Total Reviews :{(totalReviews === null) ? <>Loading..</> : <>{totalReviews} </>}
+                                            </div></li>
                                         </div>
 
 
@@ -217,19 +221,20 @@ function ViewDoctor({ doctorBook, patientname, setPage }) {
                                             <h4 class="widget-title">Education</h4>
                                             <div class="experience-box">
                                                 <ul class="experience-list">
-                                                   {doctor.Degree.map((degree)=>{
-                                                    return(<li>
-                                                        <div class="experience-user">
-                                                            <div class="before-circle"></div>
-                                                        </div>
-                                                        <div class="experience-content">
-                                                            <div class="timeline-content">
-                                                                <a href="#/" class="name">{degree.Institute}</a>
-                                                                <div>{degree.Name}</div>
-                                                                <span class="time">{degree.Duration}</span>
+                                                    {doctor.Degree.map((degree) => {
+                                                        return (<li>
+                                                            <div class="experience-user">
+                                                                <div class="before-circle"></div>
                                                             </div>
-                                                        </div>
-                                                    </li>);})}
+                                                            <div class="experience-content">
+                                                                <div class="timeline-content">
+                                                                    <a href="#/" class="name">{degree.Institute}</a>
+                                                                    <div>{degree.Name}</div>
+                                                                    <span class="time">{degree.Duration}</span>
+                                                                </div>
+                                                            </div>
+                                                        </li>);
+                                                    })}
                                                 </ul>
                                             </div>
                                         </div>
@@ -240,33 +245,34 @@ function ViewDoctor({ doctorBook, patientname, setPage }) {
 
                                 <div class="widget review-listing">
                                     <ul class="experience-list">
-{(prevreviews===null)?"Loading...":(prevreviews.length===0)?<>No Reviews Made</>:prevreviews.map((single_review)=>{
-                                        return(<li><div class="experience-user">
-                                            <div class="before-circle"></div>
-                                        </div>
-                                            <div class="experience-content">
-                                                <div class="comment">
-                                                    <div class="comment-body">
-                                                        <div class="meta-data">
-                                                            <span class="comment-author">{single_review.patientName }</span>
-                                                            <span class="comment-date">{DateTransform(single_review.date)}</span>
-                                                            <span class="comment-date">{single_review.title}</span>
-                                                            <div class="review-count rating">
+                                        {(prevreviews === null) ? "Loading..." : (prevreviews.length === 0) ? <>No Reviews Made</> : prevreviews.map((single_review) => {
+                                            return (<li><div class="experience-user">
+                                                <div class="before-circle"></div>
+                                            </div>
+                                                <div class="experience-content">
+                                                    <div class="comment">
+                                                        <div class="comment-body">
+                                                            <div class="meta-data">
+                                                                <span class="comment-author">{single_review.patientName}</span>
+                                                                <span class="comment-date">{DateTransform(single_review.date)}</span>
+                                                                <span class="comment-date">{single_review.title}</span>
+                                                                <div class="review-count rating">
 
-                                                    {(single_review.rating >= 1) ? <i class="fas fa-star filled" style={{ "color": "#f4c150" }}></i> : <i class="fas fa-star" style={{ "color": "#dedfe0" }}></i>}
-                                                    {(single_review.rating >= 2) ? <i class="fas fa-star filled" style={{ "color": "#f4c150" }}></i> : <i class="fas fa-star" style={{ "color": "#dedfe0" }}></i>}
-                                                    {(single_review.rating >= 3) ? <i class="fas fa-star filled" style={{ "color": "#f4c150" }}></i> : <i class="fas fa-star" style={{ "color": "#dedfe0" }}></i>}
-                                                    {(single_review.rating >= 4) ? <i class="fas fa-star filled" style={{ "color": "#f4c150" }}></i> : <i class="fas fa-star" style={{ "color": "#dedfe0" }}></i>}
-                                                    {(single_review.rating >= 5) ? <i class="fas fa-star filled" style={{ "color": "#f4c150" }}></i> : <i class="fas fa-star" style={{ "color": "#dedfe0" }}></i>}
+                                                                    {(single_review.rating >= 1) ? <i class="fas fa-star filled" style={{ "color": "#f4c150" }}></i> : <i class="fas fa-star" style={{ "color": "#dedfe0" }}></i>}
+                                                                    {(single_review.rating >= 2) ? <i class="fas fa-star filled" style={{ "color": "#f4c150" }}></i> : <i class="fas fa-star" style={{ "color": "#dedfe0" }}></i>}
+                                                                    {(single_review.rating >= 3) ? <i class="fas fa-star filled" style={{ "color": "#f4c150" }}></i> : <i class="fas fa-star" style={{ "color": "#dedfe0" }}></i>}
+                                                                    {(single_review.rating >= 4) ? <i class="fas fa-star filled" style={{ "color": "#f4c150" }}></i> : <i class="fas fa-star" style={{ "color": "#dedfe0" }}></i>}
+                                                                    {(single_review.rating >= 5) ? <i class="fas fa-star filled" style={{ "color": "#f4c150" }}></i> : <i class="fas fa-star" style={{ "color": "#dedfe0" }}></i>}
+                                                                </div>
                                                             </div>
+                                                            <p class="comment-content">
+                                                                {single_review.text}
+                                                            </p>
                                                         </div>
-                                                        <p class="comment-content">
-                                                            {single_review.text}
-                                                        </p>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </li>);})}
+                                            </li>);
+                                        })}
                                         {/* <li><div class="experience-user">
                                             <div class="before-circle"></div>
                                         </div>
@@ -328,7 +334,7 @@ function ViewDoctor({ doctorBook, patientname, setPage }) {
 
 
                                 <div class="write-review">
-                                    <h4 style={{ "text-align": "center" }}>Write a review for <strong>{doctor.firstname +" " +doctor.lastname}</strong></h4>
+                                    <h4 style={{ "text-align": "center" }}>Write a review for <strong>{doctor.firstname + " " + doctor.lastname}</strong></h4>
 
                                     <div className="review_form">
                                         <div class="form-group">

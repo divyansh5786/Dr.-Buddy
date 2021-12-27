@@ -51,19 +51,19 @@ const fetchMedicalData = async (id,auth) => {
         data.map((response)=>{
           bparray.push({
             date:DateTransform(response.date),
-            bp:response.bloodPressure
+            Blood_Pressure:response.bloodPressure
           });
           sugararray.push({
             date:DateTransform(response.date),
-            sugar:response.sugar
+            Glucose_level:response.sugar
           });
           temparray.push({
             date:DateTransform(response.date),
-            temp:response.bodyTempreture
+            Body_Tempreture:response.bodyTempreture
           });
           pulsearray.push({
             date:DateTransform(response.date),
-            pulse:response.pulse
+            Heart_Rate:response.pulse
           });
         })
         console.log("bloodpressure array ka data"+bparray[0].date);
@@ -243,7 +243,9 @@ function Dashboard({ id, setPage,alert,setalert,setappointment}) {
                         </div>
 
             <div class="button">
-              <a href="#">See All</a>
+            <NavLink to="/patients/appointments">
+              <a >See All</a>
+              </NavLink>
             </div>
           </div>
           <div class="top-sales box">

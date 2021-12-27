@@ -3,6 +3,8 @@ import React from 'react'
 import '../../css/style.css';
 import { useHistory } from 'react-router-dom';
 
+
+
 function PatientCard({patient}) {
     return (<>
         <tr>

@@ -69,7 +69,7 @@ function DashMedPatient({data,bparray,sugararray,pulsearray,temparray}) {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Line type="monotone" dataKey="bp" stroke="#8884d8" activeDot={{ r: 8 }} />
+          <Line type="monotone" dataKey="Blood_Pressure" stroke="#8884d8" activeDot={{ r: 8 }} />
         </LineChart>
         </div>
         
@@ -90,7 +90,7 @@ function DashMedPatient({data,bparray,sugararray,pulsearray,temparray}) {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Line type="monotone" dataKey="sugar" stroke="#8884d8" activeDot={{ r: 8 }} />
+          <Line type="monotone" dataKey="Glucose_level" stroke="#8884d8" activeDot={{ r: 8 }} />
         </LineChart>
         </div>
           </div>
@@ -112,7 +112,7 @@ function DashMedPatient({data,bparray,sugararray,pulsearray,temparray}) {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Line type="monotone" dataKey="pulse" stroke="#8884d8" activeDot={{ r: 8 }} />
+          <Line type="monotone" dataKey="Heart_Rate" stroke="#8884d8" activeDot={{ r: 8 }} />
         </LineChart>
         </div>
             
@@ -133,7 +133,7 @@ function DashMedPatient({data,bparray,sugararray,pulsearray,temparray}) {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Line type="monotone" dataKey="temp" stroke="#8884d8" activeDot={{ r: 8 }} />
+          <Line type="monotone" dataKey="Body_Tempreture" stroke="#8884d8" activeDot={{ r: 8 }} />
         </LineChart>
         </div>
         

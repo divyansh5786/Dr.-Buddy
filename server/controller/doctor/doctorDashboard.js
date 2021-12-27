@@ -20,8 +20,14 @@ doctorDashboard = async(req, res) => {
      
         var status;
   // taken a json named   totalPatient  in which all appointment having  given doctor ID
-       const totalPatient=await Appointment.find({doctorID});
-    
+       const totalPatient1=await Appointment.find({doctorID})
+       .populate('patientID', { firstname: 1, lastname: 1, dateofbirth: 1, gender: 1, mobile: 1, email: 1 }).select({ patientID: 1 });
+       function uniqueByKey(totalPatient1, key) {
+        return [...new Map(totalPatient1.map((x) => [x[key], x])).values()];
+      }
+      const totalPatient=await Appointment.find({doctorID}) 
+  
+      const list = uniqueByKey(totalPatient1, 'patientID');
   
       var  pendingPatient=0;
       var  todayPendingPatient=0;
@@ -32,25 +38,22 @@ doctorDashboard = async(req, res) => {
         if(element.status==="pending")
         pendingPatient++;
          // calculating todayPendingPatient  form a json by for loop ,in condition of status==confirm ,TODAY ONLY
-        else  if(element.status==="confirm"  && element.appointmentDate===myDate )
+        if(element.status==="confirm"  && (element.appointmentDate.getTime()==myDate.getTime())  )
         todayPendingPatient++;
          // calculating pendingPatient  form a json by for loop ,in condition of status==complete
-        else   if(element.status==="complete" )
+        if(element.status==="complete" )
         completedPatient++;
           // calculating todayPendingPatient  form a json by for loop ,in condition of status==complete ,TODAY ONLY
-        else  if(element.status==="complete"  && (element.appointmentDate.getTime()==myDate.getTime()) )
+        if(element.status==="complete"  && (element.appointmentDate.getTime()==myDate.getTime()) )
         todayCompletedPatient++;
 
       });
 
    
       // searching in DB for doctor fees of diven doctorID
-      function uniqueByKey(totalPatient, key) {
-        return [...new Map(totalPatient.map((x) => [x[key], x])).values()];
-      }
-  
-      const list = uniqueByKey(totalPatient, 'patientID');
-
+     
+      console.log("here mine");
+console.log(list);
          const doctor=await Doctor.findById(doctorID)
              var totalincome= completedPatient * (parseInt(doctor.Fees));
       
