@@ -41,15 +41,39 @@ const fetchMedicalData = async (id,auth) => {
         console.log("Medical fetch Successfull");
         console.log(data);
         let medical = data[data.length-1];
+        
           tempdata = {date:DateTransform(medical.date),bp:medical.bloodPressure,sugar:medical.sugar,temp:medical.bodyTempreture,pulse:medical.pulse};
         console.log(tempdata);
+        var bparray = [];
+        var sugararray = [];
+        var temparray = [];
+        var pulsearray = [];
+        data.map((response)=>{
+          bparray.push({
+            date:DateTransform(response.date),
+            bp:response.bloodPressure
+          });
+          sugararray.push({
+            date:DateTransform(response.date),
+            sugar:response.sugar
+          });
+          temparray.push({
+            date:DateTransform(response.date),
+            temp:response.bodyTempreture
+          });
+          pulsearray.push({
+            date:DateTransform(response.date),
+            pulse:response.pulse
+          });
+        })
+        console.log("bloodpressure array ka data"+bparray[0].date);
         // history.replace("/patients/medicaldata");
       }}
       catch(e)
       {
           console.log("error occured in fetching"+e);
-      }
-      return tempdata;
+      }  
+      return {tempdata,bparray,sugararray,temparray,pulsearray};
 }
 const fetchAppointmentsData = async (id,auth) => {
   console.log(id);
@@ -151,19 +175,26 @@ function Dashboard({ id, setPage,alert,setalert,setappointment}) {
   const [medicalData, setmedicalData] = useState(null);
   const [prescriptions, setPrescriptions] = useState(null);
   const [appointments, setAppointments] = useState(null);
-
+  const [bparray, setbparray] = useState(null);
+  const [sugararray, setsugararray] = useState(null);
+  const [pulsearray, setpulsearray] = useState(null);
+  const [temparray, settemparray] = useState(null);
   useEffect(() => {
     setPage('DashBoard');
-    fetchMedicalData(id,auth).then(tempdata => {
-      if (tempdata === null)
-        tempdata = {
+    fetchMedicalData(id,auth).then(response => {
+      if (response.tempdata === null)
+      response.tempdata = {
           "date": " ",
           "bp": " ",
           "sugar": " ",
           "temp": " ",
           "pulse": " ",
         };
-      setmedicalData(tempdata);
+      setmedicalData(response.tempdata);
+      setbparray(response.bparray);
+      setsugararray(response.sugararray);
+      settemparray(response.temparray);
+      setpulsearray(response.pulsearray);
     });
     fetchAppointmentsData(id,auth).then(tempdata => {
       setAppointments(tempdata);
@@ -181,7 +212,7 @@ function Dashboard({ id, setPage,alert,setalert,setappointment}) {
 
       <div class="home-content">
       <AlertBar alert = {alert} setalert={setalert}/>
-        {medicalData === null ? "Loading..." : <DashMedPatient key={medicalData.id} data={medicalData} />
+        {medicalData === null ? "Loading..." : <DashMedPatient key={medicalData.id} data={medicalData} bparray={bparray} sugararray={sugararray} temparray={temparray} pulsearray={pulsearray} />
         }
 
         <div class="sales-boxes">
