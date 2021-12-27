@@ -1,3 +1,4 @@
+
 //to get the contestlist from mongo db and sending it to client
 const mongoose = require('mongoose');
 const Doctor = require("../../module/doctorSchema");
@@ -52,17 +53,21 @@ LogIn = async (req, res) => {
     res.status(201);
     let token;
     try {
+
       token = await jwt.sign(
         { userId: user.id },
         process.env.TOKEN_SECRET_KEY,
         { expiresIn: '1h' }
       );
-    } catch (err) {
-      console.log(err)
-    }
-    console.log("token   /userlogin")
+      console.log("token   /userlogin")
    // console.log(token);
     return res.status(200).json({id:user.id,name:user.firstname+" "+user.lastname,token:token});
+
+    } catch (err) {
+      console.log(err)
+      return  res.status(400).json({ error: "token is not generated" })
+    }
+    
   }
 }
 forgetPassword = async (req, res) => {
