@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 module.exports = (req, res, next) => {
-  console.log(req.body);
+ // console.log(req.body);
   if (req.method === 'OPTIONS') {
     return next();
   }

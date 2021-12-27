@@ -16,6 +16,7 @@ addProfession = async (req, res) => {
   user.Specialization = Specialization;
   user.Online = Online;
   user.Fees = Fees;
+  console.log(Degree);
   Degree.map((degree) => {
     user.Degree.push(degree)
   });

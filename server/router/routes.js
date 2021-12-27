@@ -19,7 +19,7 @@ doctorPendingAppointment= require("../controller/doctor/doctorPendingAppointment
 patientProfile=require("../controller/patient/patientProfile")
 doctorDashboard=require("../controller/doctor/doctorDashboard");
 googleLogin=require("../controller/commonUser/googleLogin")
-
+ratingDoctor=require("../controller/doctor/ratingDoctor")
 
 
  // common login-singup ---1
@@ -34,6 +34,8 @@ router.post('/viewdoctor',Authenticate,doctorProfile.viewDoctor);
 router.post('/updateDoctorProfile',Authenticate,doctorProfile.updateDoctorProfile);
 router.post('/showDoctorspatient',Authenticate,doctorProfile.showDoctorsPatient);
 router.post('/doctorDashboard',Authenticate,doctorDashboard.doctorDashboard);
+router.post('/ratingDoctor',Authenticate,ratingDoctor.ratingDoctor);
+router.post('/viewRatingDoctor',Authenticate,ratingDoctor.viewRating)
 
  // all about Appointment's  -- 3
 router.post('/doctorPendingAppointment',Authenticate,doctorPendingAppointment.PendingAppointment)

@@ -22,39 +22,27 @@ doctorDashboard = async(req, res) => {
   // taken a json named   totalPatient  in which all appointment having  given doctor ID
        const totalPatient=await Appointment.find({doctorID});
     
-       // calculating pendingPatient  form a json by for loop ,in condition of status==pending
+  
       var  pendingPatient=0;
-      totalPatient.forEach((element) => {
-        if(element.status==="pending")
-        pendingPatient++;
-
-      });
-
-  // calculating todayPendingPatient  form a json by for loop ,in condition of status==confirm ,TODAY ONLY
       var  todayPendingPatient=0;
-      totalPatient.forEach((element) => {
-        if(element.status==="confirm"  && element.appointmentDate===myDate )
-        todayPendingPatient++;                    
-
-      });
-   
-      
-       // calculating pendingPatient  form a json by for loop ,in condition of status==complete
       var   completedPatient=0;
-      totalPatient.forEach((element) => {
-        if(element.status==="complete" )
-        completedPatient++;
-
-      });
-      
-       // calculating todayPendingPatient  form a json by for loop ,in condition of status==complete ,TODAY ONLY
       var  todayCompletedPatient=0;
       totalPatient.forEach((element) => {
-        if(element.status==="complete"  && (element.appointmentDate.getTime()==myDate.getTime()) )
+             // calculating pendingPatient  form a json by for loop ,in condition of status==pending
+        if(element.status==="pending")
+        pendingPatient++;
+         // calculating todayPendingPatient  form a json by for loop ,in condition of status==confirm ,TODAY ONLY
+        else  if(element.status==="confirm"  && element.appointmentDate===myDate )
+        todayPendingPatient++;
+         // calculating pendingPatient  form a json by for loop ,in condition of status==complete
+        else   if(element.status==="complete" )
+        completedPatient++;
+          // calculating todayPendingPatient  form a json by for loop ,in condition of status==complete ,TODAY ONLY
+        else  if(element.status==="complete"  && (element.appointmentDate.getTime()==myDate.getTime()) )
         todayCompletedPatient++;
-       
-      
+
       });
+
    
       // searching in DB for doctor fees of diven doctorID
       function uniqueByKey(totalPatient, key) {
