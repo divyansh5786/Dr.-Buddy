@@ -28,9 +28,46 @@ With the current scenario of covid-19 pandemic when everyone is feeling risky to
 
 <!-- Horizontal Rule -->
 ---
+### Special Features
+### * Doctor/ Patient can login through google
+### * Graphical Representation of patient medical data
+### * Provide audio and video meeting functionality for doctor and patient
+### * Patient can rate/review doctor 
 
-### Features
-
- 
 <!-- Horizontal Rule -->
 ---
+### Features
+#### 1.) Login/SignUp for Doctor/Patient
+#### 2.) Patient can search doctor according to city/specialization/mode
+#### 3.) Patient can book appointment for offline as well as online visit
+#### 4.) Patient can add their medical data for doctor reference 
+#### 5.) Doctor can check his appointments according to data
+#### 6.) Doctor can provide prescription for each appointments
+#### 7.) Doctor can see count of Total Patients/ Pending Appointments/ Complete Appointments/ earning etc on dashboard
+#### 8.) Patient can see the prescription in general format
+
+<!-- Horizontal Rule -->
+---
+### We are not much more describing our website because we believe in actions not in words
+<!-- Horizontal Rule -->
+---
+### Photos
+
+<img src="https://github.com/divyansh5786/Dr.-Buddy/blob/main/assets/book_app.jpeg" height=250px />
+<br />
+<img src="https://github.com/divyansh5786/Dr.-Buddy/blob/main/assets/doctor_appointments.png" height=250px  />
+<br />
+<img src="https://github.com/divyansh5786/Dr.-Buddy/blob/main/assets/doctor_dashboard.png" height=250px />
+<br />
+<img src="https://github.com/divyansh5786/Dr.-Buddy/blob/main/assets/doctor_profile.jpeg" height=250px  />
+<br />
+<img src="https://github.com/divyansh5786/Dr.-Buddy/blob/main/assets/login.png" height=250px  />
+<br />
+<img src="https://github.com/divyansh5786/Dr.-Buddy/blob/main/assets/patient_appointments.png" height=250px  />
+<br />
+<img src="https://github.com/divyansh5786/Dr.-Buddy/blob/main/assets/patient_dashboard.png" height=250px  />
+<br />
+<img src="https://github.com/divyansh5786/Dr.-Buddy/blob/main/assets/prescriptions.jpeg" height=250px  />
+<br />
+<img src="https://github.com/divyansh5786/Dr.-Buddy/blob/main/assets/review_doctor.jpeg" height=250px  />
+<br />
